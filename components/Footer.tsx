@@ -4,7 +4,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='mt-20'>
+    <footer>
       <div className='border-zinc-100 border-t-2 min-h-[400px] flex w-full p-16 flex-col sm:flex-row'>
         <div className='w-full xs:mb-12 flex flex-col items-center xs:justify-center'>
           <img src="/assets/logo.png" className='max-w-[125px]' alt="Logo" />

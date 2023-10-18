@@ -2,9 +2,13 @@
 
 import React, { useState } from 'react'
 import { CIDADES_BRASIL } from '@/constants/json-cidades'
+import { toast } from 'react-toastify'
+import ToastMessage from '@/components/ToastMessage'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
   const [step, setStep] = useState(1)
+  const router = useRouter()
 
   // Information about the restaurant owner
   const [email, setEmail] = useState<string>("")
@@ -76,7 +80,8 @@ const page = () => {
         })
 
         if (response.ok) {
-          console.log("Restaurante criado com sucesso!")
+          toast.success("Restaurante criado com sucesso!")
+          router.push("/home")
         }
 
       } catch (error) {
@@ -88,6 +93,7 @@ const page = () => {
 
   return (
     <div className='w-full flex flex-col p-[5%] items-center'>
+      <ToastMessage />
       <div className='max-w-[550px] w-full'>
         <h1 className='w-full text-[#ea1d2c] text-xl tracking-wider mb-20 text-center underline-offset-8 underline cursor-pointer'>Etapa {step} de 2</h1>
 

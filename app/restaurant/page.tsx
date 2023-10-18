@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession } from 'next-auth/react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
 import { AiFillStar } from 'react-icons/ai'
 import { BsCoin } from 'react-icons/bs'
@@ -9,14 +9,21 @@ import { useRouter } from 'next/navigation'
 import { APP_ROUTES } from '@/constants/app-routes'
 import { toast } from 'react-toastify'
 import ToastMessage from '@/components/ToastMessage'
+import Link from 'next/link'
+import { RestaurantData } from '@/types/types'
 
 const page = () => {
 
   const { data: session, status } = useSession()
 
+  const isFetched = useRef(true)
+
   const router = useRouter()
 
-  const [restaurantData, setRestaurantData] = useState<any>([])
+  const [restaurantData, setRestaurantData] = useState<RestaurantData | any>([])
+  const [categories, setCategories] = useState<any>([])
+
+  const [isOwner, setIsOwner] = useState<boolean>(false)
 
   const getRestaurantData = async () => {
     const requisition = await fetch(`http://localhost:3001/restaurant/${session?.user?.email}`)
@@ -25,6 +32,9 @@ const page = () => {
     if (response !== null) {
       if (response.email === session?.user?.email) {
         setRestaurantData(response)
+        setIsOwner(true)
+
+        getRestaurantCategories(response.id)
       } else {
         toast.error("Você não pode editar um restaurante que não é seu")
         router.push(APP_ROUTES.private.usuario)
@@ -33,16 +43,41 @@ const page = () => {
       toast.error("Você não pode editar um restaurante que não existe")
       router.push(APP_ROUTES.private.usuario)
     }
+  }
 
+  const getRestaurantCategories = async (restaurantId: string) => {
+    try {
+      console.log("A")
+      const requisition = await fetch(`http://localhost:3001/category/${restaurantId}`)
+      const response = await requisition.json()
+      console.log(response)
+      if (response !== null) {
+        setCategories(response)
+      }
+
+    } catch (error) {
+      console.log(error)
+      throw new Error("Não foi possível obter as categorias de produtos do restaurantes")
+    }
   }
 
   useEffect(() => {
-    if (session?.user?.email !== undefined && status === "authenticated") {
-      getRestaurantData()
+    if (isFetched.current) {
+      if (session?.user?.email !== undefined && status === "authenticated") {
+        getRestaurantData()
+      }
+    } else {
+      isFetched.current = true
     }
-  })
+  }, [])
 
-  return restaurantData.email !== undefined ? (
+  // useEffect(() => {
+  //   if (session?.user?.email !== undefined && status === "authenticated") {
+  //     getRestaurantData()
+  //   }
+  // }, [session, status, restaurantData])
+
+  return isOwner === true ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1500px] w-full rounded-sm p-16'>
@@ -77,9 +112,9 @@ const page = () => {
                 <h3 className='text-sm text-[#717171]'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
                 <h5 className='text-base text-[#717171]'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
-              <div className='bg-[#ea1d2c] text-white w-[150px] flex items-center justify-center rounded-lg cursor-pointer text-lg'>
+              <Link href="/restaurant/edit" className='bg-[#ea1d2c] text-white w-[150px] flex items-center justify-center rounded-lg cursor-pointer text-lg'>
                 Editar
-              </div>
+              </Link>
             </div>
           </div>
         </div>

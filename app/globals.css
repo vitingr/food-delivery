@@ -4,48 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* @font-face {
-  font-family: 'food_delivery_font';
-  src: url('../public/fonts/iFoodRCTextos-Light.eot');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'food_delivery_font';
-  src: url('../public/fonts/iFoodRCTextos-Bold.eot');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'food_delivery_font';
-  src: url('../public/fonts/iFoodRCTextos-ExtraBold.eot');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'food_delivery_font';
-  src: url('../public/fonts/iFoodRCTextos-Regular.eot');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'food_delivery_font';
-  src: url('../public/fonts/iFoodRCTextos-Thin.eot');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'food_delivery_font';
-  src: url('../public/fonts/iFoodRCTextos-Medium.eot');
-  font-weight: 500;
-  font-style: normal;
-} */
-
 *,
 *::after,
 *::before {
@@ -57,11 +15,11 @@
 
 .red-icon * {
   color: #ee4c58;
-} 
+}
 
 .white-icon * {
   color: white;
-} 
+}
 
 .gold-icon * {
   color: #fcbb00;
@@ -80,4 +38,108 @@
 .restaurant__option:hover {
   border: 1px solid #3e3e3e27;
   border-radius: 10px;
+}
+
+.leftbar__item {
+  padding-left: 10px;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.3s;
+  border-left: 2px solid transparent;
+}
+
+.leftbar__item:hover {
+  border-left: 2px solid #ee4c58;
+}
+
+.leftbar__item * {
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  font-size: 17.5px;
+}
+
+.leftbar__item:hover * {
+  color: #ea1d2c;
+}
+
+.cta {
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  position: relative;
+  margin: auto;
+  margin-top: 6.2em;
+  padding: 9px 15px;
+  transition: all 0.2s ease;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #ff969d9f;
+  width: 35px;
+  height: 35px;
+  transition: all 0.3s ease;
+}
+
+.cta span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #6e080f;
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #6e080f;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: #ff969d9f;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active {
+  transform: scale(0.95);
+}
+
+.popup__wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+
+.glassmorphism {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  box-shadow: 0 0px 32px 0 rgba(31, 38, 135, 0.37); 
 }
