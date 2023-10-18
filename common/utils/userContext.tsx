@@ -10,12 +10,10 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
 
   const {data: session, status} = useSession()
 
-  const [data, setData] = useState<Object>([])
+  const [data, setData] = useState<any>([])
 
   const getInfo = async () => {
     try {
-      console.log(session?.user?.email)
-
       const requisition = await fetch(`http://localhost:3001/user/${session?.user?.email}`)
       const response = await requisition.json()
       
@@ -55,7 +53,7 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
   }
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (session?.user?.email !== undefined && status === "authenticated") {
       getInfo()
     }
   }, [session])

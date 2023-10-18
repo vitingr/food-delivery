@@ -16,7 +16,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const checkUser = async () => {
     if (status !== "loading") {
       if (status === "unauthenticated") {
-        router.push(APP_ROUTES.public.login)
+        router.push(APP_ROUTES.public.home)
       } 
       if (status === "authenticated") {
         setIsLogged(true)
@@ -30,10 +30,12 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     }
   }, [session])
 
-  return (
+  return isLogged ? (
     <>
       {children}
     </>
+  ) : (
+    <></>
   )
 }
 

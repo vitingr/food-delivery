@@ -4,6 +4,6 @@ export const APP_ROUTES = {
       restaurante: "/restaurant"
   },
   public: {
-      login: "/",
+      home: "/",
   }
 }

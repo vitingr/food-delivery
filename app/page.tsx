@@ -1,5 +1,4 @@
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
-import Image from 'next/image'
 import { IoSearchOutline, IoChevronForwardOutline } from 'react-icons/io5'
 
 export default function Home() {

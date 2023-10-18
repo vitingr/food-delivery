@@ -18,8 +18,8 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState<Boolean>(false)
 
   return (
-    <div className='p-2 bg-[#f7f7f7] justify-around items-center w-full flex'>
-      <Link href="/" className='w-full flex justify-end'>
+    <div className='p-2 justify-around items-center w-full flex'>
+      <Link href="/" className='w-full flex justify-center'>
         <img src="/assets/logo.png" className='max-w-[100px]' alt="Logo Image" />
       </Link>
       <ul className='ml-14 list-none gap-14 w-full justify-center hidden lg:flex'>
@@ -43,7 +43,7 @@ const Navbar = () => {
           <div className='flex items-center' onClick={() => setShowMenu(!showMenu)}>
             <IoMenuOutline size={30} className="cursor-pointer" />
             {showMenu ? (
-              <div className='absolute z-20 bg-[#fff] shadow-md h-[700px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[750px]'>
+              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[700px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[750px]'>
                 <div className='p-10'>
                   <h1 className='text-3xl font-bold text-center'>Olá, {session?.user?.name}</h1>
                 </div>
@@ -65,14 +65,14 @@ const Navbar = () => {
                     <h3 className='text-[#717171] w-full text-lg'>Meus Cupons</h3>
                   </div>
                   {data.partner === true ? (
-                    <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                    <Link href="/restaurant" className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                       <IoStorefrontOutline size={30} className="gray-icon" />
-                      <h3 className='text-[#717171] w-full text-lg'>Minha Loja</h3>
-                    </div>
+                      <h3 className='text-[#717171] w-full text-lg'>Meu Restaurante</h3>
+                    </Link>
                   ) : (
                     <Link href="/restaurant/create" className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                       <IoStorefrontOutline size={30} className="gray-icon" />
-                      <h3 className='text-[#717171] w-full text-lg'>Adicionar minha Loja</h3>
+                      <h3 className='text-[#717171] w-full text-lg'>Adicionar meu Restaurante</h3>
                     </Link>
                   )}
                   <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>

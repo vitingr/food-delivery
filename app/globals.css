@@ -70,3 +70,14 @@
 .gray-icon * {
   color: #717171;
 }
+
+.restaurant__option {
+  border: 1px solid transparent;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+}
+
+.restaurant__option:hover {
+  border: 1px solid #3e3e3e27;
+  border-radius: 10px;
+}

@@ -1,13 +1,33 @@
+"use client"
+
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
 import RestaurantOption from '@/components/Restaurant/RestaurantOption'
 import SmallRestaurantOption from '@/components/Restaurant/SmallRestaurantOption'
-import React from 'react'
-import {IoSearchOutline} from 'react-icons/io5'
+import { useSession } from 'next-auth/react'
+import React, { useEffect, useState } from 'react'
+import { IoSearchOutline } from 'react-icons/io5'
 
 const page = () => {
 
+  const { data: session, status } = useSession()
+
+  const [restaurants, setRestaurants] = useState<any>([])
+
+  const getRestaurants = async () => {
+    const requisition = await fetch("http://localhost:3001/restaurant")
+    const response = await requisition.json()
+    setRestaurants(response)
+    console.log(response)
+  }
+
+  useEffect(() => {
+    if (session?.user?.email !== undefined && status === "authenticated") {
+      getRestaurants()
+    }
+  }, [session])
+
   return (
-    <div className='w-full flex flex-col items-center sm:p-[10%]'>
+    <div className='w-full flex flex-col items-center sm:p-[2%]'>
       <section className='w-full flex flex-col items-center justify-center p-[2%]'>
         <div className='w-full max-w-[1600px]'>
           <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>
@@ -60,22 +80,31 @@ const page = () => {
           <IoSearchOutline size={25} className="cursor-pointer mr-6" />
         </div>
         <div className='w-full flex flex-wrap sm:flex-nowrap justify-between sm:gap-6 gap-14 mt-14 max-h-[700px] overflow-hidden'>
-          <div className='w-full flex flex-col flex-wrap'>
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
-            <RestaurantOption image='https://static.ifood-static.com.br/image/upload/t_medium/logosgde/862569da-13f0-437d-8d2a-294e7635a823/202003241747_hsiD_i.png?imwidth=128' name={"Dona Beleza Bar e Restaurante"} stars={4.9} branch={"Brasileira"} distance={0.1} deliveryTime={"40-50 min"} deliveryValue={"Grátis"} />
+          <div className='w-full flex flex-col flex-wrap gap-2'>
+            {restaurants.map((restaurant: {
+              id: string;
+              email: string;
+              cellphone: string;
+              ownerName: string;
+              ownerLastname: string;
+              cpf: string;
+              rg: string;
+              orgaoEmissor: string;
+              cnpj: string;
+              restaurantName: string;
+              telephone: string;
+              street: string;
+              city: string;
+              state: string;
+              address: number;
+              speciality: string;
+              delivery: string;
+              stars: number;
+              logo: string;
+              deliveryTime: string
+            }) => (
+              <RestaurantOption image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} />
+            ))}
           </div>
         </div>
         <div className='w-full p-4 font-bold flex justify-center items-center text-[#ea1d2c] mt-16 cursor-pointer transition-all duration-300 hover:text-white hover:bg-[#ea1d2c] rounded-xl'>Ver mais</div>
