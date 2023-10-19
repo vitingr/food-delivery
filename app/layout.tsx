@@ -4,11 +4,11 @@ import Navbar from '@/components/Navbar'
 import './globals.css'
 import type { Metadata } from 'next'
 import Footer from '@/components/Footer'
-import Provider from '@/components/Provider'
+import Provider from '@/components/Config/Provider'
 import { usePathname } from 'next/navigation'
 import { checkIsPublicRoute } from '@/common/check-route'
 import { UserProvider } from '@/common/utils/userContext'
-import PrivateRoute from '@/components/PrivateRoute'
+import PrivateRoute from '@/components/Config/PrivateRoute'
 
 export default function RootLayout({
   children,

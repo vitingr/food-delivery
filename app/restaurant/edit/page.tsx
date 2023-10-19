@@ -1,12 +1,12 @@
 "use client"
 
-import ToastMessage from '@/components/ToastMessage'
+import ToastMessage from '@/components/Config/ToastMessage'
 import { APP_ROUTES } from '@/constants/app-routes'
 import { RestaurantData } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { IoHomeOutline, IoTicketOutline, IoSettingsOutline } from 'react-icons/io5'
 import { AiOutlineClockCircle, AiOutlineStar } from 'react-icons/ai'
@@ -16,6 +16,7 @@ import EditMenu from '@/components/Restaurant/EditMenu'
 const page = () => {
 
   const { data: session, status } = useSession()
+  const isFetched = useRef(false)
 
   const router = useRouter()
 
@@ -45,24 +46,15 @@ const page = () => {
     }
   }
 
-  const getRestaurantCategories = async (restaurantId: string) => {
-    try {
-
-      const requisition = await fetch(`http://localhost:3001/category/${restaurantId}`)
-      const response = await requisition.json()
-      setCategories(response)
-
-    } catch (error) {
-      console.log(error)
-      throw new Error("Não foi possível obter as categorias de produtos do restaurantes")
-    }
-  }
-
   useEffect(() => {
-    if (session?.user?.email !== undefined && status === "authenticated") {
-      getRestaurantData()
+    if (!isFetched.current) {
+      if (session?.user?.email !== undefined && status === "authenticated") {
+        getRestaurantData()
+      }
+    } else {
+      isFetched.current = true
     }
-  })
+  }, [])
 
   return isOwner === true ? (
     <div className='w-full flex justify-between'>

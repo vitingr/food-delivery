@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { CIDADES_BRASIL } from '@/constants/json-cidades'
 import { toast } from 'react-toastify'
-import ToastMessage from '@/components/ToastMessage'
+import ToastMessage from '@/components/Config/ToastMessage'
 import { useRouter } from 'next/navigation'
 
 const page = () => {

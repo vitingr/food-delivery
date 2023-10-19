@@ -8,7 +8,7 @@ import { BsCoin } from 'react-icons/bs'
 import { useRouter } from 'next/navigation'
 import { APP_ROUTES } from '@/constants/app-routes'
 import { toast } from 'react-toastify'
-import ToastMessage from '@/components/ToastMessage'
+import ToastMessage from '@/components/Config/ToastMessage'
 import Link from 'next/link'
 import { RestaurantData } from '@/types/types'
 
@@ -16,12 +16,13 @@ const page = () => {
 
   const { data: session, status } = useSession()
 
-  const isFetched = useRef(true)
+  const isFetched = useRef(false)
 
   const router = useRouter()
 
   const [restaurantData, setRestaurantData] = useState<RestaurantData | any>([])
   const [categories, setCategories] = useState<any>([])
+  const [products, setProducts] = useState<any>([])
 
   const [isOwner, setIsOwner] = useState<boolean>(false)
 
@@ -47,22 +48,34 @@ const page = () => {
 
   const getRestaurantCategories = async (restaurantId: string) => {
     try {
-      console.log("A")
       const requisition = await fetch(`http://localhost:3001/category/${restaurantId}`)
       const response = await requisition.json()
-      console.log(response)
-      if (response !== null) {
-        setCategories(response)
-      }
+
+      setCategories(response)
+
+      getRestaurantProducts(restaurantId)
 
     } catch (error) {
       console.log(error)
-      throw new Error("Não foi possível obter as categorias de produtos do restaurantes")
+      throw new Error("Não foi possível obter as categorias de produtos do restaurante")
+    }
+  }
+
+  const getRestaurantProducts = async (restaurantId: string) => {
+    try {
+      const requisition = await fetch(`http://localhost:3001/product/${restaurantId}`)
+      const response = await requisition.json()
+
+      setProducts(response)
+
+    } catch (error) {
+      console.log(error)
+      throw new Error("Não foi possível obter os produtos do restaurante")
     }
   }
 
   useEffect(() => {
-    if (isFetched.current) {
+    if (!isFetched.current) {
       if (session?.user?.email !== undefined && status === "authenticated") {
         getRestaurantData()
       }
@@ -71,16 +84,10 @@ const page = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   if (session?.user?.email !== undefined && status === "authenticated") {
-  //     getRestaurantData()
-  //   }
-  // }, [session, status, restaurantData])
-
   return isOwner === true ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
-      <div className='bg-white max-w-[1500px] w-full rounded-sm p-16'>
+      <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
         <div className='bg-[url("https://www.ifood.com.br/static/images/merchant/banner/DEFAULT.png")] bg-cover bg-no-repeat w-full h-[200px] rounded-xl' />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
@@ -120,8 +127,61 @@ const page = () => {
         </div>
       </div>
 
-      <div className='bg-white w-full min-h-[18vh] p-16 mt-[75px] max-w-[1500px]'>
-        <h1 className='w-full text-center text-3xl font-bold selection:bg-[#ea1d2c] selection:text-white'>Menu do Restaurante</h1>
+      <div className='bg-white w-full min-h-[18vh] p-16 mt-[75px] max-w-[1300px]'>
+        <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px]'>Menu do Restaurante</h1>
+        {categories.length > 0 ? (
+          <>
+            {categories.map((category: {
+              id: string,
+              restaurant: string,
+              categoryName: string,
+              categoryDescription: string,
+              quantityItems: number
+            }) => (
+              <div className='mt-[75px]' key={category.id}>
+                <div>
+                  <div className='flex items-end gap-2'>
+                    <h2 className='font-bold text-2xl'>{category.categoryName}</h2>
+                    {category.quantityItems === 0 ? <h5 className='text-sm'>Categoria vazia</h5> : <h5 className='text-sm'>{category.quantityItems} itens na categoria</h5>}
+                  </div>
+                  <h6 className='text-base text-[#717171] '>{category.categoryDescription}</h6>
+                </div>
+                <div className='mt-16 grid grid-cols-2 gap-8'>
+                  {products.map((product: {
+                    id: string,
+                    restaurant: string,
+                    category: string,
+                    productName: string,
+                    productDescription: string,
+                    productValue: number,
+                    productFoto: string,
+                  }) => (
+                    <>
+                      {product.category === category.id ? (
+                        <>
+                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[250px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300'>
+                            <div className='flex flex-col justify-center w-full'>
+                              <div className='h-full '>
+                                <h1 className='text-2xl font-bold'>{product.productName}</h1>
+                                <h2 className='text-[#717171] text-sm mt-4'>{product.productDescription}</h2>
+                              </div>
+                              <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                            </div>
+                            <div>
+                              <img src={product.productFoto} className='w-[175px] h-[175px]' alt="Product Image" />
+                            </div>
+                          </div>
+                        </>
+                      ) : (<></>)}
+                    </>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <p>Esse restaurante ainda não adicionou nada ao seu cardápio</p>
+        )}
       </div>
     </div>
   ) : (

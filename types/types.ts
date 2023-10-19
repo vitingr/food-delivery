@@ -69,3 +69,8 @@ export interface Button {
   text: string;
   handleClick?: () => void; 
 }
+
+export interface UploadProps {
+  setState: (value: string) => void;
+  currentFoto: string;
+}
