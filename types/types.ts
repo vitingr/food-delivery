@@ -17,6 +17,7 @@ export interface SmallRestaurantOption {
 }
 
 export interface RestaurantOption {
+  restaurantId: string;
   image: string;
   name: string;
   stars: number;
@@ -73,4 +74,16 @@ export interface Button {
 export interface UploadProps {
   setState: (value: string) => void;
   currentFoto: string;
+}
+
+export interface UserProps {
+  id: string;
+  name: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  partner: boolean;
+  money: number;
+  photo: string;
+  address: string;
 }

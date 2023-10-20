@@ -1,6 +1,6 @@
 "use client"
 
-import { UserContextProps } from '@/types/types'
+import { UserContextProps, UserProps } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
@@ -10,7 +10,7 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
 
   const {data: session, status} = useSession()
 
-  const [data, setData] = useState<any>([])
+  const [data, setData] = useState<UserProps | any>([])
 
   const getInfo = async () => {
     try {

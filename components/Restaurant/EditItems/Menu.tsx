@@ -13,6 +13,8 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const [createProduct, setCreateProduct] = useState<boolean>(false)
   const [editProductCategory, setEditProductCategory] = useState<boolean>(false)
   const [currentProductCategory, setCurrentProductCategory] = useState<string>("")
+  const [editRestaurantProduct, setEditRestaurantProduct] = useState(false)
+  const [currentProductId, setCurrentProductId] = useState<string>("")
 
   const [currentCategoryId, setCurrentCategoryId] = useState<string>("")
   const [categoryName, setCategoryName] = useState<string>("")
@@ -58,6 +60,11 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const editCategory = async (categoryId: string) => {
     setEditProductCategory(true)
     setCurrentProductCategory(categoryId)
+  }
+
+  const editProduct = async (productId: string) => {
+    setCurrentCategoryId(productId)
+    setEditRestaurantProduct(true)
   }
 
   const createNewProduct = async () => {
@@ -187,6 +194,14 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
     }
   }
 
+  const removeProduct = async (productId: string) => {
+
+  }
+
+  const updateProduct = async (productId: string) => {
+
+  }
+
   useEffect(() => {
     if (restaurantId !== undefined) {
       getRestaurantCategories(restaurantId)
@@ -225,13 +240,46 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                   <>
                     {product.category === category.id ? (
                       <div className='pt-8 pb-8 border-b border-neutral-200 flex justify-between gap-4'>
+                        {editRestaurantProduct ? (
+                          <Popup title={"Editar Produto"} state={setEditRestaurantProduct}>
+                            <form onSubmit={(e: React.SyntheticEvent) => {
+                              e.preventDefault()
+                              updateProduct(product.id)
+                            }} className='mt-14'>
+
+                              <label htmlFor="nome" className='text-lg'>Nome do Produto</label>
+                              <input type="text" name="nome" id="nome" minLength={2} maxLength={35} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Feijoada, Pastel, etc.' onChange={(e) => setProductName(e.target.value)} defaultValue={product.productName} required />
+
+                              <label htmlFor="descricao" className='text-lg'>Descrição do Produto</label>
+                              <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição do seu produto oferecido' onChange={(e) => setProductDescription(e.target.value)} defaultValue={product.productDescription} required />
+
+                              <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
+                              <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} defaultValue={product.productValue} required />
+
+                              <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} />
+
+                              <button className='mt-12 w-full text-[#ea1d2c] rounded-xl p-4 text-center border border-[#ea1d2c] cursor-pointer' type='submit' onClick={() => removeProduct(product.id)}>
+                                Remover Produto
+                              </button>
+                              {productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "" ? (
+                                <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                                  Editar Produto
+                                </button>
+                              ) : (
+                                <button className='mt-6 w-full bg-[#dddddd] rounded-xl p-4 text-center text-[#717171] font-bold cursor-not-allowed'>Editar Produto</button>
+                              )}
+
+                            </form>
+                          </Popup>
+                        ) : (<></>)}
                         <img src={product.productFoto} alt="Product Foto" className='w-full max-w-[65px] max-h-[65px] h-full' />
                         <div className='w-full'>
                           <h1 className='font-bold'>{product.productName}</h1>
-                          <p className='text-sm'>{product.productDescription}</p>
+                          <h2 className='text-base'>{product.productDescription}</h2>
+                          <p className='mt-2 text-sm text-[#717171]'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         </div>
                         <div className='flex gap-4 max-h-[40px]'>
-                          <div className='text-[#ea1d2c] border border-[#ea1d2c] w-[100px] flex items-center justify-center rounded-xl cursor-pointer'>Editar</div>
+                          <div className='text-[#ea1d2c] border border-[#ea1d2c] w-[100px] flex items-center justify-center rounded-xl cursor-pointer' onClick={() => editProduct(product.id)}>Editar</div>
                           <div className='bg-[#ea1d2c] text-white w-[100px] flex items-center justify-center rounded-xl cursor-pointer'>Remover</div>
                         </div>
                       </div>
@@ -255,9 +303,13 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                         <button className='mt-12 w-full text-[#ea1d2c] rounded-xl p-4 text-center border border-[#ea1d2c] cursor-pointer' type='submit' onClick={() => removeCategory(category.id)}>
                           Remover Categoria
                         </button>
-                        <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
-                          Editar Categoria
-                        </button>
+                        {categoryName !== "" && categoryDescription !== "" ? (
+                          <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                            Editar Categoria
+                          </button>
+                        ) : (
+                          <button className='mt-6 w-full bg-[#dddddd] rounded-xl p-4 text-center text-[#717171] font-bold cursor-not-allowed'>Editar Categoria</button>
+                        )}
                       </form>
                     </Popup>
                   ) : (<></>)}

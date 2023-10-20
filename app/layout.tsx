@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation'
 import { checkIsPublicRoute } from '@/common/check-route'
 import { UserProvider } from '@/common/utils/userContext'
 import PrivateRoute from '@/components/Config/PrivateRoute'
+import RegisterLogin from '@/components/RegisterLogin'
 
 export default function RootLayout({
   children,
@@ -31,7 +32,7 @@ export default function RootLayout({
         <Provider>
           {isPublic && (
             <>
-              <Navbar />
+              <RegisterLogin />
               <main>
                 {children}
               </main>

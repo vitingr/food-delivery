@@ -11,10 +11,12 @@ import { toast } from 'react-toastify'
 import ToastMessage from '@/components/Config/ToastMessage'
 import Link from 'next/link'
 import { RestaurantData } from '@/types/types'
+import { infoUser } from '@/common/utils/userContext'
 
 const page = () => {
 
   const { data: session, status } = useSession()
+  const {data} = infoUser()
 
   const isFetched = useRef(false)
 
@@ -27,11 +29,12 @@ const page = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false)
 
   const getRestaurantData = async () => {
-    const requisition = await fetch(`http://localhost:3001/restaurant/${session?.user?.email}`)
+    const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
     const response = await requisition.json()
+    console.log(response)
 
     if (response !== null) {
-      if (response.email === session?.user?.email) {
+      if (response.id === data.restaurantId) {
         setRestaurantData(response)
         setIsOwner(true)
 
@@ -76,13 +79,13 @@ const page = () => {
 
   useEffect(() => {
     if (!isFetched.current) {
-      if (session?.user?.email !== undefined && status === "authenticated") {
+      if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
         getRestaurantData()
       }
     } else {
       isFetched.current = true
     }
-  }, [])
+  }, [data])
 
   return isOwner === true ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
@@ -159,7 +162,7 @@ const page = () => {
                     <>
                       {product.category === category.id ? (
                         <>
-                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[250px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300'>
+                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[225px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={category.id}>
                             <div className='flex flex-col justify-center w-full'>
                               <div className='h-full '>
                                 <h1 className='text-2xl font-bold'>{product.productName}</h1>

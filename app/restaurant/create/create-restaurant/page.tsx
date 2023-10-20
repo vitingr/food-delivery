@@ -5,9 +5,11 @@ import { CIDADES_BRASIL } from '@/constants/json-cidades'
 import { toast } from 'react-toastify'
 import ToastMessage from '@/components/Config/ToastMessage'
 import { useRouter } from 'next/navigation'
+import { infoUser } from '@/common/utils/userContext'
 
 const page = () => {
   const [step, setStep] = useState(1)
+  const {data} = infoUser()
   const router = useRouter()
 
   // Information about the restaurant owner
@@ -60,6 +62,7 @@ const page = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            ownerId: data.id,
             email: email,
             cellphone: cellphone,
             ownerName: name,
@@ -75,7 +78,8 @@ const page = () => {
             state: state,
             address: Number(address),
             speciality: speciality,
-            delivery: delivery
+            delivery: delivery,
+            creatorEmail: data.email
           })
         })
 
@@ -147,7 +151,7 @@ const page = () => {
               <input type="text" name="cnpj" id="cnpj" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o CNPJ do restaurante?' onChange={(e) => setCnpj(e.target.value)} required />
 
               <label htmlFor="restauranteName" className='text-lg'>Nome do restaurante</label>
-              <input type="text" name="restauranteName" id="restauranteName" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Nome do restaurante' onChange={(e) => setRestaurantName(e.target.value)} required />
+              <input type="text" name="restauranteName" id="restauranteName" minLength={2} maxLength={40} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Nome do restaurante' onChange={(e) => setRestaurantName(e.target.value)} required />
 
               <label htmlFor="telephone" className='text-lg'>Telefone</label>
               <input type="text" name="telephone" id="telephone" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o telefone do restaurante?' onChange={(e) => setTelephone(e.target.value)} required />

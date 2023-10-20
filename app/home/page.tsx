@@ -103,7 +103,7 @@ const page = () => {
               logo: string;
               deliveryTime: string
             }) => (
-              <RestaurantOption image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} />
+              <RestaurantOption restaurantId={restaurant.id} image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} />
             ))}
           </div>
         </div>

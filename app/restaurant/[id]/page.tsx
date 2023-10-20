@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
 import { AiFillStar } from 'react-icons/ai'
 import { BsCoin } from 'react-icons/bs'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { APP_ROUTES } from '@/constants/app-routes'
 import { toast } from 'react-toastify'
 import ToastMessage from '@/components/Config/ToastMessage'
@@ -17,6 +17,9 @@ const page = () => {
   // Usar sistema do pathname para substituir o session?.user?.email
   // Alterar nestjs e adicionar uma rota de GET para pegar valores pelo ID
   // Alterar valores restaurantID
+
+  const pathname = usePathname().split("/")
+  const query = pathname[2]
 
   const { data: session, status } = useSession()
 
@@ -31,19 +34,15 @@ const page = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false)
 
   const getRestaurantData = async () => {
-    const requisition = await fetch(`http://localhost:3001/restaurant/${session?.user?.email}`)
+    const requisition = await fetch(`http://localhost:3001/restaurant/${query}`)
     const response = await requisition.json()
 
     if (response !== null) {
       if (response.email === session?.user?.email) {
-        setRestaurantData(response)
         setIsOwner(true)
-
         getRestaurantCategories(response.id)
-      } else {
-        toast.error("Você não pode editar um restaurante que não é seu")
-        router.push(APP_ROUTES.private.usuario)
       }
+      setRestaurantData(response)
     } else {
       toast.error("Você não pode editar um restaurante que não existe")
       router.push(APP_ROUTES.private.usuario)
@@ -88,7 +87,7 @@ const page = () => {
     }
   }, [])
 
-  return isOwner === true ? (
+  return session?.user?.email ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
@@ -160,8 +159,8 @@ const page = () => {
                     <>
                       {product.category === category.id ? (
                         <>
-                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[250px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300'>
-                            <div className='flex flex-col justify-center w-full'>
+                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[225px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300'>
+                            <div className='flex flex-col justify-center w-full'key={category.id}>
                               <div className='h-full '>
                                 <h1 className='text-2xl font-bold'>{product.productName}</h1>
                                 <h2 className='text-[#717171] text-sm mt-4'>{product.productDescription}</h2>

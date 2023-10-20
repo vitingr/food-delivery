@@ -12,10 +12,12 @@ import { IoHomeOutline, IoTicketOutline, IoSettingsOutline } from 'react-icons/i
 import { AiOutlineClockCircle, AiOutlineStar } from 'react-icons/ai'
 import { MdAttachMoney, MdRestaurantMenu } from 'react-icons/md'
 import EditMenu from '@/components/Restaurant/EditMenu'
+import { infoUser } from '@/common/utils/userContext'
 
 const page = () => {
 
   const { data: session, status } = useSession()
+  const {data} = infoUser()
   const isFetched = useRef(false)
 
   const router = useRouter()
@@ -27,11 +29,11 @@ const page = () => {
   const [currentSection, setCurrentSection] = useState<string>("menu")
 
   const getRestaurantData = async () => {
-    const requisition = await fetch(`http://localhost:3001/restaurant/${session?.user?.email}`)
+    const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
     const response = await requisition.json()
 
     if (response !== null) {
-      if (response.email === session?.user?.email) {
+      if (response.id === data.restaurantId) {
         setRestaurantData(response)
         setIsOwner(true)
 
@@ -48,13 +50,13 @@ const page = () => {
 
   useEffect(() => {
     if (!isFetched.current) {
-      if (session?.user?.email !== undefined && status === "authenticated") {
+      if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
         getRestaurantData()
       }
     } else {
       isFetched.current = true
     }
-  }, [])
+  }, [data])
 
   return isOwner === true ? (
     <div className='w-full flex justify-between'>
