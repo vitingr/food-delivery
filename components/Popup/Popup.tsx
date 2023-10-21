@@ -9,7 +9,7 @@ const Popup = ({
   return (
     <div className='popup__wrapper'>
       <div className='glassmorphism'>
-        <div className='max-w-[575px] w-full min-h-[350px] p-10 bg-white rounded-xl'>
+        <div className='max-w-[575px] w-full p-10 bg-white rounded-xl'>
           <div className='flex justify-between items-center'>
           <h1 className='w-full text-center text-3xl font-bold'>{title}</h1>
             <IoCloseOutline size={25} className="cursor-pointer" onClick={() => state(false)} />

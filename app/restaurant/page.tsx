@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState, useRef } from 'react'
+import {IoAdd} from 'react-icons/io5'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
 import { AiFillStar } from 'react-icons/ai'
 import { BsCoin } from 'react-icons/bs'
@@ -12,11 +13,12 @@ import ToastMessage from '@/components/Config/ToastMessage'
 import Link from 'next/link'
 import { RestaurantData } from '@/types/types'
 import { infoUser } from '@/common/utils/userContext'
+import Popup from '@/components/Popup/Popup'
 
 const page = () => {
 
   const { data: session, status } = useSession()
-  const {data} = infoUser()
+  const { data } = infoUser()
 
   const isFetched = useRef(false)
 
@@ -25,6 +27,8 @@ const page = () => {
   const [restaurantData, setRestaurantData] = useState<RestaurantData | any>([])
   const [categories, setCategories] = useState<any>([])
   const [products, setProducts] = useState<any>([])
+
+  const [buyingProducts, setBuyingProducts] = useState<boolean>(false)
 
   const [isOwner, setIsOwner] = useState<boolean>(false)
 
@@ -162,16 +166,16 @@ const page = () => {
                     <>
                       {product.category === category.id ? (
                         <>
-                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[225px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={category.id}>
+                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={category.id} onClick={() => setBuyingProducts(true)}>
                             <div className='flex flex-col justify-center w-full'>
                               <div className='h-full '>
                                 <h1 className='text-2xl font-bold'>{product.productName}</h1>
-                                <h2 className='text-[#717171] text-sm mt-4'>{product.productDescription}</h2>
+                                <h2 className='text-[#717171] text-sm mt-2'>{product.productDescription}</h2>
                               </div>
                               <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                             </div>
                             <div>
-                              <img src={product.productFoto} className='w-[175px] h-[175px]' alt="Product Image" />
+                              <img src={product.productFoto} className='w-[125px] h-[125px]' alt="Product Image" />
                             </div>
                           </div>
                         </>
@@ -185,6 +189,63 @@ const page = () => {
         ) : (
           <p>Esse restaurante ainda não adicionou nada ao seu cardápio</p>
         )}
+
+        {buyingProducts ? (
+          <Popup state={setBuyingProducts} title={`Realizar Pedidos`}>
+            <form onSubmit={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+
+            }} className='mt-14 z-50 flex flex-col overflow-y-scroll max-h-[500px] pr-10'>
+              {categories.map((category: {
+                id: string,
+                restaurant: string,
+                categoryName: string,
+                categoryDescription: string,
+                quantityItems: number
+              }) => (
+                <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={category.id}>
+                  <h2 className='font-bold mb-10 text-xl'>{category.categoryName}</h2>
+                  <div>
+                    {products.map((product: {
+                      id: string,
+                      restaurant: string,
+                      category: string,
+                      productName: string,
+                      productDescription: string,
+                      productValue: number,
+                      productFoto: string,
+                    }) => (
+                      <div key={product.id}>
+                        {product.category === category.id ? (
+                          <div className='flex justify-between mb-5'>
+                            <div className='w-full'>
+                              <h1 className='text-lg font-semibold'>{product.productName}</h1>
+                              <h2 className='text-[#717171]'>+ {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
+                            </div>
+                            <img src={product.productFoto} alt="Product Photo" className='w-[65px] h-[65px]' />
+                            <div className='ml-6 flex items-center cursor-pointer'>
+                              <IoAdd size={25} className="red-icon"/>
+                            </div>
+                          </div>
+                        ) : (<></>)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              <div className='flex justify-between mt-10'>
+                <h1 className='w-full'>Valor total do pedido: R$0,00</h1>
+                <h1 className='w-full flex justify-end text-[#717171]'>0 itens</h1>
+              </div>
+              <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                Confirmar Pedido
+              </button>
+
+            </form>
+          </Popup>
+        ) : (<></>)}
+
       </div>
     </div>
   ) : (

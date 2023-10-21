@@ -59,7 +59,7 @@ const page = () => {
   }, [data])
 
   return isOwner === true ? (
-    <div className='w-full flex justify-between'>
+    <div className='w-full h-full flex justify-between'>
       <ToastMessage />
       <div className='p-12 h-full min-h-[78vh] w-full max-w-[375px] border-r border-[#3e3e3e27] bg-[#efefef59]'>
         <div className='flex flex-col items-center'>
