@@ -7,6 +7,7 @@ import Upload from '@/components/Config/Upload'
 import Popup from '@/components/Popup/Popup'
 import Button from '@/components/Button'
 import { infoUser } from '@/common/utils/userContext'
+import ToastMessage from '@/components/Config/ToastMessage'
 
 const Menu = ({ restaurantId }: { restaurantId: string }) => {
 
@@ -273,6 +274,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
 
   return (
     <>
+      <ToastMessage />
       {categories.length > 0 ? (
         <>
           {categories.map((category: {
@@ -319,15 +321,15 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                                   <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição do seu produto oferecido' onChange={(e) => setProductDescription(e.target.value)} defaultValue={product.productDescription} required />
 
                                   <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
-                                  <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} defaultValue={product.productValue} required />
+                                  <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} defaultValue={product.productValue} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
 
-                                  <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} />
+                                  <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} styles='mt-[-565px]' />
 
                                   <button className='mt-12 w-full text-[#ea1d2c] rounded-xl p-4 text-center border border-[#ea1d2c] cursor-pointer' type='submit' onClick={() => removeProduct(product.id)}>
                                     Remover Produto
                                   </button>
                                   {productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "" ? (
-                                    <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                                    <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>
                                       Editar Produto
                                     </button>
                                   ) : (
@@ -371,7 +373,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                           Remover Categoria
                         </button>
                         {categoryName !== "" && categoryDescription !== "" ? (
-                          <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                          <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>
                             Editar Categoria
                           </button>
                         ) : (
@@ -417,15 +419,15 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
             <input type="text" name="nome" id="nome" minLength={2} maxLength={35} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Feijoada, Pastel, etc.' onChange={(e) => setProductName(e.target.value)} required />
 
             <label htmlFor="descricao" className='text-lg'>Descrição do Produto</label>
-            <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição do seu produto oferecido' onChange={(e) => setProductDescription(e.target.value)} required />
+            <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Ex: Ingredientes, temperatura, ponto da carne' onChange={(e) => setProductDescription(e.target.value)} required />
 
             <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
-            <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} required />
+            <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
 
-            <Upload setState={(value: any) => setProductFoto(value)} currentFoto={productFoto} />
+            <Upload setState={(value: any) => setProductFoto(value)} currentFoto={productFoto} styles='mt-[-565px]' />
 
             {productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "" ? (
-              <button className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+              <button className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>
                 Criar Produto
               </button>
             ) : (
@@ -450,7 +452,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
             <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição da categoria' onChange={(e) => setCategoryDescription(e.target.value)} required />
 
             {categoryName !== "" && categoryDescription !== "" ? (
-              <button className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+              <button className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>
                 Criar Categoria
               </button>
             ) : (

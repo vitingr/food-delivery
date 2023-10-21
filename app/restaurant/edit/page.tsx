@@ -66,7 +66,7 @@ const page = () => {
           <img src={restaurantData.logo} alt="Company Logo" className='w-[150px] h-[150px] rounded-lg mt-[-25px]' />
           <h1 className='mt-6 font-bold text-2xl uppercase'>{restaurantData.restaurantName}</h1>
         </div>
-        <div className='mt-16'>
+        <div className='mt-16 h-full'>
           <ul className='list-none flex flex-col gap-2'>
             <li className="flex gap-4 items-center leftbar__item pb-2 pt-2">
               <IoHomeOutline size={20} />

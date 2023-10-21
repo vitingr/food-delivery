@@ -74,6 +74,7 @@ export interface Button {
 export interface UploadProps {
   setState: (value: string) => void;
   currentFoto: string;
+  styles?: string
 }
 
 export interface UserProps {
@@ -86,4 +87,14 @@ export interface UserProps {
   money: number;
   photo: string;
   address: string;
+}
+
+export interface ProductProps {
+  id: string,
+  restaurant: string,
+  category: string,
+  productName: string,
+  productDescription: string,
+  productValue: number,
+  productFoto: string,
 }

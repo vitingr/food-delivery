@@ -23,7 +23,7 @@ const EditMenu = ({ currentSection, restaurantId }: EditMenu) => {
       ) : (<></>)}
 
       {currentSection === "menu" ? (
-        <div className='w-full pl-12 pr-12'>
+        <div className='w-full pl-12 pr-12 max-h-[69vh] overflow-y-scroll'>
           <h1 className='text-center text-3xl font-bold'>Cardápio</h1>
 
           <Menu restaurantId={restaurantId} />
