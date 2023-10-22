@@ -186,10 +186,73 @@ const page = () => {
     }
   }
 
+  const confirmPurchase = async () => {
+    if (totalPurchaseValue !== 0 && myPurchases.length > 0 && paymentMethod !== "" && takeMethod !== "" && deliveryPlace !== "" && data.id !== null && data.id !== undefined && restaurantData.id !== null && restaurantData.id !== undefined) {
+      try {
+
+        const ids: string[] = myPurchases.map((item: {
+          id: string;
+          user: string;
+          restaurant: string;
+          products: string;
+          quantity: number;
+          totalValue: number;
+          commentaries: string;
+          paymentMethod: string;
+          takeOption: string;
+          deliveryAddress: string;
+          deliveryTime: string;
+          deliveryValue: string;
+          delivered: boolean;
+        }) => item.id);
+
+        const purchaseIds: string = ids.join(',');
+
+        const response = await fetch("http://localhost:3001/purchase/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: data.id,
+            restaurant: restaurantData.id,
+            products: purchaseIds,
+            quantity: Number(myPurchases.length),
+            totalValue: Number(totalPurchaseValue),
+            commentaries: commentaries,
+            paymentMethod: paymentMethod,
+            takeOption: takeMethod,
+            deliveryAddress: deliveryPlace,
+            deliveryTime: "30min - 35min",
+            deliveryValue: Number(5),
+            delivered: false,
+          })
+        })
+        if (response.ok) {
+          toast.success("Pedido realizado com sucesso!")
+          setPayingProducts(false)
+          setDeliveryPlace("")
+          setTakeMethod("Retirada")
+          setPaymentMethod("")
+          setCommentaries("")
+          setMyPurchases([])
+          setTotalPurchaseValue(0)
+        } else {
+          toast.error("ERRO! Não foi possível finalizar o pedido")
+        }
+
+      } catch (error) {
+        console.log(error)
+        toast.error("ERRO! Não foi possível finalizar o pedido")
+      }
+    }
+  }
+
   useEffect(() => {
     if (!isFetched.current) {
       if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
         getRestaurantData()
+        getUserAddress()
       }
     } else {
       isFetched.current = true
@@ -270,7 +333,7 @@ const page = () => {
                   }) => (
                     <>
                       {product.category === category.id ? (
-                        <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={category.id} onClick={() => setBuyingProducts(true)}>
+                        <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
                           <div className='flex flex-col justify-center w-full'>
                             <div className='h-full '>
                               <h1 className='text-2xl font-bold'>{product.productName}</h1>
@@ -310,7 +373,7 @@ const page = () => {
                 categoryDescription: string,
                 quantityItems: number
               }) => (
-                <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={category.id}>
+                <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={category.restaurant}>
                   <h2 className='font-bold mb-10 text-xl'>{category.categoryName}</h2>
                   <div>
                     {products.map((product: {
@@ -380,7 +443,7 @@ const page = () => {
                 productValue: number,
                 productFoto: string,
               }) => (
-                <div key={product.id} className='flex flex-col gap-6'>
+                <div key={product.productName} className='flex flex-col gap-6'>
                   <div className='flex justify-between'>
                     <div className='max-w-[65px] max-h-[65px] flex justify-center'>
                       <img src={product.productFoto} alt="Product Photo" className='' />
@@ -450,6 +513,7 @@ const page = () => {
           }}>
             <form onSubmit={(e: React.SyntheticEvent) => {
               e.preventDefault()
+              confirmPurchase()
             }} className='mt-14 z-50 overflow-y-scroll max-h-[600px] pr-10 flex flex-col gap-4'>
 
               {takeMethod === "Entrega" ? (
@@ -481,7 +545,7 @@ const page = () => {
               ) : (<></>)}
 
               <label htmlFor="paymentMethod" className='text-lg'>Como você deseja pagar?</label>
-              <select name="paymentMethod" id="paymentMethod" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setDeliveryPlace(e.target.value)} required>
+              <select name="paymentMethod" id="paymentMethod" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setPaymentMethod(e.target.value)} required>
                 <option value="">Escolha o método de pagamento</option>
                 <option value="Dinheiro">Dinheiro</option>
                 <option value="Cartão de Crédito">Cartão de Crédito</option>
@@ -492,10 +556,7 @@ const page = () => {
               <label htmlFor="commentaries" className='text-lg'>Alguma observação?</label>
               <input type="text" name="commentaries" id="commentaries" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Comentários adicionais' onChange={(e) => setCommentaries(e.target.value)} />
 
-              <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit' onClick={() => {
-                setConfirmingProducts(!setBuyingProducts)
-                setPayingProducts(true)
-              }}>
+              <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
                 Fechar Pedido
               </button>
             </form>
@@ -503,7 +564,9 @@ const page = () => {
         ) : (<></>)}
 
         {creatingAddress ? (
-          <Popup state={setPayingProducts} title={`Adicionar Endereço`}>
+          <Popup state={setCreatingAddress} title={`Adicionar Endereço`} handleSubmit={() => {
+            setPayingProducts(true)
+          }}>
             <form onSubmit={(e: React.SyntheticEvent) => {
               e.preventDefault()
               createAddress(state, city, street, Number(address))

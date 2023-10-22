@@ -98,3 +98,19 @@ export interface ProductProps {
   productValue: number,
   productFoto: string,
 }
+
+export interface PurchaseProps {
+  id: string;
+  user: string;
+  restaurant: string;
+  products: string;
+  quantity: number;
+  totalValue: number;
+  commentaries: string;
+  paymentMethod: string;
+  takeOption: string;
+  deliveryAddress: string;
+  deliveryTime: string;
+  deliveryValue: number;
+  delivered: boolean;
+}
