@@ -8,7 +8,7 @@ import Menu from './EditItems/Menu'
 import Purchases from './EditItems/Purchases'
 import MainConfig from './EditItems/MainConfig'
 
-const EditMenu = ({ currentSection, restaurantId, restaurantData }: EditMenu) => {
+const EditMenu = ({ currentSection, restaurantId, restaurantData, getRestaurantData }: EditMenu) => {
   return (
     <div className='sm:p-16 p-0 w-full'>
       <ToastMessage />
@@ -53,7 +53,7 @@ const EditMenu = ({ currentSection, restaurantId, restaurantData }: EditMenu) =>
         <div className='w-full pl-12 pr-12 max-h-[69vh] overflow-y-scroll'>
           <h1 className='text-center text-3xl font-bold'>Configurações</h1>
 
-          <MainConfig restaurantData={restaurantData} restaurantId={restaurantId} />
+          <MainConfig restaurantData={restaurantData} restaurantId={restaurantId} getRestaurantData={getRestaurantData} />
         </div>
       ) : (<></>)}
     </div >

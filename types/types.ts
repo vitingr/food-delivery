@@ -65,6 +65,7 @@ export interface EditMenu {
   currentSection: string;
   restaurantId: string;
   restaurantData: any;
+  getRestaurantData: any
 }
 
 export interface Button {
@@ -136,4 +137,5 @@ export interface CategoryProps {
 export interface MainConfig {
   restaurantId: string;
   restaurantData: any;
+  getRestaurantData: any
 }

@@ -199,6 +199,12 @@ const page = () => {
 
         const purchaseIds: string = ids.join(',');
 
+        if (takeMethod === "Entrega") {
+          let newPurchaseValue = totalPurchaseValue
+          newPurchaseValue += restaurantData.deliveryValue
+          setTotalPurchaseValue(newPurchaseValue)
+        }
+
         const response = await fetch("http://localhost:3001/purchase/create", {
           method: "POST",
           headers: {
@@ -277,15 +283,15 @@ const page = () => {
               </div>
               <div className='w-[200px] flex items-center gap-3 pl-8 border-l border-neutral-300'>
                 <BsCoin size={15} className="gray-icon" />
-                <p className='text-sm text-[#717171]'>Pedido mínimo R$ {restaurantData.deliveryValue}5,00</p>
+                <p className='text-sm text-[#717171]'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
               </div>
             </div>
-            <div className='mt-2 flex gap-4'>
+            <div className='mt-8 flex gap-4'>
               <div className='w-full'>
                 <h3 className='text-sm text-[#717171]'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
                 <h5 className='text-base text-[#717171]'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
-              <Link href="/restaurant/edit" className='bg-[#ea1d2c] text-white w-[150px] flex items-center justify-center rounded-lg cursor-pointer text-lg'>
+              <Link href="/restaurant/edit" className='bg-[#ea1d2c] text-white w-[150px] flex items-center justify-center rounded-lg cursor-pointer text-lg max-h-[45px]'>
                 Editar
               </Link>
             </div>
@@ -371,7 +377,7 @@ const page = () => {
                 <h1 className='w-full'>Valor dos itens: {totalPurchaseValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h1>
                 <h1 className='w-full flex justify-end text-[#717171]'>{myPurchases.length} itens</h1>
               </div>
-              {myPurchases.length > 0 && totalPurchaseValue > 5 ? (
+              {myPurchases.length > 0 && totalPurchaseValue > restaurantData.minValue ? (
                 <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit' onClick={() => {
                   setBuyingProducts(!setBuyingProducts)
                   setConfirmingProducts(true)
@@ -431,7 +437,7 @@ const page = () => {
                   {takeMethod == "Retirada" ? (
                     <h2 className='w-full flex justify-end text-green-700'>Grátis</h2>
                   ) : (
-                    <h2 className='w-full flex justify-end'>R$ 5,00</h2>
+                    <h2 className='w-full flex justify-end'>{(restaurantData.deliveryValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
                   )}
                 </div>
                 <div className='flex justify-between w-full'>

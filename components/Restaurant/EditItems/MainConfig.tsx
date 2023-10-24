@@ -5,10 +5,13 @@ import { isValidCPF } from '@/common/functions/cpf-validator'
 import ToastMessage from '@/components/Config/ToastMessage'
 import { CIDADES_BRASIL } from '@/constants/json-cidades'
 import { MainConfig } from '@/types/types'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const MainConfig = ({ restaurantData, restaurantId }: MainConfig) => {
+const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainConfig) => {
+
+  const router = useRouter()
 
   // Information about the restaurant owner
   const [cellphone, setCellphone] = useState<string>(restaurantData.cellphone)
@@ -58,11 +61,58 @@ const MainConfig = ({ restaurantData, restaurantId }: MainConfig) => {
     setTelephone(formatedCellphone)
   }
 
+  const updateInfo = async () => {
+    if (restaurantId) {
+      try {
+        const response = await fetch("http://localhost:3001/restaurant/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: restaurantData.id,
+            ownerId: restaurantData.ownerId,
+            cellphone: cellphone,
+            ownerName: name,
+            ownerLastname: lastName,
+            restaurantName: restaurantName,
+            telephone: telephone,
+            street: street,
+            city: city,
+            state: state,
+            address: address,
+            speciality: speciality,
+            delivery: delivery,
+            logo: logo,
+            deliveryTime: deliveryTime,
+            deliveryValue: deliveryValue,
+            minValue: minValue
+          })
+        })
+
+        if (response.ok) {
+          getRestaurantData()
+          router.push("/restaurant")
+          toast.success("Informações do restaurante atualizadas!")
+        } else {
+          toast.error("Não foi possível atualizar as informações")
+        }
+
+      } catch (error) {
+        console.log(error)
+        toast.error("Não foi possível atualizar as informações")
+      }
+    }
+  }
+
   return (
     <div className='flex w-full justify-center'>
       <ToastMessage />
-      <form className='max-w-[750px] w-full mt-16 max-h-'>
- 
+      <form className='max-w-[750px] w-full mt-16' onSubmit={(e: React.SyntheticEvent) => {
+        e.preventDefault()
+        updateInfo()
+      }}>
+
         <label htmlFor="deliveryValue" className='text-lg'>Valor de entrega do Restaurante</label>
         <input type="number" name="deliveryValue" id="deliveryValue" max={200} min={1} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' defaultValue={deliveryValue} autoComplete='off' placeholder='Qual é o valor de entrega do restaurante?' onChange={(e) => setDeliveryValue(Number(e.target.value))} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
 

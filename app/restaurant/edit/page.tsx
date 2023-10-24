@@ -101,7 +101,7 @@ const page = () => {
       </div>
 
       <div className='w-full'>
-    	  <EditMenu currentSection={currentSection} restaurantId={restaurantData.id} restaurantData={restaurantData} />
+    	  <EditMenu currentSection={currentSection} restaurantId={restaurantData.id} restaurantData={restaurantData} getRestaurantData={getRestaurantData} />
       </div>
     </div>
   ) : (
