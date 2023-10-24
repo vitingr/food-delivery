@@ -36,8 +36,8 @@ const Navbar = () => {
           <div className='flex items-center justify-center gap-2 transition-all duration-300 rounded-full hover:bg-[#b1b4b415] pl-6 pr-6 w-[125px] cursor-pointer'>
             <IoBagOutline size={35} className="red-icon" />
             <div className='w-full'>
-              <h5 className='text-[12px]'>R$ 0,00</h5>
-              <p className='text-[11px] text-[#717171] mt-[-3.5px]'>0 itens</p>
+              <h5 className='text-[12px]'>{(data.money).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+              <p className='text-[11px] text-[#717171] mt-[-3.5px]'>Valor gasto</p>
             </div>
           </div>
           <div className='flex items-center' onClick={() => setShowMenu(!showMenu)}>

@@ -3,6 +3,7 @@ import { cellphoneMask } from '@/common/functions/cellphone-mask'
 import { cpfMask } from '@/common/functions/cpf-mask'
 import { isValidCPF } from '@/common/functions/cpf-validator'
 import ToastMessage from '@/components/Config/ToastMessage'
+import Upload from '@/components/Config/Upload'
 import { CIDADES_BRASIL } from '@/constants/json-cidades'
 import { MainConfig } from '@/types/types'
 import { useRouter } from 'next/navigation'
@@ -30,6 +31,7 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
   const [deliveryValue, setDeliveryValue] = useState<number>(restaurantData.deliveryValue)
   const [deliveryTime, setDeliveryTime] = useState<string>(restaurantData.deliveryTime)
   const [logo, setLogo] = useState<string>(restaurantData.logo)
+  const [background, setBackground] = useState<string>(restaurantData.background)
   const [minValue, setMinValue] = useState<number>(restaurantData.minValue)
 
   // Input Masks
@@ -121,6 +123,14 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
 
         <label htmlFor="deliveryTime" className='text-lg'>Tempo médio de entrega</label>
         <input type="text" name="deliveryTime" id="deliveryTime" maxLength={15} minLength={2} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' defaultValue={deliveryTime} autoComplete='off' placeholder='Qual é o tempo médio de entrega do restaurante' onChange={(e) => setDeliveryTime(e.target.value)} required />
+
+        <div className='flex flex-col mt-10 mb-10 max-w-[500px]'>
+          <label htmlFor="logo" className='text-lg'>Sua Logo</label>
+          <Upload currentFoto={logo} setState={setLogo} />
+
+          <label htmlFor="background" className='text-lg'>Seu Plano de Fundo</label>
+          <Upload currentFoto={background} setState={setBackground} />
+        </div>
 
         <label htmlFor="telefone" className='text-lg'>Celular do Dono (com DDD)</label>
         <input type="text" name="telefone" id="telefone" maxLength={15} minLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' defaultValue={cellphone} autoComplete='off' placeholder='Qual é o celular do restaurante' onChange={(e) => verifyCellphone(e.target.value)} required />

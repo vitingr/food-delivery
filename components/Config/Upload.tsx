@@ -36,7 +36,7 @@ const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
       ) : (
         <div className='flex w-full h-full'>
           <div>
-            <img className='max-w-[150px] max-h-[150px]' src={currentFoto} alt="Image" />
+            <img className='max-w-[150px] max-h-[150px] h-full w-full' src={currentFoto} alt="Image" />
           </div>
           <label htmlFor="image" className='w-full h-full ml-4 flex items-end'>
             <div className='w-full'>

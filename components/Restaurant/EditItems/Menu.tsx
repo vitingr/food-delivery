@@ -313,7 +313,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                                   <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} styles='mt-[-565px]' />
 
                                   <button className='mt-12 w-full text-[#ea1d2c] rounded-xl p-4 text-center border border-[#ea1d2c] cursor-pointer' type='submit' onClick={() => removeProduct(product.id)}>
-                                    Remover Produto
+                                    Remover Produto 
                                   </button>
                                   {productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "" ? (
                                     <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>
