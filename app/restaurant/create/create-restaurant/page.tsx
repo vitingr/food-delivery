@@ -6,10 +6,13 @@ import { toast } from 'react-toastify'
 import ToastMessage from '@/components/Config/ToastMessage'
 import { useRouter } from 'next/navigation'
 import { infoUser } from '@/common/utils/userContext'
+import { isValidCPF } from '@/common/functions/cpf-validator'
+import { cellphoneMask } from '@/common/functions/cellphone-mask'
+import { cpfMask } from '@/common/functions/cpf-mask'
 
 const page = () => {
   const [step, setStep] = useState(1)
-  const {data} = infoUser()
+  const { data, getInfo } = infoUser()
   const router = useRouter()
 
   // Information about the restaurant owner
@@ -32,6 +35,9 @@ const page = () => {
   const [speciality, setSpeciality] = useState<string>("")
   const [delivery, setDelivery] = useState<string>("")
 
+  // Input Masks
+  const [cpfFormated, setCpfFormated] = useState<string>("")
+
   const nextStep = async () => {
     let currentStep = step
     setStep(currentStep + 1)
@@ -39,7 +45,7 @@ const page = () => {
 
   const [cidadesList, setCidadesList] = useState<any>([])
 
-  const buscaCidadesPorEstado = (estado: string)     => {
+  const buscaCidadesPorEstado = (estado: string) => {
     var estadoSelecionado: any = CIDADES_BRASIL.estados.find((sigla) => sigla.sigla === estado); // Vai procurar no json estados, um estado com o sigla igual ao estado Selecionado
     var cidades = estadoSelecionado.cidades
     return cidades;
@@ -52,8 +58,33 @@ const page = () => {
     setCidadesList(cidadesDoEstado);
   }
 
+  const verifyCPF = async (cpf: string) => {
+    const valid: boolean | any = await isValidCPF(cpf)
+
+    const formatedCPF: string = await cpfMask(cpf)
+    setCpfFormated(formatedCPF)
+
+    if (valid) {
+      setCpf(formatedCPF)
+    } else {
+      if (!valid) {
+        toast.error("CPF Inválido")
+      }
+    }
+  }
+
+  const verifyCellphone = async (value: string) => {
+    const formatedCellphone: string = await cellphoneMask(value)
+    setCellphone(formatedCellphone)
+  }
+
+  const verifyCellphoneRestaurant = async (value: string) => {
+    const formatedCellphone: string = await cellphoneMask(value)
+    setTelephone(formatedCellphone)
+  }
+
   const createRestaurant = async () => {
-    if (email != "" && cellphone !== "" && name !== "" && lastName !== "" && cpf !== "" && rg !== "" && orgaoEmissor !== "" && cnpj !== "" && restaurantName !== "" && telephone !== "" && state !== "" && city !== "" && address !== "" && street !== "" && speciality !== "" && delivery !== "") {
+    if (email != "" && cellphone !== "" && name !== "" && lastName !== "" && cpf !== "" && rg !== "" && orgaoEmissor !== "" && cnpj !== "" && restaurantName !== "" && telephone !== "" && state !== "" && city !== "" && address !== "" && street !== "" && speciality !== "" && delivery !== "" && data.email !== "" && data.email !== undefined) {
       try {
 
         const response = await fetch("http://localhost:3001/restaurant/create", {
@@ -85,12 +116,13 @@ const page = () => {
 
         if (response.ok) {
           toast.success("Restaurante criado com sucesso!")
+          await getInfo()
           router.push("/home")
         }
 
       } catch (error) {
         console.log(error)
-        throw new Error("ERRO! Não foi possível adicionar o restaurante")
+        throw new Error("Algum campo é inválido ou está em branco!")
       }
     }
   }
@@ -111,8 +143,8 @@ const page = () => {
               <label htmlFor="email" className='text-lg'>E-mail</label>
               <input type="email" name="email" id="email" minLength={2} maxLength={80} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o e-mail do dono do restaurante' onChange={(e) => setEmail(e.target.value)} required />
 
-              <label htmlFor="telefone" className='text-lg'>Celular (com DDD)</label>
-              <input type="text" name="telefone" id="telefone" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o celular do restaurante' onChange={(e) => setCellphone(e.target.value)} required />
+              <label htmlFor="telefone" className='text-lg'>Celular do Dono (com DDD)</label>
+              <input type="text" name="telefone" id="telefone" maxLength={15} minLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' value={cellphone} autoComplete='off' placeholder='Qual é o celular do restaurante' onChange={(e) => verifyCellphone(e.target.value)} required />
 
               <div className='flex items-center gap-6'>
                 <div className='w-full'>
@@ -126,15 +158,21 @@ const page = () => {
               </div>
 
               <label htmlFor="cpf" className='text-lg'>CPF</label>
-              <input type="text" name="cpf" id="cpf" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o CPF do dono do restaurante?' onChange={(e) => setCpf(e.target.value)} required />
+              <input type="text" name="cpf" id="cpf" minLength={11} maxLength={14} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={cpfFormated} placeholder='Qual é o CPF do dono do restaurante?' onChange={(e) => verifyCPF(e.target.value)} required />
 
               <label htmlFor="rg" className='text-lg'>RG</label>
-              <input type="text" name="rg" id="rg" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o RG do dono do restaurante?' onChange={(e) => setRg(e.target.value)} required />
+              <input type="text" name="rg" id="rg" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={rg.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")} placeholder='Qual é o RG do dono do restaurante?' onChange={(e) => setRg(e.target.value)} required />
 
               <label htmlFor="orgao-emissor" className='text-lg'>Orgão Emissor</label>
               <select name="orgao-emissor" id="orgao-emissor" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setOrgaoEmissor(e.target.value)} required>
                 <option value="">Selecione</option>
-                <option value="teste">teste</option>
+                <option value="SSP/UF">SSP/UF</option>
+                <option value="Cartório Civil">Cartório Civil</option>
+                <option value="Polícia Federal">Polícia Federal</option>
+                <option value="Detran">Detran</option>
+                <option value="ABNC">ABNC</option>
+                <option value="CNIG">CNIG</option>
+                <option value="CGPI">CGPI</option>
               </select>
 
               {email !== "" && cellphone !== "" && name !== "" && lastName !== "" && cpf !== "" && rg !== "" && orgaoEmissor !== "" ? <button onClick={(e: React.SyntheticEvent) => {
@@ -153,8 +191,8 @@ const page = () => {
               <label htmlFor="restauranteName" className='text-lg'>Nome do restaurante</label>
               <input type="text" name="restauranteName" id="restauranteName" minLength={2} maxLength={40} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Nome do restaurante' onChange={(e) => setRestaurantName(e.target.value)} required />
 
-              <label htmlFor="telephone" className='text-lg'>Telefone</label>
-              <input type="text" name="telephone" id="telephone" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o telefone do restaurante?' onChange={(e) => setTelephone(e.target.value)} required />
+              <label htmlFor="telephone" className='text-lg'>Celular do Restaurante (com DDD)</label>
+              <input type="text" name="telephone" id="telephone" maxLength={15} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o telefone do restaurante?' onChange={(e) => verifyCellphoneRestaurant(e.target.value)} required />
 
               <div className='flex items-center gap-6'>
                 <div className='w-full'>

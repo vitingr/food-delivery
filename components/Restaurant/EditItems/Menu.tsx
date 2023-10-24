@@ -8,6 +8,7 @@ import Popup from '@/components/Popup/Popup'
 import Button from '@/components/Button'
 import { infoUser } from '@/common/utils/userContext'
 import ToastMessage from '@/components/Config/ToastMessage'
+import { CategoryProps, ProductProps } from '@/types/types'
 
 const Menu = ({ restaurantId }: { restaurantId: string }) => {
 
@@ -26,10 +27,10 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const [productName, setProductName] = useState<string>("")
   const [productDescription, setProductDescription] = useState<string>("")
   const [productValue, setProductValue] = useState<any>("")
-  const [productFoto, setProductFoto] = useState<any>("")
+  const [productFoto, setProductFoto] = useState<string>("")
 
-  const [categories, setCategories] = useState<any>([])
-  const [products, setProducts] = useState<any>([])
+  const [categories, setCategories] = useState<CategoryProps[]>([])
+  const [products, setProducts] = useState<ProductProps[]>([])
 
   const createCategory = async () => {
     if (categoryName !== "" && categoryDescription !== "") {
@@ -277,13 +278,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
       <ToastMessage />
       {categories.length > 0 ? (
         <>
-          {categories.map((category: {
-            id: string,
-            restaurant: string,
-            categoryName: string,
-            categoryDescription: string,
-            quantityItems: number
-          }) => (
+          {categories.map((category: CategoryProps) => (
             <div className='mt-[50px] p-6 border border-neutral-200 rounded-xl' key={category.id}>
               <div>
                 <div className='flex items-end gap-2'>
@@ -293,18 +288,10 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                 <h6 className='text-base text-[#717171] mt-2 pb-6'>{category.categoryDescription}</h6>
               </div>
               <div className='border-t border-neutral-200'>
-                {products.map((product: {
-                  id: string,
-                  restaurant: string,
-                  category: string,
-                  productName: string,
-                  productDescription: string,
-                  productValue: number,
-                  productFoto: string,
-                }) => (
+                {products.map((product: ProductProps) => (
                   <div key={product.id}>
                     {product.category === category.id ? (
-                      <div className='pt-8 pb-8 border-b border-neutral-200 flex justify-between gap-4'>
+                      <div className='flex-col items-center sm:items-start sm:flex-row pt-8 pb-8 border-b border-neutral-200 flex justify-between gap-4'>
                         {currentProductId === product.id ? (
                           <>
                             {editRestaurantProduct ? (
@@ -348,14 +335,14 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                           <p className='mt-2 text-sm text-[#717171]'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         </div>
                         <div className='flex gap-4 max-h-[40px]'>
-                          <div className='text-[#ea1d2c] border border-[#ea1d2c] w-[100px] flex items-center justify-center rounded-xl cursor-pointer' onClick={() => editProduct(product.id, product.productDescription, product.productName, product.productValue, product.productFoto)}>Editar</div>
-                          <div className='bg-[#ea1d2c] text-white w-[100px] flex items-center justify-center rounded-xl cursor-pointer'>Remover</div>
+                          <div className='text-[#ea1d2c] border border-[#ea1d2c] w-[100px] flex items-center justify-center rounded-xl cursor-pointer p-1' onClick={() => editProduct(product.id, product.productDescription, product.productName, product.productValue, product.productFoto)}>Editar</div>
+                          <div className='bg-[#ea1d2c] text-white w-[100px] flex items-center justify-center rounded-xl cursor-pointer p-1'>Remover</div>
                         </div>
                       </div>
                     ) : (<></>)}
                   </div>
                 ))}
-                <div className='flex justify-between items-center w-full mt-12'>
+                <div className='flex justify-between items-center w-full mt-12 flex-col sm:flex-row'>
                   {editProductCategory ? (
                     <Popup title={"Editar Categoria"} state={setEditProductCategory}>
                       <form onSubmit={(e: React.SyntheticEvent) => {
@@ -383,12 +370,12 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                     </Popup>
                   ) : (<></>)}
                   <div className='w-full'>
-                    <div className=' text-[#ea1d2c] border border-[#ea1d2c] max-w-[185px] flex items-center justify-center p-2 rounded-xl gap-2 cursor-pointer w-full' onClick={() => createProductAction(category.id)}>
+                    <div className=' text-[#ea1d2c] border border-[#ea1d2c] sm:max-w-[185px] flex items-center justify-center p-2 rounded-xl gap-2 cursor-pointer w-full' onClick={() => createProductAction(category.id)}>
                       <IoAddOutline size={25} className="red-icon" />
                       Adicionar Produto
                     </div>
                   </div>
-                  <div className='w-full flex justify-end text-[#ea1d2c] cursor-pointer underline-offset-4 underline' onClick={() => editCategory(category.id, category.categoryName, category.categoryDescription)}>
+                  <div className='w-full flex items-center mt-8 sm:mt-0 sm:justify-end text-[#ea1d2c] cursor-pointer underline-offset-4 underline justify-center' onClick={() => editCategory(category.id, category.categoryName, category.categoryDescription)}>
                     Editar Categoria
                   </div>
                 </div>
@@ -402,7 +389,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
         </div>
       )}
 
-      {!editRestaurantProduct && !editProductCategory ? (
+      {!editRestaurantProduct && !editProductCategory && !createProductCategory && !createProduct  ? (
         <Button text='Adicionar Categoria' handleClick={() => setCreateProductCategory(true)} />
       ) : (
         <></>

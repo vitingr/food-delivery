@@ -64,6 +64,7 @@ export interface RestaurantData {
 export interface EditMenu {
   currentSection: string;
   restaurantId: string;
+  restaurantData: any;
 }
 
 export interface Button {
@@ -113,4 +114,26 @@ export interface PurchaseProps {
   deliveryTime: string;
   deliveryValue: number;
   delivered: boolean;
+}
+
+export interface AddressProps {
+  id: string;
+  user: string;
+  state: string;
+  city: string;
+  street: string;
+  address: number;
+}
+
+export interface CategoryProps {
+  id: string;
+  restaurant: string;
+  categoryName: string;
+  categoryDescription: string;
+  quantityItems: number;
+}
+
+export interface MainConfig {
+  restaurantId: string;
+  restaurantData: any;
 }

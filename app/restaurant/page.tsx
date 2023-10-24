@@ -11,7 +11,7 @@ import { APP_ROUTES } from '@/constants/app-routes'
 import { toast } from 'react-toastify'
 import ToastMessage from '@/components/Config/ToastMessage'
 import Link from 'next/link'
-import { ProductProps, RestaurantData } from '@/types/types'
+import { AddressProps, CategoryProps, ProductProps, PurchaseProps, RestaurantData } from '@/types/types'
 import { infoUser } from '@/common/utils/userContext'
 import Popup from '@/components/Popup/Popup'
 import { CIDADES_BRASIL } from '@/constants/json-cidades'
@@ -28,9 +28,9 @@ const page = () => {
 
   // Restaurant Data
   const [restaurantData, setRestaurantData] = useState<RestaurantData | any>([])
-  const [categories, setCategories] = useState<any>([])
-  const [products, setProducts] = useState<any>([])
-  const [userAddresses, setUserAddresses] = useState<any>([])
+  const [categories, setCategories] = useState<CategoryProps[]>([])
+  const [products, setProducts] = useState<ProductProps[]>([])
+  const [userAddresses, setUserAddresses] = useState<AddressProps[]>([])
 
   // Payment and Take Option
   const [deliveryPlace, setDeliveryPlace] = useState<string>("")
@@ -187,24 +187,15 @@ const page = () => {
   }
 
   const confirmPurchase = async () => {
-    if (totalPurchaseValue !== 0 && myPurchases.length > 0 && paymentMethod !== "" && takeMethod !== "" && deliveryPlace !== "" && data.id !== null && data.id !== undefined && restaurantData.id !== null && restaurantData.id !== undefined) {
+    if (totalPurchaseValue !== 0 && myPurchases.length > 0 && paymentMethod !== "" && takeMethod !== "" && data.id !== null && data.id !== undefined && restaurantData.id !== null && restaurantData.id !== undefined) {
+
+      if (deliveryPlace === "") {
+        setDeliveryPlace("retirada")
+      }
+
       try {
 
-        const ids: string[] = myPurchases.map((item: {
-          id: string;
-          user: string;
-          restaurant: string;
-          products: string;
-          quantity: number;
-          totalValue: number;
-          commentaries: string;
-          paymentMethod: string;
-          takeOption: string;
-          deliveryAddress: string;
-          deliveryTime: string;
-          deliveryValue: string;
-          delivered: boolean;
-        }) => item.id);
+        const ids: string[] = myPurchases.map((item: PurchaseProps) => item.id);
 
         const purchaseIds: string = ids.join(',');
 
@@ -306,13 +297,7 @@ const page = () => {
         <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px]'>Menu do Restaurante</h1>
         {categories.length > 0 ? (
           <>
-            {categories.map((category: {
-              id: string,
-              restaurant: string,
-              categoryName: string,
-              categoryDescription: string,
-              quantityItems: number
-            }) => (
+            {categories.map((category: CategoryProps) => (
               <div className='mt-[75px]' key={category.id}>
                 <div>
                   <div className='flex items-end gap-2'>
@@ -322,15 +307,7 @@ const page = () => {
                   <h6 className='text-base text-[#717171] '>{category.categoryDescription}</h6>
                 </div>
                 <div className='mt-16 grid grid-cols-2 gap-8'>
-                  {products.map((product: {
-                    id: string,
-                    restaurant: string,
-                    category: string,
-                    productName: string,
-                    productDescription: string,
-                    productValue: number,
-                    productFoto: string,
-                  }) => (
+                  {products.map((product: ProductProps) => (
                     <>
                       {product.category === category.id ? (
                         <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
@@ -366,26 +343,12 @@ const page = () => {
             setTotalPurchaseValue(0)
           }}>
             <div className='mt-14 z-50 flex flex-col overflow-y-scroll max-h-[600px] pr-10'>
-              {categories.map((category: {
-                id: string,
-                restaurant: string,
-                categoryName: string,
-                categoryDescription: string,
-                quantityItems: number
-              }) => (
+              {categories.map((category: CategoryProps) => (
                 <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={category.restaurant}>
                   <h2 className='font-bold mb-10 text-xl'>{category.categoryName}</h2>
                   <div>
-                    {products.map((product: {
-                      id: string,
-                      restaurant: string,
-                      category: string,
-                      productName: string,
-                      productDescription: string,
-                      productValue: number,
-                      productFoto: string,
-                    }) => (
-                      <div key={product.id}>
+                    {products.map((product: ProductProps) => (
+                      <div key={product.productName}>
                         {product.category === category.id ? (
                           <div className='flex justify-between mb-5'>
                             <div className='w-full'>
@@ -434,19 +397,11 @@ const page = () => {
             <form onSubmit={(e: React.SyntheticEvent) => {
               e.preventDefault()
             }} className='mt-14 z-50 overflow-y-scroll max-h-[600px] pr-10 flex flex-col gap-6'>
-              {myPurchases.map((product: {
-                id: string,
-                restaurant: string,
-                category: string,
-                productName: string,
-                productDescription: string,
-                productValue: number,
-                productFoto: string,
-              }) => (
-                <div key={product.productName} className='flex flex-col gap-6'>
+              {myPurchases.map((product: ProductProps) => (
+                <div key={product.productDescription} className='flex flex-col gap-6'>
                   <div className='flex justify-between'>
                     <div className='max-w-[65px] max-h-[65px] flex justify-center'>
-                      <img src={product.productFoto} alt="Product Photo" className='' />
+                      <img src={product.productFoto} alt="Product Photo" className='Product Image' />
                     </div>
                     <div className='w-full ml-4'>
                       <h1 className='text-lg font-semibold'>{product.productName}</h1>
@@ -522,14 +477,7 @@ const page = () => {
                     <label htmlFor="deliveryPlace" className='text-lg'>Em qual endereço devemos entregar?</label>
                     <select name="deliveryPlace" id="deliveryPlace" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setDeliveryPlace(e.target.value)} required>
                       <option value="">Escolha um endereço de entrega</option>
-                      {userAddresses.map((address: {
-                        id: string,
-                        user: string,
-                        state: string,
-                        city: string,
-                        street: string,
-                        address: number,
-                      }) => (
+                      {userAddresses.map((address: AddressProps) => (
                         <option value={address.id} key={address.user}>{address.address}, {address.street}, {address.city} - {address.state}</option>
                       ))}
                     </select>

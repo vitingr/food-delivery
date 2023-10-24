@@ -5,10 +5,12 @@ import React from 'react'
 import Button from '../Button'
 import ToastMessage from '../Config/ToastMessage'
 import Menu from './EditItems/Menu'
+import Purchases from './EditItems/Purchases'
+import MainConfig from './EditItems/MainConfig'
 
-const EditMenu = ({ currentSection, restaurantId }: EditMenu) => {
+const EditMenu = ({ currentSection, restaurantId, restaurantData }: EditMenu) => {
   return (
-    <div className='p-16 w-full'>
+    <div className='sm:p-16 p-0 w-full'>
       <ToastMessage />
       {currentSection === "ratings" ? (
         <div className='w-full'>
@@ -17,8 +19,10 @@ const EditMenu = ({ currentSection, restaurantId }: EditMenu) => {
       ) : (<></>)}
 
       {currentSection === "purchases" ? (
-        <div className='w-full'>
-          <h1 className='text-center text-3xl font-bold'>Pedidos</h1>
+        <div className='w-full pl-12 pr-12 max-h-[69vh] overflow-y-scroll'>
+          <h1 className='text-center text-3xl font-bold mb-[50px]'>Pedidos</h1>
+
+          <Purchases restaurantId={restaurantId} restaurantData={restaurantData} />
         </div>
       ) : (<></>)}
 
@@ -46,10 +50,10 @@ const EditMenu = ({ currentSection, restaurantId }: EditMenu) => {
       ) : (<></>)}
 
       {currentSection === "settings" ? (
-        <div className='w-full'>
+        <div className='w-full pl-12 pr-12 max-h-[69vh] overflow-y-scroll'>
           <h1 className='text-center text-3xl font-bold'>Configurações</h1>
 
-          <Button text='Editar Configurações' />
+          <MainConfig restaurantData={restaurantData} restaurantId={restaurantId} />
         </div>
       ) : (<></>)}
     </div >
