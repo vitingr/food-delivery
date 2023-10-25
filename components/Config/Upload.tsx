@@ -41,7 +41,7 @@ const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
           </div>
           <label htmlFor="image" className='w-full h-full ml-4 flex items-end'>
             <div className='w-full'>
-              <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={` w-full absolute opacity-0 cursor-pointer mt-[-80px] max-w-[300px]`} required />
+              <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} required />
               <h2 className='bg-[#ea1d2c] text-white p-3 w-full rounded-xl text-center cursor-pointer'>Editar Imagem</h2>
             </div>
           </label>

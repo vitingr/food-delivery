@@ -86,6 +86,7 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
             speciality: speciality,
             delivery: delivery,
             logo: logo,
+            background: background,
             deliveryTime: deliveryTime,
             deliveryValue: deliveryValue,
             minValue: minValue
@@ -126,10 +127,10 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
 
         <div className='flex flex-col mt-10 mb-10 max-w-[500px]'>
           <label htmlFor="logo" className='text-lg'>Sua Logo</label>
-          <Upload currentFoto={logo} setState={setLogo} />
+          <Upload currentFoto={logo} setState={setLogo} styles='w-full absolute opacity-0 cursor-pointer max-w-[300px]' />
 
-          <label htmlFor="background" className='text-lg'>Seu Plano de Fundo</label>
-          <Upload currentFoto={background} setState={setBackground} />
+          <label htmlFor="background" className='text-lg mt-10'>Seu Plano de Fundo</label>
+          <Upload currentFoto={background} setState={setBackground} styles='w-full absolute opacity-0 cursor-pointer max-w-[300px]' />
         </div>
 
         <label htmlFor="telefone" className='text-lg'>Celular do Dono (com DDD)</label>

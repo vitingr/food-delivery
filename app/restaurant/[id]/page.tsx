@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import React, { useEffect, useState, useRef } from 'react'
 import { IoAdd } from 'react-icons/io5'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
-import { AiFillStar } from 'react-icons/ai'
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { BsCoin } from 'react-icons/bs'
 import { usePathname, useRouter } from 'next/navigation'
 import { APP_ROUTES } from '@/constants/app-routes'
@@ -202,39 +202,48 @@ const page = () => {
           setTotalPurchaseValue(newPurchaseValue)
         }
 
-        const response = await fetch("http://localhost:3001/purchase/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: data.id,
-            restaurant: restaurantData.id,
-            products: purchaseIds,
-            quantity: Number(myPurchases.length),
-            totalValue: Number(totalPurchaseValue),
-            commentaries: commentaries,
-            paymentMethod: paymentMethod,
-            takeOption: takeMethod,
-            deliveryAddress: deliveryPlace,
-            deliveryTime: "30min - 35min",
-            deliveryValue: Number(5),
-            delivered: false,
-          })
-        })
-        if (response.ok) {
-          toast.success("Pedido realizado com sucesso!")
-          setPayingProducts(false)
-          setDeliveryPlace("")
-          setTakeMethod("Retirada")
-          setPaymentMethod("")
-          setCommentaries("")
-          setMyPurchases([])
-          setTotalPurchaseValue(0)
-        } else {
-          toast.error("ERRO! Não foi possível finalizar o pedido")
-        }
+        const requisition: any = await fetch(`http://localhost:3001/address/getAddressById/${deliveryPlace}`)
+        const addressData: any = await requisition.json()
 
+        let deliveryLocal = `${addressData.address}, ${addressData.street}, ${addressData.city} - ${addressData.state}`
+
+        if (deliveryLocal) {
+          const response = await fetch("http://localhost:3001/purchase/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: data.id,
+              restaurant: restaurantData.id,
+              products: purchaseIds,
+              quantity: Number(myPurchases.length),
+              totalValue: Number(totalPurchaseValue),
+              commentaries: commentaries,
+              paymentMethod: paymentMethod,
+              takeOption: takeMethod,
+              deliveryAddress: deliveryPlace,
+              deliveryPlace: deliveryLocal,
+              restaurantLogo: restaurantData.logo,
+              restaurantName: restaurantData.restaurantName,
+              deliveryTime: restaurantData.deliveryTime,
+              deliveryValue: Number(restaurantData.deliveryValue),
+              delivered: false,
+            })
+          })
+          if (response.ok) {
+            toast.success("Pedido realizado com sucesso!")
+            setPayingProducts(false)
+            setDeliveryPlace("")
+            setTakeMethod("Retirada")
+            setPaymentMethod("")
+            setCommentaries("")
+            setMyPurchases([])
+            setTotalPurchaseValue(0)
+          } else {
+            toast.error("ERRO! Não foi possível finalizar o pedido")
+          }
+        }
       } catch (error) {
         console.log(error)
         toast.error("ERRO! Não foi possível finalizar o pedido")
@@ -257,7 +266,7 @@ const page = () => {
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
-        <div className='bg-[url("https://www.ifood.com.br/static/images/merchant/banner/DEFAULT.png")] bg-cover bg-no-repeat w-full h-[200px] rounded-xl' />
+      <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{backgroundImage: `url(${restaurantData.background})`}} />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
@@ -269,6 +278,16 @@ const page = () => {
               <div>
                 <h5 className='text-[#717171] text-sm'>Especialidade da casa: {restaurantData.speciality}</h5>
                 <h6 className='text-[#717171] text-sm'>Tempo de entrega: ≅ {restaurantData.deliveryTime}</h6>
+              </div>
+              <div className='flex gap-2 items-center mt-4'>
+                <h1 className='text-sm'>Minha avaliação</h1>
+                <div className='flex items-center gap-1'>
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
+                </div>
               </div>
             </div>
           </div>
@@ -283,14 +302,11 @@ const page = () => {
                 <p className='text-sm text-[#717171]'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
               </div>
             </div>
-            <div className='mt-8 flex gap-4'>
+            <div className='mt-8 flex justify-end gap-4 w-full'>
               <div className='w-full'>
-                <h3 className='text-sm text-[#717171]'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
-                <h5 className='text-base text-[#717171]'>{restaurantData.street}, {restaurantData.address}</h5>
+                <h3 className='text-sm text-[#717171] flex justify-end w-full'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
+                <h5 className='text-base text-[#717171] flex justify-end w-full'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
-              <Link href="/restaurant/edit" className='bg-[#ea1d2c] text-white w-[150px] flex items-center justify-center rounded-lg cursor-pointer text-lg max-h-[45px]'>
-                Editar
-              </Link>
             </div>
           </div>
         </div>
@@ -321,8 +337,8 @@ const page = () => {
                             </div>
                             <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                           </div>
-                          <div>
-                            <img src={product.productFoto} className='w-[125px] h-[125px]' alt="Product Image" />
+                          <div className='max-w-[125px] max-h-[125px]'>
+                            <img src={product.productFoto} className='w-full h-full' alt="Product Image" />
                           </div>
                         </div>
                       ) : (<></>)}

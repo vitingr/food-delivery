@@ -310,7 +310,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                                   <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
                                   <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} defaultValue={product.productValue} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
 
-                                  <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} styles='mt-[-565px]' />
+                                  <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} styles='mt-[-565px] w-full mt-[-20px] absolute opacity-0 cursor-pointer max-w-[450px] mt-[0px]' />
 
                                   <button className='mt-12 w-full text-[#ea1d2c] rounded-xl p-4 text-center border border-[#ea1d2c] cursor-pointer' type='submit' onClick={() => removeProduct(product.id)}>
                                     Remover Produto 
@@ -411,7 +411,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
             <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
             <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
 
-            <Upload setState={(value: any) => setProductFoto(value)} currentFoto={productFoto} styles='mt-[-565px]' />
+            <Upload setState={(value: any) => setProductFoto(value)} currentFoto={productFoto} styles='mt-[-565px] w-full mt-[-20px] absolute opacity-0 cursor-pointer max-w-[450px] mt-[0px]' />
 
             {productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "" ? (
               <button className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>

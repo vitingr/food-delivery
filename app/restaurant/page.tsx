@@ -210,40 +210,42 @@ const page = () => {
 
         let deliveryLocal = `${addressData.address}, ${addressData.street}, ${addressData.city} - ${addressData.state}`
 
-        const response = await fetch("http://localhost:3001/purchase/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: data.id,
-            restaurant: restaurantData.id,
-            products: purchaseIds,
-            quantity: Number(myPurchases.length),
-            totalValue: Number(totalPurchaseValue),
-            commentaries: commentaries,
-            paymentMethod: paymentMethod,
-            takeOption: takeMethod,
-            deliveryAddress: deliveryPlace,
-            deliveryPlace: deliveryLocal,
-            restaurantLogo: restaurantData.logo,
-            restaurantName: restaurantData.restaurantName,
-            deliveryTime: "30min - 35min",
-            deliveryValue: Number(5),
-            delivered: false,
+        if (deliveryLocal) {
+          const response = await fetch("http://localhost:3001/purchase/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: data.id,
+              restaurant: restaurantData.id,
+              products: purchaseIds,
+              quantity: Number(myPurchases.length),
+              totalValue: Number(totalPurchaseValue),
+              commentaries: commentaries,
+              paymentMethod: paymentMethod,
+              takeOption: takeMethod,
+              deliveryAddress: deliveryPlace,
+              deliveryPlace: deliveryLocal,
+              restaurantLogo: restaurantData.logo,
+              restaurantName: restaurantData.restaurantName,
+              deliveryTime: restaurantData.deliveryTime,
+              deliveryValue: Number(restaurantData.deliveryValue),
+              delivered: false,
+            })
           })
-        })
-        if (response.ok) {
-          toast.success("Pedido realizado com sucesso!")
-          setPayingProducts(false)
-          setDeliveryPlace("")
-          setTakeMethod("Retirada")
-          setPaymentMethod("")
-          setCommentaries("")
-          setMyPurchases([])
-          setTotalPurchaseValue(0)
-        } else {
-          toast.error("ERRO! Não foi possível finalizar o pedido")
+          if (response.ok) {
+            toast.success("Pedido realizado com sucesso!")
+            setPayingProducts(false)
+            setDeliveryPlace("")
+            setTakeMethod("Retirada")
+            setPaymentMethod("")
+            setCommentaries("")
+            setMyPurchases([])
+            setTotalPurchaseValue(0)
+          } else {
+            toast.error("ERRO! Não foi possível finalizar o pedido")
+          }
         }
 
       } catch (error) {
@@ -268,7 +270,7 @@ const page = () => {
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
-        <div className='bg-[url("https://www.ifood.com.br/static/images/merchant/banner/DEFAULT.png")] bg-cover bg-no-repeat w-full h-[200px] rounded-xl' />
+        <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{backgroundImage: `url(${restaurantData.background})`}} />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
@@ -332,8 +334,8 @@ const page = () => {
                             </div>
                             <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                           </div>
-                          <div>
-                            <img src={product.productFoto} className='w-[125px] h-[125px]' alt="Product Image" />
+                          <div className='max-w-[125px] max-h-[125px]'>
+                            <img src={product.productFoto} className='w-full h-full' alt="Product Image" />
                           </div>
                         </div>
                       ) : (<></>)}
