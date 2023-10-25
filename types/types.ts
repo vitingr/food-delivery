@@ -70,7 +70,7 @@ export interface EditMenu {
 
 export interface Button {
   text: string;
-  handleClick?: () => void; 
+  handleClick?: () => void;
 }
 
 export interface UploadProps {
@@ -112,6 +112,9 @@ export interface PurchaseProps {
   paymentMethod: string;
   takeOption: string;
   deliveryAddress: string;
+  deliveryPlace: string;
+  restaurantName: string;
+  restaurantLogo: string
   deliveryTime: string;
   deliveryValue: number;
   delivered: boolean;
@@ -138,4 +141,25 @@ export interface MainConfig {
   restaurantId: string;
   restaurantData: any;
   getRestaurantData: any
+}
+
+export interface RestaurantProps {
+  id: string;
+  ownerId: string;
+  cellphone: string;
+  ownerName: string;
+  ownerLastname: string;
+  restaurantName: string;
+  telephone: string;
+  street: string;
+  city: string;
+  state: string;
+  address: number;
+  speciality: string;
+  delivery: string;
+  logo: string;
+  background: string;
+  deliveryTime: string;
+  deliveryValue: number;
+  minValue: number;
 }

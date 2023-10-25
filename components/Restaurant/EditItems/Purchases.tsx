@@ -83,7 +83,7 @@ const Purchases = ({ restaurantId, restaurantData }: { restaurantId: string, res
               <img src={restaurantData.logo} className='w-[80px] h-[80px]' alt="Restaurant Logo" />
               {addresses.map((address: AddressProps) => (
                 <div key={address.id}>
-                  {address.id === "retirada" ? (
+                  {purchase.takeOption === "Retirada" ? (
                     <div>
                       <h2 className='font-semibold selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.street} - {restaurantData.address}</h2>
                       <h3 className='text-[#717171] text-sm selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.city}, {restaurantData.state}</h3>

@@ -205,6 +205,11 @@ const page = () => {
           setTotalPurchaseValue(newPurchaseValue)
         }
 
+        const requisition: any = await fetch(`http://localhost:3001/address/getAddressById/${deliveryPlace}`)
+        const addressData: any = await requisition.json()
+
+        let deliveryLocal = `${addressData.address}, ${addressData.street}, ${addressData.city} - ${addressData.state}`
+
         const response = await fetch("http://localhost:3001/purchase/create", {
           method: "POST",
           headers: {
@@ -220,6 +225,9 @@ const page = () => {
             paymentMethod: paymentMethod,
             takeOption: takeMethod,
             deliveryAddress: deliveryPlace,
+            deliveryPlace: deliveryLocal,
+            restaurantLogo: restaurantData.logo,
+            restaurantName: restaurantData.restaurantName,
             deliveryTime: "30min - 35min",
             deliveryValue: Number(5),
             delivered: false,

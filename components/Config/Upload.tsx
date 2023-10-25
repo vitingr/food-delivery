@@ -2,6 +2,7 @@ import { UploadProps } from '@/types/types'
 import React, { ChangeEvent } from 'react'
 
 const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
+  
   const handleChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
 
