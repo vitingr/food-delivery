@@ -33,6 +33,8 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
   const [logo, setLogo] = useState<string>(restaurantData.logo)
   const [background, setBackground] = useState<string>(restaurantData.background)
   const [minValue, setMinValue] = useState<number>(restaurantData.minValue)
+  const [openingHour, setOpeningHour] = useState<number>(0)
+  const [closingHour, setClosingingHour] = useState<number>(0)
 
   // Input Masks
   const [cpfFormated, setCpfFormated] = useState<string>("")
@@ -108,6 +110,20 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
     }
   }
 
+  const changeOpeningHour = (e: any) => {
+    const hour = parseInt(e, 10);
+    if (!isNaN(hour) && hour > 0 && hour <= 24) {
+      setOpeningHour(hour);
+    }
+  }
+
+  const changeClosingHour = (e: any) => {
+    const hour = parseInt(e, 10);
+    if (!isNaN(hour) && hour > 0 && hour <= 24) {
+      setClosingingHour(hour);
+    }
+  }
+
   return (
     <div className='flex w-full justify-center'>
       <ToastMessage />
@@ -127,14 +143,25 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
 
         <div className='flex flex-col mt-10 mb-10 max-w-[500px]'>
           <label htmlFor="logo" className='text-lg'>Sua Logo</label>
-          <Upload currentFoto={logo} setState={setLogo} styles='w-full absolute opacity-0 cursor-pointer max-w-[300px]' />
+          <Upload currentFoto={logo} setState={setLogo} styles='w-full absolute opacity-0 cursor-pointer max-w-[375px] mt-[10px]' />
 
           <label htmlFor="background" className='text-lg mt-10'>Seu Plano de Fundo</label>
-          <Upload currentFoto={background} setState={setBackground} styles='w-full absolute opacity-0 cursor-pointer max-w-[300px]' />
+          <Upload currentFoto={background} setState={setBackground} styles='w-full absolute opacity-0 cursor-pointer max-w-[375px] mt-[10px]' />
         </div>
 
         <label htmlFor="telefone" className='text-lg'>Celular do Dono (com DDD)</label>
         <input type="text" name="telefone" id="telefone" maxLength={15} minLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' defaultValue={cellphone} autoComplete='off' placeholder='Qual é o celular do restaurante' onChange={(e) => verifyCellphone(e.target.value)} required />
+
+        <div className='flex items-center gap-6'>
+          <div className='w-full'>
+            <label htmlFor="abertura" className='text-lg'>Hora de Abertura do Restaurante</label>
+            <input type="number" name="abertura" id="abertura" max={24} min={0} value={openingHour} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Hora da abertura do restaurante' onChange={(e) => changeOpeningHour(e.target.value)} required />
+          </div>
+          <div className='w-full'>
+            <label htmlFor="fechamento" className='text-lg'>Hora de Fechamento do Restaurante</label>
+            <input type="number" name="fechamento" id="fechamento" max={24} min={0} value={closingHour} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Hora do fechamento do restaurante' onChange={(e) => changeClosingHour(e.target.value)} required />
+          </div>
+        </div>
 
         <div className='flex items-center gap-6'>
           <div className='w-full'>

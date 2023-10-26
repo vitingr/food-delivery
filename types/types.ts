@@ -25,6 +25,7 @@ export interface RestaurantOption {
   distance: number;
   deliveryTime: string;
   deliveryValue: number | string;
+  isOpen: boolean;
 }
 
 export interface CreateRestaurantForm {

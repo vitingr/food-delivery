@@ -5,6 +5,7 @@ import { AddressProps, ProductProps, PurchaseProps, RestaurantProps } from '@/ty
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 const page = () => {
 
@@ -18,8 +19,6 @@ const page = () => {
     try {
       const result = await fetch(`http://localhost:3001/purchase/${data.id}`)
       const response = await result.json()
-
-      console.log(response)
 
       setPurchases(response)
 
@@ -39,6 +38,31 @@ const page = () => {
     }
   }
 
+  const cancelPurchase = async (purchaseId: string) => {
+    try {
+      const response = await fetch(`http://localhost:3001/purchase/remove`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          purchaseId: purchaseId
+        })
+      })
+
+      if (response.ok) {
+        toast.success("Pedido cancelado")
+        getPurchases()
+      } else {
+        toast.error("Não foi possível cancelar o pedido")
+      }
+
+    } catch (error) {
+      console.log(error)
+      toast.error("Não foi possível cancelar o pedido")
+    }
+  }
+
   useEffect(() => {
     if (data.id !== undefined && status === "authenticated") {
       getPurchases()
@@ -53,7 +77,7 @@ const page = () => {
       {purchases.length > 0 ? (
         <div className='max-w-[1500px]'>
           {purchases.map((purchase: PurchaseProps) => (
-            <div key={purchase.id} className='shadow-sm p-10 sm:w-[550px] w-[450px] border border-neutral-200 rounded-lg'>
+            <div key={purchase.id} className='shadow-sm p-10 sm:w-[550px] w-[450px] border border-neutral-200 rounded-lg mb-20'>
               <div className='flex justify-between w-full'>
                 <div className='w-full flex gap-4'>
                   <img src={purchase.restaurantLogo} className='w-[125px] h-[125px]' alt="Restaurant Logo" />
@@ -61,8 +85,8 @@ const page = () => {
                     <div className='flex flex-col'>
                       <h1 className='font-semibold selection:bg-[#ea1d2c] selection:text-white'>{purchase.restaurantName}</h1>
                       <div>
-                        <h2 className='selection:bg-[#ea1d2c] selection:text-white'>{purchase.deliveryPlace}</h2>
-                        <h4 className='text-[#ea1d2c] text-sm mt-2 selection:bg-[#ea1d2c] selection:text-white'>Entregar no endereço</h4>
+                        <h2 className='selection:bg-[#ea1d2c] selection:text-white'>Retirar no restaurante</h2>
+                        <h4 className='text-[#ea1d2c] text-sm mt-2 selection:bg-[#ea1d2c] selection:text-white'>Retirada</h4>
                         <h5 className='text-[#717171] text-sm mt-4 selection:bg-[#ea1d2c] selection:text-white'>N. Pedido: {purchase.id}</h5>
                       </div>
                     </div>
@@ -97,7 +121,7 @@ const page = () => {
               <div className='w-full mt-4 p-8 border-t border-t-neutral-200 max-h-[400px] overflow-y-scroll'>
                 <h2 className='mb-12 text-center text-xl font-semibold selection:bg-[#ea1d2c] selection:text-white'>O que você pediu</h2>
                 {products.map((product) => (
-                  <div className='flex flex-col w-full gap-6'>
+                  <div className='flex flex-col w-full gap-6' key={product.id}>
                     {(purchase.products).includes(product.id) ? (
                       <div className='flex justify-between mb-8'>
                         <div className='max-w-[65px] max-h-[65px] flex justify-center'>
@@ -116,7 +140,7 @@ const page = () => {
                 ))}
               </div>
 
-              <div className='bg-[#ea1d2c] text-white p-4 mt-6 text-xl font-bold text-center rounded-xl cursor-pointer'>
+              <div className='bg-[#ea1d2c] text-white p-4 mt-6 text-xl font-bold text-center rounded-xl cursor-pointer' onClick={() => cancelPurchase(purchase.id)}>
                 Cancelar Pedido
               </div>
             </div>

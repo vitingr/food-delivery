@@ -3,6 +3,7 @@
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
 import RestaurantOption from '@/components/Restaurant/RestaurantOption'
 import SmallRestaurantOption from '@/components/Restaurant/SmallRestaurantOption'
+import { RestaurantProps } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5'
@@ -11,7 +12,8 @@ const page = () => {
 
   const { data: session, status } = useSession()
 
-  const [restaurants, setRestaurants] = useState<any>([])
+  const [restaurants, setRestaurants] = useState<RestaurantProps[] | any>([])
+  const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const getRestaurants = async () => {
     const requisition = await fetch("http://localhost:3001/restaurant")
@@ -20,9 +22,18 @@ const page = () => {
     console.log(response)
   }
 
+  const isRestaurantOpen = async () => {
+    const now = new Date()
+    const currentHour = now.getHours()
+    const open = currentHour <= 23 && currentHour >= 11
+
+    setIsOpen(open)
+  }
+
   useEffect(() => {
     if (session?.user?.email !== undefined && status === "authenticated") {
       getRestaurants()
+      isRestaurantOpen()
     }
   }, [session])
 
@@ -103,7 +114,13 @@ const page = () => {
               logo: string;
               deliveryTime: string
             }) => (
-              <RestaurantOption restaurantId={restaurant.id} image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} />
+              <div>
+                {isOpen ? (
+                  <RestaurantOption restaurantId={restaurant.id} image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} isOpen={true} />
+                ) : (
+                  <RestaurantOption restaurantId={restaurant.id} image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} isOpen={false} />
+                )}
+              </div>
             ))}
           </div>
         </div>

@@ -58,6 +58,7 @@ const page = () => {
   const [address, setAddress] = useState<string>("")
 
   const [isOwner, setIsOwner] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const getRestaurantData = async () => {
     const requisition = await fetch(`http://localhost:3001/restaurant/${query}`)
@@ -251,18 +252,27 @@ const page = () => {
     }
   }
 
+  const isRestaurantOpen = async () => {
+    const now = new Date()
+    const currentHour = now.getHours()
+    const open = currentHour >= 23 && currentHour <= 11
+
+    setIsOpen(open)
+  }
+
   useEffect(() => {
     if (!isFetched.current) {
       if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
         getRestaurantData()
         getUserAddress()
+        isRestaurantOpen()
       }
     } else {
       isFetched.current = true
     }
   }, [data])
 
-  return isOwner === true ? (
+  return isOwner === true && isOpen ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>

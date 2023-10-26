@@ -30,7 +30,7 @@ const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
         <label htmlFor="image">
           Envie uma Imagem do produto
           <div>
-            <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={` w-full absolute opacity-0 cursor-pointer p-3 mt-6 max-w-[300px]`} required />
+            <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} required />
             <h2 className='bg-[#ea1d2c] text-white p-3 w-full rounded-xl text-center mt-6'>Escolher Imagem</h2>
           </div>
         </label>
