@@ -14,6 +14,7 @@ export interface SmallRestaurantOption {
   color: string;
   name: string;
   image: string;
+  speciality: string;
 }
 
 export interface RestaurantOption {
@@ -163,4 +164,21 @@ export interface RestaurantProps {
   deliveryTime: string;
   deliveryValue: number;
   minValue: number;
+  stars: number;
+}
+
+export interface FieldProps {
+  option: string;
+  name: string;
+  type: string;
+  options: any
+}
+
+export interface FormFieldProps {
+  field: FieldProps;
+  type?: string;
+  title?: string;
+  isTextArea?: boolean
+  setState: (value: string) => void
+  checkItem: (value: string) => void
 }

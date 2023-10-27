@@ -43,7 +43,7 @@ const Navbar = () => {
           <div className='flex items-center' onClick={() => setShowMenu(!showMenu)}>
             <IoMenuOutline size={30} className="cursor-pointer" />
             {showMenu ? (
-              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[700px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[750px]'>
+              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[700px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[750px] lg:left-[64%]'>
                 <div className='p-10'>
                   <h1 className='text-3xl font-bold text-center'>Olá, {session?.user?.name}</h1>
                 </div>
@@ -60,10 +60,10 @@ const Navbar = () => {
                     <IoTicketOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meus Pedidos</h3>
                   </Link>
-                  <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/cupons"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                     <BsTicketPerforated size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meus Cupons</h3>
-                  </div>
+                  </Link>
                   {data.partner === true ? (
                     <Link href="/restaurant" className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                       <IoStorefrontOutline size={30} className="gray-icon" />

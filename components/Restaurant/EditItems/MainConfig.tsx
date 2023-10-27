@@ -239,8 +239,10 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
           <option value="Lanches">Lanches</option>
           <option value="Marmita">Marmita</option>
           <option value="Mexicana">Mexicana</option>
+          <option value="Mercado">Mercado</option>
           <option value="Padaria">Padaria</option>
           <option value="Peixes">Peixes</option>
+          <option value="Saudável">Saudável</option>
         </select>
 
         <label htmlFor="delivery" className='text-lg'>O restaurante possui serviço de entrega?</label>
