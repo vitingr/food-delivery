@@ -75,14 +75,14 @@ const Navbar = () => {
                       <h3 className='text-[#717171] w-full text-lg'>Adicionar meu Restaurante</h3>
                     </Link>
                   )}
-                  <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/favoritos"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                     <AiOutlineHeart size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Favoritos</h3>
-                  </div>
-                  <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  </Link>
+                  <Link href={"/perfil"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                     <IoSettingsOutline size={30} className="gray-icon" />
-                    <h3 className='text-[#717171] w-full text-lg'>Meus Dados</h3>
-                  </div>
+                    <h3 className='text-[#717171] w-full text-lg'>Meu Perfil</h3>
+                  </Link>
                   <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                     <IoHelpBuoyOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Ajuda</h3>

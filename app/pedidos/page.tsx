@@ -149,7 +149,7 @@ const page = () => {
       ) : (
         <div className='max-w-[1500px] flex flex-col items-center'>
           <h1 className='font-semibold selection:bg-[#ea1d2c] selection:text-white text-center'>Você ainda não pediu nada</h1>
-          <h3 className='mt-4 text-[#717171] selection:bg-[#ea1d2c] selection:text-white text-center'>Que tal conhecer as melhores opções na sua região</h3>
+          <h3 className='mt-4 text-[#717171] selection:bg-[#ea1d2c] selection:text-white text-center'>Que tal conhecer as melhores opções na sua região?</h3>
           <Link className='mt-14 font-semibold text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white text-center' href="/home">
             Ir para o início
           </Link>

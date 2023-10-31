@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState, useRef } from 'react'
-import { IoAdd } from 'react-icons/io5'
+import { IoAdd, IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { BsCoin } from 'react-icons/bs'
@@ -34,6 +34,7 @@ const page = () => {
   const [categories, setCategories] = useState<CategoryProps[]>([])
   const [products, setProducts] = useState<ProductProps[]>([])
   const [userAddresses, setUserAddresses] = useState<AddressProps[]>([])
+  const [userFavorites, setUserFavorites] = useState<string | any>(data.favorites || "")
 
   // Payment and Take Option
   const [deliveryPlace, setDeliveryPlace] = useState<string>("")
@@ -65,9 +66,9 @@ const page = () => {
     const response = await requisition.json()
 
     if (response !== null) {
-        setRestaurantData(response)
-        setIsOwner(true)
-        getRestaurantCategories(response.id)
+      setRestaurantData(response)
+      setIsOwner(true)
+      getRestaurantCategories(response.id)
     } else {
       toast.error("Você não pode editar um restaurante que não existe")
       router.push(APP_ROUTES.private.usuario)
@@ -255,9 +256,45 @@ const page = () => {
   const isRestaurantOpen = async () => {
     const now = new Date()
     const currentHour = now.getHours()
-    const open = currentHour >= 23 && currentHour <= 11
+    const open = currentHour <= 23 && currentHour >= 11
 
     setIsOpen(open)
+  }
+
+  const favoriteProduct = async (productId: string) => {
+    if (data.id !== undefined) {
+      try {
+        const response = await fetch("http://localhost:3001/product/favorite", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: data.id,
+            productId: productId
+          })
+        })
+
+        if (response.ok) {
+          getRestaurantData()
+          toast.success("Produto adicionado aos favoritos")
+        } else {
+          toast.error("Não foi possível favoritar o produto")
+        }
+      } catch (error) {
+        toast.error("Não foi possível favoritar o produto")
+      }
+    }
+  }
+
+  const getUserFavorites = async () => {
+    if (data.favorites !== "" && data.favorites !== undefined) {
+      try {
+        setUserFavorites(data.favorites)
+      } catch (error) {
+        throw new Error("ERRO! Não foi possível encontrar os pratos favoritos")
+      }
+    }
   }
 
   useEffect(() => {
@@ -266,17 +303,18 @@ const page = () => {
         getRestaurantData()
         getUserAddress()
         isRestaurantOpen()
+        getUserFavorites()
       }
     } else {
       isFetched.current = true
     }
   }, [data])
 
-  return isOwner === true && isOpen ? (
+  return isOpen ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
-      <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{backgroundImage: `url(${restaurantData.background})`}} />
+        <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
@@ -339,16 +377,25 @@ const page = () => {
                   {products.map((product: ProductProps) => (
                     <>
                       {product.category === category.id ? (
-                        <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
-                          <div className='flex flex-col justify-center w-full'>
-                            <div className='h-full '>
-                              <h1 className='text-2xl font-bold'>{product.productName}</h1>
-                              <h2 className='text-[#717171] text-sm mt-2'>{product.productDescription}</h2>
+                        <div className='flex'>
+                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
+                            <div className='flex flex-col justify-center w-full'>
+                              <div className='h-full '>
+                                <h1 className='text-2xl font-bold flex gap-3 items-center'> {product.productName}</h1>
+                                <h2 className='text-[#717171] text-sm mt-2'>{product.productDescription}</h2>
+                              </div>
+                              <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                             </div>
-                            <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                            <div className='max-w-[125px] max-h-[125px]'>
+                              <img src={product.productFoto} className='w-full h-full' alt="Product Image" />
+                            </div>
                           </div>
-                          <div className='max-w-[125px] max-h-[125px]'>
-                            <img src={product.productFoto} className='w-full h-full' alt="Product Image" />
+                          <div className='absolute'>
+                            {userFavorites.includes(product.id) ? (
+                              <IoBookmark size={20} className="cursor-pointer" />
+                            ) : (
+                              <IoBookmarkOutline size={20} onClick={() => favoriteProduct(product.id)} className="cursor-pointer" />
+                            )}
                           </div>
                         </div>
                       ) : (<></>)}
@@ -595,7 +642,9 @@ const page = () => {
       </div>
     </div >
   ) : (
-    <></>
+    <div>
+      Restaurante Fechado
+    </div>
   )
 }
 

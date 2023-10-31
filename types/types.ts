@@ -91,6 +91,7 @@ export interface UserProps {
   money: number;
   photo: string;
   address: string;
+  favorites: string;
 }
 
 export interface ProductProps {
