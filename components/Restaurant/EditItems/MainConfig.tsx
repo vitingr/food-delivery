@@ -33,8 +33,8 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
   const [logo, setLogo] = useState<string>(restaurantData.logo)
   const [background, setBackground] = useState<string>(restaurantData.background)
   const [minValue, setMinValue] = useState<number>(restaurantData.minValue)
-  const [openingHour, setOpeningHour] = useState<number>(0)
-  const [closingHour, setClosingingHour] = useState<number>(0)
+  const [openingHour, setOpeningHour] = useState<number>(restaurantData.openingHour)
+  const [closingHour, setClosingingHour] = useState<number>(restaurantData.closingHour)
 
   // Input Masks
   const [cpfFormated, setCpfFormated] = useState<string>("")
@@ -91,7 +91,9 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
             background: background,
             deliveryTime: deliveryTime,
             deliveryValue: deliveryValue,
-            minValue: minValue
+            minValue: minValue,
+            openingHour: openingHour,
+            closingHour: closingHour
           })
         })
 

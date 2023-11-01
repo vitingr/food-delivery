@@ -19,14 +19,7 @@ export interface SmallRestaurantOption {
 
 export interface RestaurantOption {
   restaurantId: string;
-  image: string;
-  name: string;
-  stars: number;
-  branch: string;
-  distance: number;
-  deliveryTime: string;
-  deliveryValue: number | string;
-  isOpen: boolean;
+  restaurantData: any
 }
 
 export interface CreateRestaurantForm {
@@ -61,6 +54,8 @@ export interface RestaurantData {
   deliveryTime: string;
   stars: number;
   logo: string;
+  openingHour: number;
+  closingHour: number;
 }
 
 export interface EditMenu {
