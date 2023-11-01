@@ -1,13 +1,9 @@
 "use client"
 
 import Link from 'next/link'
-import React, { useState } from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import { IoBagOutline, IoMenuOutline, IoTicketOutline, IoSettingsOutline, IoHelpBuoyOutline, IoStorefrontOutline } from 'react-icons/io5'
-import { AiOutlineHeart } from 'react-icons/ai'
-import { BsTicketPerforated } from 'react-icons/bs'
-import { VscSignOut } from 'react-icons/vsc'
-import { infoUser } from '@/common/utils/userContext'
+import React from 'react'
+import { useSession, signIn } from 'next-auth/react'
+import { IoBagOutline} from 'react-icons/io5'
 
 const RegisterLogin = () => {
 

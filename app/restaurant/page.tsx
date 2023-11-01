@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession } from 'next-auth/react'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoAdd } from 'react-icons/io5'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
 import { AiFillStar } from 'react-icons/ai'
@@ -21,8 +21,6 @@ const page = () => {
   // Restaurant Config
   const { data: session, status } = useSession()
   const { data } = infoUser()
-
-  const isFetched = useRef(false)
 
   const router = useRouter()
 
@@ -57,22 +55,24 @@ const page = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false)
 
   const getRestaurantData = async () => {
-    const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
-    const response = await requisition.json()
+    if (data.restaurantId !== undefined && data.restaurantId !== null) {
+      const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
+      const response = await requisition.json()
 
-    if (response !== null) {
-      if (response.id === data.restaurantId) {
-        setRestaurantData(response)
-        setIsOwner(true)
+      if (response !== null) {
+        if (response.id === data.restaurantId) {
+          setRestaurantData(response)
+          setIsOwner(true)
 
-        getRestaurantCategories(response.id)
+          getRestaurantCategories(response.id)
+        } else {
+          toast.error("Você não pode editar um restaurante que não é seu")
+          router.push(APP_ROUTES.private.usuario)
+        }
       } else {
-        toast.error("Você não pode editar um restaurante que não é seu")
+        toast.error("Você não pode editar um restaurante que não existe")
         router.push(APP_ROUTES.private.usuario)
       }
-    } else {
-      toast.error("Você não pode editar um restaurante que não existe")
-      router.push(APP_ROUTES.private.usuario)
     }
   }
 
@@ -256,13 +256,9 @@ const page = () => {
   }
 
   useEffect(() => {
-    if (!isFetched.current) {
-      if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
-        getRestaurantData()
-        getUserAddress()
-      }
-    } else {
-      isFetched.current = true
+    if (session?.user?.email !== undefined && status === "authenticated" && data.restaurantData !== null) {
+      getRestaurantData()
+      getUserAddress()
     }
   }, [data])
 
@@ -270,7 +266,7 @@ const page = () => {
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
-        <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{backgroundImage: `url(${restaurantData.background})`}} />
+        <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />

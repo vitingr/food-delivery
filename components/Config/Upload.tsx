@@ -1,8 +1,10 @@
 import { UploadProps } from '@/types/types'
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 const Upload = ({ setState, currentFoto, styles, text }: UploadProps) => {
   
+  const [image, setImage] = useState<string>(currentFoto)
+
   const handleChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
 
@@ -20,6 +22,7 @@ const Upload = ({ setState, currentFoto, styles, text }: UploadProps) => {
     reader.readAsDataURL(file)
     reader.onload = () => {
       const result = reader.result as string
+      setImage(result)
       setState(result)
     }
   }
@@ -37,11 +40,11 @@ const Upload = ({ setState, currentFoto, styles, text }: UploadProps) => {
       ) : (
         <div className='flex w-full h-full'>
           <div>
-            <img className='max-w-[150px] max-h-[150px] h-full w-full' src={currentFoto} alt="Image" />
+            <img className='max-w-[150px] max-h-[150px] h-full w-full' src={image} alt="Image" />
           </div>
           <label htmlFor="image" className='w-full h-full ml-4 flex items-end'>
             <div className='w-full'>
-              <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} defaultValue={currentFoto} required />
+              <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} required />
               <h2 className='bg-[#ea1d2c] text-white p-3 w-full rounded-xl text-center cursor-pointer'>Editar Imagem</h2>
             </div>
           </label>

@@ -37,7 +37,7 @@ const EditMenu = ({ currentSection, restaurantId, restaurantData, getRestaurantD
 
       {currentSection === "financial" ? (
         <div className='w-full'>
-          <h1 className='text-center text-3xl font-bold'>Financeiro</h1>
+          <h1 className='text-center text-3xl font-bold'>Analytics</h1>
         </div>
       ) : (<></>)}
 

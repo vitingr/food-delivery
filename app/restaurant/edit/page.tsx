@@ -6,7 +6,7 @@ import { RestaurantData } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { IoHomeOutline, IoTicketOutline, IoSettingsOutline } from 'react-icons/io5'
 import { AiOutlineClockCircle, AiOutlineStar } from 'react-icons/ai'
@@ -17,8 +17,7 @@ import { infoUser } from '@/common/utils/userContext'
 const page = () => {
 
   const { data: session, status } = useSession()
-  const {data} = infoUser()
-  const isFetched = useRef(false)
+  const { data } = infoUser()
 
   const router = useRouter()
 
@@ -29,32 +28,30 @@ const page = () => {
   const [currentSection, setCurrentSection] = useState<string>("")
 
   const getRestaurantData = async () => {
-    const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
-    const response = await requisition.json()
+    if (data.restaurantId !== undefined && data.restaurantId !== null) {
+      const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
+      const response = await requisition.json()
 
-    if (response !== null) {
-      if (response.id === data.restaurantId) {
-        setRestaurantData(response)
-        setIsOwner(true)
+      if (response !== null) {
+        if (response.id === data.restaurantId) {
+          setRestaurantData(response)
+          setIsOwner(true)
 
-        // getRestaurantCategories(response.id)
+          // getRestaurantCategories(response.id)
+        } else {
+          toast.error("Você não pode editar um restaurante que não é seu")
+          router.push(APP_ROUTES.private.usuario)
+        }
       } else {
-        toast.error("Você não pode editar um restaurante que não é seu")
+        toast.error("Você não pode editar um restaurante que não existe")
         router.push(APP_ROUTES.private.usuario)
       }
-    } else {
-      toast.error("Você não pode editar um restaurante que não existe")
-      router.push(APP_ROUTES.private.usuario)
     }
   }
 
   useEffect(() => {
-    if (!isFetched.current) {
-      if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
-        getRestaurantData()
-      }
-    } else {
-      isFetched.current = true
+    if (session?.user?.email !== undefined && status === "authenticated" && data.restaurantId !== null) {
+      getRestaurantData()
     }
   }, [data])
 
@@ -86,7 +83,7 @@ const page = () => {
             </li>
             <li className="flex gap-4 items-center leftbar__item pb-2 pt-2" onClick={() => setCurrentSection("financial")}>
               <MdAttachMoney size={20} />
-              <h1>Financeiro</h1>
+              <h1>Analytics</h1>
             </li>
             <li className="flex gap-4 items-center leftbar__item pb-2 pt-2" onClick={() => setCurrentSection("time")}>
               <AiOutlineClockCircle size={20} />
@@ -101,7 +98,7 @@ const page = () => {
       </div>
 
       <div className='w-full'>
-    	  <EditMenu currentSection={currentSection} restaurantId={restaurantData.id} restaurantData={restaurantData} getRestaurantData={getRestaurantData} />
+        <EditMenu currentSection={currentSection} restaurantId={restaurantData.id} restaurantData={restaurantData} getRestaurantData={getRestaurantData} />
       </div>
     </div>
   ) : (
