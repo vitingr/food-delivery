@@ -18,9 +18,9 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState<Boolean>(false)
 
   return (
-    <div className='p-2 justify-around items-center w-full flex'>
-      <Link href="/" className='w-full flex justify-center'>
-        <img src="/assets/logo.png" className='max-w-[100px]' alt="Logo Image" />
+    <div className='p-8 sm:p-2 justify-around items-center w-full flex'>
+      <Link href="/" className='sm:w-full flex justify-center'>
+        <img src="/assets/logo.png" className='max-w-[75px] sm:max-w-[100px]' alt="Logo Image" />
       </Link>
       <ul className='ml-14 list-none gap-14 w-full justify-center hidden lg:flex'>
         <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Início</li></Link>
@@ -31,7 +31,7 @@ const Navbar = () => {
       </ul>
 
       {session?.user?.email ? (
-        <div className='w-full flex items-center gap-4 ml-20'>
+        <div className='w-full flex items-center gap-4 sm:ml-20 justify-end sm:justify-start'>
           <img src={session?.user?.image || ""} className='w-[40px] h-[40px] duration-200 transition-all hover:scale-110 cursor-pointer rounded-full' alt="Profile Image" />
           <div className='flex items-center justify-center gap-2 transition-all duration-300 rounded-full hover:bg-[#b1b4b415] pl-6 pr-6 w-[125px] cursor-pointer'>
             <IoBagOutline size={35} className="red-icon" />

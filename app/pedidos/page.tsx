@@ -71,8 +71,8 @@ const page = () => {
   }, [session, data])
 
   return (
-    <div className='p-[5%] w-full flex flex-col items-center'>
-      <h1 className='selection:bg-[#ea1d2c] selection:text-white text-2xl font-semibold mb-32 w-full max-w-[1500px]'>Meus Pedidos</h1>
+    <div className='sm:p-[5%] p-[1%] w-full flex flex-col items-center'>
+      <h1 className='selection:bg-[#ea1d2c] selection:text-white sm:text-2xl text-3xl font-semibold mb-20 mt-12 sm:mb-28 w-full max-w-[1500px] sm:text-left text-center'>Meus Pedidos</h1>
 
       {purchases.length > 0 ? (
         <div className='max-w-[1500px]'>
@@ -140,7 +140,7 @@ const page = () => {
                 ))}
               </div>
 
-              <div className='bg-[#ea1d2c] text-white p-4 mt-6 text-xl font-bold text-center rounded-xl cursor-pointer' onClick={() => cancelPurchase(purchase.id)}>
+              <div className='bg-[#ea1d2c] text-white p-4 mt-6 text-base sm:text-xl font-bold text-center rounded-xl cursor-pointer' onClick={() => cancelPurchase(purchase.id)}>
                 Cancelar Pedido
               </div>
             </div>
