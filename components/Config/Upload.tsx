@@ -1,7 +1,7 @@
 import { UploadProps } from '@/types/types'
 import React, { ChangeEvent } from 'react'
 
-const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
+const Upload = ({ setState, currentFoto, styles, text }: UploadProps) => {
   
   const handleChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -28,7 +28,7 @@ const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
     <div className='w-full pt-6 pb-6'>
       {!currentFoto ? (
         <label htmlFor="image">
-          Envie uma Imagem do produto
+          {text}
           <div>
             <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} required />
             <h2 className='bg-[#ea1d2c] text-white p-3 w-full rounded-xl text-center mt-6'>Escolher Imagem</h2>
@@ -41,7 +41,7 @@ const Upload = ({ setState, currentFoto, styles }: UploadProps) => {
           </div>
           <label htmlFor="image" className='w-full h-full ml-4 flex items-end'>
             <div className='w-full'>
-              <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} required />
+              <input type="file" name="image" id="image" accept='image/*' onChange={(e) => handleChangeImage(e)} className={styles} defaultValue={currentFoto} required />
               <h2 className='bg-[#ea1d2c] text-white p-3 w-full rounded-xl text-center cursor-pointer'>Editar Imagem</h2>
             </div>
           </label>

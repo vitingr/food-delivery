@@ -78,7 +78,8 @@ export interface Button {
 export interface UploadProps {
   setState: (value: string) => void;
   currentFoto: string;
-  styles?: string
+  styles?: string;
+  text?: string;
 }
 
 export interface UserProps {

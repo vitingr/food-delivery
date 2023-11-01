@@ -36,7 +36,7 @@ const RestaurantOption = ({ restaurantId, image, name, stars, branch, distance, 
           <h5 className='text-[#717171]'> • {distance} km </h5>
         </div>
         <div className='mt-6'>
-          <h6 className='text-[#ea1d2c] bottom-restaurant'>Restaurante Fechado</h6>
+          <h6 className='text-[#ea1d2c] bottom-restaurant'>Restaurante fechado no momento</h6>
         </div>
       </div>
     </Link>
