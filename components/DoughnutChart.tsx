@@ -7,7 +7,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({chartData, chartOptions}: DoughnutProps) => {
   return (
-    <div className='max-w-[525px] h-full'>
+    <div className='max-w-[525px] min-h-[200px] h-full'>
       <Doughnut data={chartData} options={chartOptions} />
     </div>
   );
