@@ -7,6 +7,7 @@ import ToastMessage from '../Config/ToastMessage'
 import Menu from './EditItems/Menu'
 import Purchases from './EditItems/Purchases'
 import MainConfig from './EditItems/MainConfig'
+import Analytics from './EditItems/Analytics'
 
 const EditMenu = ({ currentSection, restaurantId, restaurantData, getRestaurantData }: EditMenu) => {
   return (
@@ -36,8 +37,10 @@ const EditMenu = ({ currentSection, restaurantId, restaurantData, getRestaurantD
       ) : (<></>)}
 
       {currentSection === "financial" ? (
-        <div className='w-full'>
+        <div className='w-full pl-12 pr-12 max-h-[69vh] overflow-y-scroll h-full'>
           <h1 className='text-center text-3xl font-bold'>Analytics</h1>
+
+          <Analytics restaurantData={restaurantData} restaurantId={restaurantId} />
         </div>
       ) : (<></>)}
 

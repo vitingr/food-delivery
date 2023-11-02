@@ -145,3 +145,8 @@
   border-radius: 10px;
   box-shadow: 0 0px 32px 0 rgba(31, 38, 135, 0.37); 
 }
+
+.chart__pie {
+  width: 500px !important;
+  height: 300px !important;
+}

@@ -98,6 +98,7 @@ export interface ProductProps {
   productDescription: string,
   productValue: number,
   productFoto: string,
+  sales: number;
 }
 
 export interface PurchaseProps {
@@ -178,4 +179,14 @@ export interface FormFieldProps {
   isTextArea?: boolean
   setState: (value: string) => void
   checkItem: (value: string) => void
+}
+
+export interface DoughnutProps {
+  chartData: any;
+  chartOptions: any;
+}
+
+export interface AnalyticsProps {
+  restaurantData: RestaurantData;
+  restaurantId: string;
 }
