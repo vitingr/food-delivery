@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { IoBagOutline, IoMenuOutline, IoTicketOutline, IoSettingsOutline, IoHelpBuoyOutline, IoStorefrontOutline } from 'react-icons/io5'
+import { IoBagOutline, IoMenuOutline, IoTicketOutline, IoSettingsOutline, IoHelpBuoyOutline, IoStorefrontOutline, IoCalendarOutline } from 'react-icons/io5'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { BsTicketPerforated } from 'react-icons/bs'
 import { VscSignOut } from 'react-icons/vsc'
@@ -83,10 +83,10 @@ const Navbar = () => {
                     <IoSettingsOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meu Perfil</h3>
                   </Link>
-                  <div className='flex w-full justify-between items-center gap-8 cursor-pointer'>
-                    <IoHelpBuoyOutline size={30} className="gray-icon" />
-                    <h3 className='text-[#717171] w-full text-lg'>Ajuda</h3>
-                  </div>
+                  <Link href={"/rotina"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                    <IoCalendarOutline size={30} className="gray-icon" />
+                    <h3 className='text-[#717171] w-full text-lg'>Rotina de Pedidos</h3>
+                  </Link>
                   <div className='flex w-full justify-between items-center gap-8 cursor-pointer' onClick={() => signOut()}>
                     <VscSignOut size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Sair</h3>

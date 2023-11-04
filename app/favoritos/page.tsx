@@ -42,7 +42,7 @@ const page = () => {
       {favorites.length > 0 ? (
         <div className='max-w-[1500px] flex flex-col gap-8'>
           {favorites.map((favorite: ProductProps) => (
-            <div className='border border-neutral-100 rounded-lg sm:w-[700px] min-h-[175px] pb-6 shadow-sm transition-all duration-300 hover:border-neutral-300' key={favorite.id}>
+            <Link href={`/restaurant/${favorite.restaurant}`} className='border border-neutral-100 rounded-lg sm:w-[700px] min-h-[175px] pb-6 shadow-sm transition-all duration-300 hover:border-neutral-300' key={favorite.id}>
               <div className='flex justify-between p-6'>
                 <div className='flex flex-col justify-center w-full'>
                   <div className='h-full '>
@@ -58,7 +58,7 @@ const page = () => {
               <div className='w-full flex justify-center mt-8'>
                 <h1 className='text-[#ea1d2c] cursor-pointer'>Remover dos Salvos</h1>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (

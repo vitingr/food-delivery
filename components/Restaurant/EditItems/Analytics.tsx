@@ -135,12 +135,12 @@ const Analytics = ({ restaurantData, restaurantId }: AnalyticsProps) => {
             <span className='w-full flex justify-end font-semibold'>{qtdProductsSold} itens</span>
           </li>
           <li className='flex justify-between items-center gap-2 w-full border-b border-neutral-200 pb-3'>
-            <h2 className='w-full'>Receita</h2>
-            <span className='w-full flex justify-end font-semibold'>R$ 200,00</span>
+            <h2 className='w-full'>Dia mais movimentado</h2>
+            <span className='w-full flex justify-end font-semibold'>Sexta-Feira</span>
           </li>
           <li className='flex justify-between items-center gap-2 w-full border-b border-neutral-200 pb-3'>
-            <h2 className='w-full'>Receita</h2>
-            <span className='w-full flex justify-end font-semibold'>R$ 200,00</span>
+            <h2 className='w-full'>Dia menos movimentado</h2>
+            <span className='w-full flex justify-end font-semibold'>Segunda-Feira</span>
           </li>
         </ul>
         <div className='w-full flex flex-col items-center sm:shadow-md sm:p-12 sm:border sm:border-neutral-200 sm:rounded-xl'>

@@ -48,7 +48,7 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
 
     } catch (error) {
       console.log(error)
-      throw new Error("ERRO! Não foi possível obter as infomrações do usuário")
+      throw new Error("ERRO! Não foi possível obter as informações do usuário")
     }
   }
 

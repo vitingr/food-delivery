@@ -23,7 +23,7 @@ const page = () => {
 
   // Restaurant Config
   const { data: session, status } = useSession()
-  const { data } = infoUser()
+  const { data, getInfo } = infoUser()
 
   const isFetched = useRef(false)
 
@@ -277,6 +277,7 @@ const page = () => {
 
         if (response.ok) {
           getRestaurantData()
+          getInfo()
           toast.success("Produto adicionado aos favoritos")
         } else {
           toast.error("Não foi possível favoritar o produto")

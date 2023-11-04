@@ -190,3 +190,36 @@ export interface AnalyticsProps {
   restaurantData: RestaurantData;
   restaurantId: string;
 }
+
+export interface ScheduleProps {
+  id: string;
+  userId: string;
+}
+
+export interface WeekDayProps {
+  id: string;
+  userId: string;
+  schedule: string;
+  weekDay: string;
+}
+
+export interface DayItemProps {
+  id: string;
+  userId: string;
+  day: string;
+  restaurant: string;
+  restaurantName: string;
+  productId: string;
+  productFoto: string;
+  quantityItems: number;
+  totalValue: number;
+  deliveryHour: number;
+  productName: string;
+}
+
+export interface RoutineItemProps {
+  day: string;
+  dayValidator: string;
+  product: DayItemProps;
+  getUserRoutine: any;
+}
