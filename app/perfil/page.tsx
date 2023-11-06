@@ -145,7 +145,7 @@ const page = () => {
 
         <div className='flex flex-col mt-10 mb-10 w-full'>
           <label htmlFor="logo" className='text-lg selection:bg-[#ea1d2c] selection:text-white'>Sua Foto</label>
-          <Upload currentFoto={data.photo} setState={setPhoto} styles='w-full absolute opacity-0 cursor-pointer max-w-[500px] mt-[10px]' />
+          <Upload currentFoto={data.photo} setState={setPhoto} styles='w-full absolute opacity-0 cursor-pointer sm:max-w-[500px] max-w-[240px] mt-[10px] ' />
         </div>
 
         <div className='flex items-center gap-6'>

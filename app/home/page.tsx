@@ -35,7 +35,7 @@ const page = () => {
           <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>
             Os melhores restaurantes
           </h2>
-          <div className='flex gap-6'>
+          <div className='flex sm:flex-nowrap flex-wrap gap-6'>
             <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/Logo%20McDonald_MCDON_DRIV15.jpg?imwidth=128' name="Mcdonalds's" branch='Lanches' verified={true} />
             <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/201910292243_94aaf166-84cc-4ebf-a35d-d223be34d01f.png?imwidth=64' name='Coco Bambu' branch='Frutos do mar' verified={true} />
             <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/201906182008_2b157a73-7564-4733-94c1-8d0376e7bb39.png?imwidth=64' name='Outback Steakhouse' branch='Australiana' verified={true} />
@@ -45,10 +45,10 @@ const page = () => {
         </div>
       </section>
 
-      <section className='max-w-[1600px] w-full'>
+      <section className='max-w-[1600px] w-full mt-20 sm:mt-0'>
         <h2 className='sm:text-2xl text-4xl selection:bg-[#ea1d2c] selection:text-white text-center sm:text-left'>Você pode gostar</h2>
         <h5 className='text-[#717171] sm:text-sm text-base selection:bg-[#ea1d2c] selection:text-white text-center sm:text-left'>Escolha o que você mais deseja</h5>
-        <div className='w-full flex flex-wrap sm:justify-normal justify-between sm:gap-6 gap-14 mt-14'>
+        <div className='w-full flex flex-wrap sm:justify-normal justify-center sm:gap-6 gap-14 mt-14'>
           <SmallRestaurantOption color="bg-[#bceca0]" image='https://cdn3.iconfinder.com/data/icons/3d-black-friday/512/basket.png' name='Mercado' speciality='Mercado' />
           <SmallRestaurantOption color="bg-[#fff19f]" image='https://png.pngtree.com/png-vector/20230918/ourmid/pngtree-picanha-and-salad-brazilian-food-png-image_10093980.png' name='Brasileira' speciality='Brasileira' />
           <SmallRestaurantOption color="bg-[#bceca0]" image='https://static.wixstatic.com/media/b617de_6d6f1d19c89747268fc6fbe5f6f5ac32~mv2.png/v1/crop/x_1315,y_624,w_5166,h_3917/fill/w_342,h_258,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/MARMITA_03.png' name='Marmita' speciality='Marmita' />

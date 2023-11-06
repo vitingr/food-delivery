@@ -32,11 +32,13 @@ export default function RootLayout({
         <Provider>
           {isPublic && (
             <>
-              <RegisterLogin />
-              <main>
-                {children}
-              </main>
-              <Footer />
+              <UserProvider>
+                <Navbar />
+                <main>
+                  {children}
+                </main>
+                <Footer />
+              </UserProvider>
             </>
           )}
 

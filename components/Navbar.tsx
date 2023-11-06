@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { IoBagOutline, IoMenuOutline, IoTicketOutline, IoSettingsOutline, IoHelpBuoyOutline, IoStorefrontOutline, IoCalendarOutline } from 'react-icons/io5'
+import { IoBagOutline, IoMenuOutline, IoTicketOutline, IoSettingsOutline, IoHelpBuoyOutline, IoStorefrontOutline, IoCalendarOutline, IoHomeOutline } from 'react-icons/io5'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { BsTicketPerforated } from 'react-icons/bs'
 import { VscSignOut } from 'react-icons/vsc'
@@ -43,7 +43,7 @@ const Navbar = () => {
           <div className='flex items-center' onClick={() => setShowMenu(!showMenu)}>
             <IoMenuOutline size={30} className="cursor-pointer" />
             {showMenu ? (
-              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[700px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[750px] lg:left-[64%]'>
+              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[750px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[780px] lg:left-[64%]'>
                 <div className='p-10'>
                   <h1 className='text-3xl font-bold text-center'>Olá, {session?.user?.name}</h1>
                 </div>
@@ -56,6 +56,10 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className='p-10 gap-8 w-full flex flex-col'>
+                  <Link href={"/home"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                    <IoHomeOutline size={30} className="gray-icon" />
+                    <h3 className='text-[#717171] w-full text-lg'>Início</h3>
+                  </Link>
                   <Link href={"/pedidos"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
                     <IoTicketOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meus Pedidos</h3>
@@ -97,9 +101,9 @@ const Navbar = () => {
           </div>
         </div>
       ) : (
-        <div className='w-full flex gap-10 ml-10'>
-          <div className='border border-gray-400 pt-2 pb-2 pl-6 pr-6 w-[125px] text-center rounded-xl cursor-pointer flex items-center justify-center text-gray-500' onClick={() => signIn()}>Criar Conta</div>
-          <div className='bg-[#ee4c58] text-white pt-2 pb-2 pl-6 pr-6 w-[125px] text-center rounded-xl cursor-pointer flex items-center justify-center' onClick={() => signIn()}>Entrar</div>
+        <div className='w-full flex justify-between sm:justify-normal gap-10 ml-10'>
+          <div className='border border-gray-400 pt-2 pb-2 pl-6 pr-6 sm:w-[125px] w-full text-center rounded-xl cursor-pointer flex items-center justify-center text-gray-500 sm:text-base text-sm' onClick={() => signIn()}>Criar Conta</div>
+          <div className='bg-[#ee4c58] text-white pt-2 pb-2 pl-6 pr-6 sm:w-[125px] w-full text-center rounded-xl cursor-pointer flex items-center justify-center sm:text-base text-sm' onClick={() => signIn()}>Entrar</div>
         </div>
       )}
     </div >

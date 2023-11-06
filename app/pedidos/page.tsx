@@ -75,7 +75,7 @@ const page = () => {
       <h1 className='selection:bg-[#ea1d2c] selection:text-white sm:text-2xl text-3xl font-semibold mb-20 mt-12 sm:mb-28 w-full max-w-[1500px] sm:text-left text-center'>Meus Pedidos</h1>
 
       {purchases.length > 0 ? (
-        <div className='max-w-[1500px]'>
+        <div className='max-w-[1500px] p-[2%]'>
           {purchases.map((purchase: PurchaseProps) => (
             <div key={purchase.id} className='shadow-sm p-10 sm:w-[550px] w-[450px] border border-neutral-200 rounded-lg mb-20'>
               <div className='flex justify-between w-full'>
