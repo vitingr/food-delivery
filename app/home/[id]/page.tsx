@@ -55,7 +55,7 @@ const page = () => {
 
   return (
     <div className='p-[5%] w-full flex flex-col items-center'>
-      <h1 className='selection:bg-[#ea1d2c] selection:text-white text-2xl font-semibold mb-6 w-full max-w-[1500px]'>Restaurantes Encontrados</h1>
+      <h1 className='selection:bg-[#ea1d2c] selection:text-white text-2xl font-semibold mb-6 w-full max-w-[1500px]'>Restaurantes</h1>
 
       {restaurants.length > 0 ? (
         <div className='w-full flex flex-col max-w-[1500px]'>
@@ -63,11 +63,7 @@ const page = () => {
             <div className='w-full flex flex-col flex-wrap gap-2'>
               {restaurants.map((restaurant: RestaurantProps) => (
                 <div key={restaurant.id}>
-                  {isOpen ? (
-                    <RestaurantOption restaurantId={restaurant.id} image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} isOpen={true} />
-                  ) : (
-                    <RestaurantOption restaurantId={restaurant.id} image={restaurant.logo} name={restaurant.restaurantName} stars={restaurant.stars} branch={restaurant.speciality} distance={0.1} deliveryTime={restaurant.deliveryTime} deliveryValue={"Grátis"} isOpen={false} />
-                  )}
+                  <RestaurantOption restaurantId={restaurant.id} restaurantData={restaurant} />
                 </div>
               ))}
             </div>

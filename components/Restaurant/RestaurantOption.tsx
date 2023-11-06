@@ -39,7 +39,7 @@ const RestaurantOption = ({ restaurantId, restaurantData }: RestaurantOption) =>
         </div>
         <h5 className='text-[#717171] text-sm'>Valor mímimo do pedido: {minPurchaseValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} </h5>
         <div className='mt-6'>
-          <h6 className='bottom-restaurant'>{restaurantData.deliveryTime}  •  <span className='text-[#50a773]'>{restaurantData.deliveryValue}</span></h6>
+          <h6 className='bottom-restaurant'>{restaurantData.deliveryTime}  •  <span className='text-[#50a773]'>{restaurantData.deliveryValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} entrega</span></h6>
         </div>
       </div>
     </Link>

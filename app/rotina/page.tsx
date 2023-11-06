@@ -162,7 +162,7 @@ const page = () => {
             <h1 className='text-2xl font-semibold mb-16 selection:bg-[#ea1d2c] selection:text-white'>Segunda-Feira</h1>
             <div className='flex flex-col gap-6'>
               {dayItems.map((item: DayItemProps) => (
-                <RoutineProduct day="Segunda-Feira" dayValidator={item.day} key={item.id} product={item} getUserRoutine={getUserRoutine} />
+                <RoutineProduct day="Segunda-Feira" dayValidator={item.day} key={item.id} product={item} getUserRoutine={getUserRoutine } />
               ))}
             </div>
           </div>

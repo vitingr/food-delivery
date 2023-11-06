@@ -78,7 +78,7 @@ const page = () => {
         <h2 className='sm:text-2xl text-4xl selection:bg-[#ea1d2c] selection:text-white text-center sm:text-left'>Restaurantes e Mercados</h2>
         <h5 className='text-[#717171] sm:text-sm text-base selection:bg-[#ea1d2c] selection:text-white text-center sm:text-left'>Veja algumas opções de estabelecimentos</h5>
         <div className='mt-16 flex justify-between items-center w-full bg-[#b8b8b83f] rounded-full pl-6 p-2'>
-          <input type="text" name="search" id="search" placeholder='Buscar Loja' className='w-full outline-none bg-transparent p-2' />
+          <input type="text" name="search" id="search" placeholder='Buscar Loja' autoComplete='off' className='w-full outline-none bg-transparent p-2' />
           <IoSearchOutline size={25} className="cursor-pointer mr-6" />
         </div>
         <div className='w-full flex flex-wrap sm:flex-nowrap justify-between sm:gap-6 gap-14 mt-14 max-h-[700px] overflow-hidden'>

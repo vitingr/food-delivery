@@ -145,10 +145,10 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
 
         <div className='flex flex-col mt-10 mb-10 max-w-[500px]'>
           <label htmlFor="logo" className='text-lg'>Sua Logo</label>
-          <Upload currentFoto={logo} setState={setLogo} styles='w-full absolute opacity-0 cursor-pointer max-w-[375px] mt-[10px]' text='Enviar logo' />
+          <Upload currentFoto={logo} setState={setLogo} styles='w-full opacity-0 cursor-pointer max-w-[375px] mt-[10px]' text='Enviar logo' />
 
           <label htmlFor="background" className='text-lg mt-10'>Seu Plano de Fundo</label>
-          <Upload currentFoto={background} setState={setBackground} styles='w-full absolute opacity-0 cursor-pointer max-w-[375px] mt-[10px]' text='Enviar background' />
+          <Upload currentFoto={background} setState={setBackground} styles='w-full opacity-0 cursor-pointer max-w-[375px] mt-[10px]' text='Enviar background' />
         </div>
 
         <label htmlFor="telefone" className='text-lg'>Celular do Dono (com DDD)</label>

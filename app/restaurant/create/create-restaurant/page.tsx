@@ -9,6 +9,7 @@ import { infoUser } from '@/common/utils/userContext'
 import { isValidCPF } from '@/common/functions/cpf-validator'
 import { cellphoneMask } from '@/common/functions/cellphone-mask'
 import { cpfMask } from '@/common/functions/cpf-mask'
+import { CNPJMask } from '@/common/functions/cnpj-mask'
 
 const page = () => {
   const [step, setStep] = useState(1)
@@ -81,6 +82,11 @@ const page = () => {
   const verifyCellphoneRestaurant = async (value: string) => {
     const formatedCellphone: string = await cellphoneMask(value)
     setTelephone(formatedCellphone)
+  }
+
+  const verifyCNPJ = async (value: string) => {
+    const formatedCPNJ: string = await CNPJMask(value)
+    setCnpj(formatedCPNJ)
   }
 
   const createRestaurant = async () => {
@@ -186,13 +192,13 @@ const page = () => {
               <h2 className='text-2xl font-bold mb-10'>Sobre o restaurante</h2>
 
               <label htmlFor="cnpj" className='text-lg'>CPNJ</label>
-              <input type="text" name="cnpj" id="cnpj" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o CNPJ do restaurante?' onChange={(e) => setCnpj(e.target.value)} required />
+              <input type="text" name="cnpj" id="cnpj" minLength={14} maxLength={18} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o CNPJ do restaurante?' onChange={(e) => verifyCNPJ(e.target.value)} value={cnpj} required />
 
               <label htmlFor="restauranteName" className='text-lg'>Nome do restaurante</label>
               <input type="text" name="restauranteName" id="restauranteName" minLength={2} maxLength={40} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Nome do restaurante' onChange={(e) => setRestaurantName(e.target.value)} required />
 
               <label htmlFor="telephone" className='text-lg'>Celular do Restaurante (com DDD)</label>
-              <input type="text" name="telephone" id="telephone" maxLength={15} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o telefone do restaurante?' onChange={(e) => verifyCellphoneRestaurant(e.target.value)} required />
+              <input type="text" name="telephone" id="telephone" maxLength={15} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual é o telefone do restaurante?' onChange={(e) => verifyCellphoneRestaurant(e.target.value)} value={telephone} required />
 
               <div className='flex items-center gap-6'>
                 <div className='w-full'>
