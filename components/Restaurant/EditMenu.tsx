@@ -2,7 +2,6 @@
 
 import { EditMenu } from '@/types/types'
 import React from 'react'
-import Button from '../Button'
 import ToastMessage from '../Config/ToastMessage'
 import Menu from './EditItems/Menu'
 import Purchases from './EditItems/Purchases'
@@ -41,14 +40,6 @@ const EditMenu = ({ currentSection, restaurantId, restaurantData, getRestaurantD
           <h1 className='text-center text-3xl font-bold'>Analytics</h1>
 
           <Analytics restaurantData={restaurantData} restaurantId={restaurantId} />
-        </div>
-      ) : (<></>)}
-
-      {currentSection === "time" ? (
-        <div className='w-full'>
-          <h1 className='text-center text-3xl font-bold'>Horários</h1>
-
-          <Button text='Editar Horário' />
         </div>
       ) : (<></>)}
 

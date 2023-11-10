@@ -81,35 +81,49 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   }
 
   const createNewProduct = async () => {
-    if (productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "") {
-      try {
-        const response = await fetch("http://localhost:3001/product/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            restaurant: restaurantId,
-            category: currentCategoryId,
-            productName: productName,
-            productDescription: productDescription,
-            productValue: Number(productValue),
-            productFoto: productFoto
-          })
-        })
 
-        if (response.ok) {
-          toast.success("Produto criado com Sucesso!")
-          setProductFoto("")
-          getRestaurantProducts(restaurantId)
-          setCreateProduct(false)
-        } else {
+    let photoCloudinary
+
+    if (productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "") {
+
+      const imageUpload = await fetch(`/api/upload/new`, {
+        method: "POST",
+        body: JSON.stringify({
+          path: productFoto
+        })
+      })
+
+      if (imageUpload.ok) {
+        photoCloudinary = await imageUpload.json()
+        try {
+          const response = await fetch("http://localhost:3001/product/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              restaurant: restaurantId,
+              category: currentCategoryId,
+              productName: productName,
+              productDescription: productDescription,
+              productValue: Number(productValue),
+              productFoto: photoCloudinary.url
+            })
+          })
+
+          if (response.ok) {
+            toast.success("Produto criado com Sucesso!")
+            setProductFoto("")
+            getRestaurantProducts(restaurantId)
+            setCreateProduct(false)
+          } else {
+            toast.error("Não foi possível adicionar o produto")
+          }
+
+        } catch (error) {
+          console.log(error)
           toast.error("Não foi possível adicionar o produto")
         }
-
-      } catch (error) {
-        console.log(error)
-        toast.error("Não foi possível adicionar o produto")
       }
     }
   }
@@ -206,7 +220,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
       }
     }
   }
-
+ 
   const removeProduct = async (productId: string) => {
     if (productId) {
       try {
@@ -283,7 +297,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
               <div>
                 <div className='flex items-end gap-2'>
                   <h2 className='font-bold text-2xl'>{category.categoryName}</h2>
-                  {category.quantityItems === 0 ? <h5 className='text-sm mb-[1.5px]'>Categoria vazia</h5> : <h5 className='text-sm -m-1'>{category.quantityItems} itens na categoria</h5>}
+                  {category.quantityItems === 0 ? <h5 className='text-sm mb-[1.5px]'>Categoria vazia</h5> : <h5 className='text-sm mb-1'>{category.quantityItems} itens na categoria</h5>}
                 </div>
                 <h6 className='text-base text-[#717171] mt-2 pb-6'>{category.categoryDescription}</h6>
               </div>
@@ -305,7 +319,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                                   <input type="text" name="nome" id="nome" minLength={2} maxLength={35} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Feijoada, Pastel, etc.' onChange={(e) => setProductName(e.target.value)} defaultValue={product.productName} required />
 
                                   <label htmlFor="descricao" className='text-lg'>Descrição do Produto</label>
-                                  <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição do seu produto oferecido' onChange={(e) => setProductDescription(e.target.value)} defaultValue={product.productDescription} required />
+                                  <input type="text" name="descricao" id="descricao" minLength={2} maxLength={155} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição do seu produto oferecido' onChange={(e) => setProductDescription(e.target.value)} defaultValue={product.productDescription} required />
 
                                   <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
                                   <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} defaultValue={product.productValue} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
@@ -313,7 +327,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                                   <Upload setState={(value: any) => setProductFoto(value)} currentFoto={product.productFoto} styles='mt-[-565px] w-full mt-[-20px] absolute opacity-0 cursor-pointer max-w-[450px] mt-[0px]' text='Enviar imagem do produto' />
 
                                   <button className='mt-12 w-full text-[#ea1d2c] rounded-xl p-4 text-center border border-[#ea1d2c] cursor-pointer' type='submit' onClick={() => removeProduct(product.id)}>
-                                    Remover Produto 
+                                    Remover Produto
                                   </button>
                                   {productName !== "" && productValue !== "" && productDescription !== "" && productFoto !== "" ? (
                                     <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer z-50' type='submit'>
@@ -336,7 +350,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                         </div>
                         <div className='flex gap-4 max-h-[40px]'>
                           <div className='text-[#ea1d2c] border border-[#ea1d2c] w-[100px] flex items-center justify-center rounded-xl cursor-pointer p-1' onClick={() => editProduct(product.id, product.productDescription, product.productName, product.productValue, product.productFoto)}>Editar</div>
-                          <div className='bg-[#ea1d2c] text-white w-[100px] flex items-center justify-center rounded-xl cursor-pointer p-1'>Remover</div>
+                          <div className='bg-[#ea1d2c] text-white w-[100px] flex items-center justify-center rounded-xl cursor-pointer p-1' onClick={() => removeProduct(product.id)}>Remover</div>
                         </div>
                       </div>
                     ) : (<></>)}
@@ -351,7 +365,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                       }} className='mt-14 overflow-y-scroll max-h-[500px] pr-10'>
 
                         <label htmlFor="nome" className='text-lg'>Nome da Categoria</label>
-                        <input type="text" name="nome" id="nome" minLength={2} maxLength={35} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Bebidas, Acompanhamentos, Hamburguers' onChange={(e) => setCategoryName(e.target.value)} defaultValue={category.categoryName} required />
+                        <input type="text" name="nome" id="nome" minLength={2} maxLength={45} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Bebidas, Acompanhamentos, Hamburguers' onChange={(e) => setCategoryName(e.target.value)} defaultValue={category.categoryName} required />
 
                         <label htmlFor="descricao" className='text-lg'>Descrição</label>
                         <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição da categoria' onChange={(e) => setCategoryDescription(e.target.value)} defaultValue={category.categoryDescription} required />
@@ -389,7 +403,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
         </div>
       )}
 
-      {!editRestaurantProduct && !editProductCategory && !createProductCategory && !createProduct  ? (
+      {!editRestaurantProduct && !editProductCategory && !createProductCategory && !createProduct ? (
         <Button text='Adicionar Categoria' handleClick={() => setCreateProductCategory(true)} />
       ) : (
         <></>
@@ -406,7 +420,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
             <input type="text" name="nome" id="nome" minLength={2} maxLength={35} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Feijoada, Pastel, etc.' onChange={(e) => setProductName(e.target.value)} required />
 
             <label htmlFor="descricao" className='text-lg'>Descrição do Produto</label>
-            <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Ex: Ingredientes, temperatura, ponto da carne' onChange={(e) => setProductDescription(e.target.value)} required />
+            <input type="text" name="descricao" id="descricao" minLength={2} maxLength={155} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Ex: Ingredientes, temperatura, ponto da carne' onChange={(e) => setProductDescription(e.target.value)} required />
 
             <label htmlFor="preco" className='text-lg'>Preço do Produto</label>
             <input type="number" name="preco" id="preco" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o preço do seu produto?' onChange={(e) => setProductValue(e.target.value)} pattern="^\d*(\.\d{0,2})?$" step="0.01" required />
@@ -433,7 +447,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
           }} className='mt-14 overflow-y-scroll max-h-[500px] pr-10'>
 
             <label htmlFor="nome" className='text-lg'>Nome da Categoria</label>
-            <input type="text" name="nome" id="nome" minLength={2} maxLength={35} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Bebidas, Acompanhamentos, Hamburguers' onChange={(e) => setCategoryName(e.target.value)} required />
+            <input type="text" name="nome" id="nome" minLength={2} maxLength={45} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Bebidas, Acompanhamentos, Hamburguers' onChange={(e) => setCategoryName(e.target.value)} required />
 
             <label htmlFor="descricao" className='text-lg'>Descrição</label>
             <input type="text" name="descricao" id="descricao" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Descrição da categoria' onChange={(e) => setCategoryDescription(e.target.value)} required />

@@ -265,37 +265,37 @@ const page = () => {
   return isOwner === true ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
-      <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
-        <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
-        <div className='mt-10 flex justify-between w-full'>
+      <div className='bg-white max-w-[1300px] w-full rounded-sm sm:p-16 p-4'>
+        <div className={`bg-cover bg-no-repeat w-full h-[300px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
+        <div className='mt-10 flex justify-between sm:flex-nowrap flex-wrap w-full'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
             <div>
               <div className='flex items-center gap-2'>
-                <h1 className='text-2xl'>{restaurantData.restaurantName}</h1>
+                <h1 className='text-2xl selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.restaurantName}</h1>
                 <RiVerifiedBadgeFill size={22.5} className="red-icon" />
               </div>
               <div>
-                <h5 className='text-[#717171] text-sm'>Especialidade da casa: {restaurantData.speciality}</h5>
-                <h6 className='text-[#717171] text-sm'>Tempo de entrega: ≅ {restaurantData.deliveryTime}</h6>
+                <h5 className='text-[#717171] text-sm selection:bg-[#ea1d2c] selection:text-white'>Especialidade da casa: {restaurantData.speciality}</h5>
+                <h6 className='text-[#717171] text-sm selection:bg-[#ea1d2c] selection:text-white'>Tempo de entrega: ≅ {restaurantData.deliveryTime}</h6>
               </div>
             </div>
           </div>
-          <div className=''>
+          <div className='mt-6 sm:mt-0 pb-6 sm:pb-0'>
             <div className='flex gap-8 h-[25px]'>
               <div className='flex gap-3 items-center'>
                 <AiFillStar size={15} className="gold-icon" />
-                <h3>{restaurantData.stars}.0</h3>
+                <h3 className='selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.stars}.0</h3>
               </div>
               <div className='w-[200px] flex items-center gap-3 pl-8 border-l border-neutral-300'>
                 <BsCoin size={15} className="gray-icon" />
-                <p className='text-sm text-[#717171]'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                <p className='text-sm text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
               </div>
             </div>
             <div className='mt-8 flex gap-4'>
               <div className='w-full'>
-                <h3 className='text-sm text-[#717171]'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
-                <h5 className='text-base text-[#717171]'>{restaurantData.street}, {restaurantData.address}</h5>
+                <h3 className='text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
+                <h5 className='text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
               <Link href="/restaurant/edit" className='bg-[#ea1d2c] text-white w-[150px] flex items-center justify-center rounded-lg cursor-pointer text-lg max-h-[45px]'>
                 Editar
@@ -305,33 +305,33 @@ const page = () => {
         </div>
       </div>
 
-      <div className='bg-white w-full min-h-[18vh] p-16 mt-[75px] max-w-[1300px]'>
-        <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px]'>Menu do Restaurante</h1>
+      <div className='bg-white w-full min-h-[18vh] sm:p-16 p-2 mt-[75px] max-w-[1300px]'>
+        <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px] sm:mt-0 mt-14'>Menu do Restaurante</h1>
         {categories.length > 0 ? (
           <>
             {categories.map((category: CategoryProps) => (
               <div className='mt-[75px]' key={category.id}>
                 <div>
                   <div className='flex items-end gap-2'>
-                    <h2 className='font-bold text-2xl'>{category.categoryName}</h2>
-                    {category.quantityItems === 0 ? <h5 className='text-sm'>Categoria vazia</h5> : <h5 className='text-sm'>{category.quantityItems} itens na categoria</h5>}
+                    <h2 className='font-bold text-2xl selection:bg-[#ea1d2c] selection:text-white'>{category.categoryName}</h2>
+                    {category.quantityItems === 0 ? <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white'>Categoria vazia</h5> : <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>{category.quantityItems} itens na categoria</h5>}
                   </div>
-                  <h6 className='text-base text-[#717171] '>{category.categoryDescription}</h6>
+                  <h6 className='text-base text-[#717171] selection:bg-[#ea1d2c] selection:text-white mt-4'>{category.categoryDescription}</h6>
                 </div>
-                <div className='mt-16 grid grid-cols-2 gap-8'>
+                <div className='mt-16 sm:grid sm:grid-cols-2 flex flex-wrap gap-8'>
                   {products.map((product: ProductProps) => (
                     <>
                       {product.category === category.id ? (
-                        <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
+                        <div className='flex justify-between p-6 border border-neutral-100 rounded-lg sm:h-[175px] h-[300px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
                           <div className='flex flex-col justify-center w-full'>
-                            <div className='h-full '>
-                              <h1 className='text-2xl font-bold'>{product.productName}</h1>
-                              <h2 className='text-[#717171] text-sm mt-2'>{product.productDescription}</h2>
+                            <div className='h-full'>
+                              <h1 className='text-[1.125rem] font-semibold selection:bg-[#ea1d2c] selection:text-white'>{product.productName}</h1>
+                              <h2 className='text-[#717171] text-[0.875rem] mt-2 text-justify selection:bg-[#ea1d2c] selection:text-white overflow-hidden sm:max-h-[40px] max-h-[100px]'>{product.productDescription}</h2>
                             </div>
-                            <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                            <h5 className='text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                           </div>
-                          <div className='max-w-[125px] max-h-[125px]'>
-                            <img src={product.productFoto} className='w-full h-full' alt="Product Image" />
+                          <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
+                            <img src={product.productFoto} alt="Product Image" />
                           </div>
                         </div>
                       ) : (<></>)}

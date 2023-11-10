@@ -10,6 +10,7 @@ import { isValidCPF } from '@/common/functions/cpf-validator'
 import { cellphoneMask } from '@/common/functions/cellphone-mask'
 import { cpfMask } from '@/common/functions/cpf-mask'
 import { CNPJMask } from '@/common/functions/cnpj-mask'
+import { rgMask } from '@/common/functions/rg-mask'
 
 const page = () => {
   const [step, setStep] = useState(1)
@@ -42,6 +43,11 @@ const page = () => {
   const nextStep = async () => {
     let currentStep = step
     setStep(currentStep + 1)
+  }
+
+  const lastStep = async () => {
+    let currentStep = step
+    setStep(currentStep - 1)
   }
 
   const [cidadesList, setCidadesList] = useState<any>([])
@@ -87,6 +93,11 @@ const page = () => {
   const verifyCNPJ = async (value: string) => {
     const formatedCPNJ: string = await CNPJMask(value)
     setCnpj(formatedCPNJ)
+  }
+
+  const verifyRG = async (value: string)   => {
+    const formatedRG: string = await rgMask(value)
+    setRg(formatedRG)
   }
 
   const createRestaurant = async () => {
@@ -147,7 +158,7 @@ const page = () => {
             <>
               <h2 className='text-2xl font-bold mb-10'>Sobre o dono do restaurante</h2>
               <label htmlFor="email" className='text-lg'>E-mail</label>
-              <input type="email" name="email" id="email" minLength={2} maxLength={80} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Qual o e-mail do dono do restaurante' onChange={(e) => setEmail(e.target.value)} required />
+              <input type="email" name="email" id="email" minLength={2} maxLength={80} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={email} placeholder='Qual o e-mail do dono do restaurante' onChange={(e) => setEmail(e.target.value)} required />
 
               <label htmlFor="telefone" className='text-lg'>Celular do Dono (com DDD)</label>
               <input type="text" name="telefone" id="telefone" maxLength={15} minLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' value={cellphone} autoComplete='off' placeholder='Qual é o celular do restaurante' onChange={(e) => verifyCellphone(e.target.value)} required />
@@ -155,11 +166,11 @@ const page = () => {
               <div className='flex items-center gap-6'>
                 <div className='w-full'>
                   <label htmlFor="nome" className='text-lg'>Nome</label>
-                  <input type="text" name="nome" id="nome" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Nome do dono' onChange={(e) => setName(e.target.value)} required />
+                  <input type="text" name="nome" id="nome" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={name} placeholder='Nome do dono' onChange={(e) => setName(e.target.value)} required />
                 </div>
                 <div className='w-full'>
                   <label htmlFor="sobrenome" className='text-lg'>Sobrenome</label>
-                  <input type="text" name="sobrenome" id="sobrenome" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Sobrenome do dono' onChange={(e) => setLastName(e.target.value)} required />
+                  <input type="text" name="sobrenome" id="sobrenome" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={lastName} placeholder='Sobrenome do dono' onChange={(e) => setLastName(e.target.value)} required />
                 </div>
               </div>
 
@@ -167,10 +178,10 @@ const page = () => {
               <input type="text" name="cpf" id="cpf" minLength={11} maxLength={14} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={cpfFormated} placeholder='Qual é o CPF do dono do restaurante?' onChange={(e) => verifyCPF(e.target.value)} required />
 
               <label htmlFor="rg" className='text-lg'>RG</label>
-              <input type="text" name="rg" id="rg" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={rg.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")} placeholder='Qual é o RG do dono do restaurante?' onChange={(e) => setRg(e.target.value)} required />
+              <input type="text" name="rg" id="rg" minLength={8} maxLength={11} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={rg} placeholder='Qual é o RG do dono do restaurante?' onChange={(e) => verifyRG(e.target.value)} required />
 
               <label htmlFor="orgao-emissor" className='text-lg'>Orgão Emissor</label>
-              <select name="orgao-emissor" id="orgao-emissor" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setOrgaoEmissor(e.target.value)} required>
+              <select name="orgao-emissor" id="orgao-emissor" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' value={orgaoEmissor} onChange={(e) => setOrgaoEmissor(e.target.value)} required>
                 <option value="">Selecione</option>
                 <option value="SSP/UF">SSP/UF</option>
                 <option value="Cartório Civil">Cartório Civil</option>
@@ -181,14 +192,12 @@ const page = () => {
                 <option value="CGPI">CGPI</option>
               </select>
 
-              {email !== "" && cellphone !== "" && name !== "" && lastName !== "" && cpf !== "" && rg !== "" && orgaoEmissor !== "" ? <button onClick={(e: React.SyntheticEvent) => {
-                e.preventDefault()
-                nextStep()
-              }} className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer'>Continuar</button> : <button className='mt-12 w-full bg-[#dddddd] rounded-xl p-4 text-center text-[#717171] font-bold cursor-not-allowed'>Continuar</button>}
+              {email !== "" && cellphone !== "" && name !== "" && lastName !== "" && cpf !== "" && rg !== "" && orgaoEmissor !== "" ? <button onClick={() => nextStep()} className='mt-12 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer'>Continuar</button> : <button className='mt-12 w-full bg-[#dddddd] rounded-xl p-4 text-center text-[#717171] font-bold cursor-not-allowed'>Continuar</button>}
             </>
           ) : (<></>)}
           {step === 2 ? (
             <>
+              <p className='text-[#717171] mb-6 underline-offset-2 underline cursor-pointer text-sm' onClick={() => lastStep()}>Voltar</p>
               <h2 className='text-2xl font-bold mb-10'>Sobre o restaurante</h2>
 
               <label htmlFor="cnpj" className='text-lg'>CPNJ</label>

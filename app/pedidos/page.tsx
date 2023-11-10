@@ -80,7 +80,7 @@ const page = () => {
             <div key={purchase.id} className='shadow-sm p-10 sm:w-[550px] w-[450px] border border-neutral-200 rounded-lg mb-20'>
               <div className='flex justify-between w-full'>
                 <div className='w-full flex gap-4'>
-                  <img src={purchase.restaurantLogo} className='w-[125px] h-[125px]' alt="Restaurant Logo" />
+                  <img src={purchase.restaurantLogo} className='w-[75px] h-[75px] rounded-xl' alt="Restaurant Logo" />
                   {purchase.takeOption === "Retirada" ? (
                     <div className='flex flex-col'>
                       <h1 className='font-semibold selection:bg-[#ea1d2c] selection:text-white'>{purchase.restaurantName}</h1>

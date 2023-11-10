@@ -315,7 +315,7 @@ const page = () => {
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
       <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
-        <div className={`bg-cover bg-no-repeat w-full h-[200px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
+        <div className={`bg-cover bg-no-repeat w-full h-[300px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
@@ -353,8 +353,8 @@ const page = () => {
             </div>
             <div className='mt-8 flex justify-end gap-4 w-full'>
               <div className='w-full'>
-                <h3 className='text-sm text-[#717171] flex justify-end w-full'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
-                <h5 className='text-base text-[#717171] flex justify-end w-full'>{restaurantData.street}, {restaurantData.address}</h5>
+                <h3 className='text-[#717171] flex justify-end w-full'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
+                <h5 className='text-[#717171] flex justify-end w-full'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
             </div>
           </div>
@@ -369,12 +369,12 @@ const page = () => {
               <div className='mt-[75px]' key={category.id}>
                 <div>
                   <div className='flex items-end gap-2'>
-                    <h2 className='font-bold text-2xl'>{category.categoryName}</h2>
-                    {category.quantityItems === 0 ? <h5 className='text-sm'>Categoria vazia</h5> : <h5 className='text-sm'>{category.quantityItems} itens na categoria</h5>}
+                    <h2 className='font-bold text-2xl selection:bg-[#ea1d2c] selection:text-white'>{category.categoryName}</h2>
+                    {category.quantityItems === 0 ? <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>Categoria vazia</h5> : <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>{category.quantityItems} itens na categoria</h5>}
                   </div>
-                  <h6 className='text-base text-[#717171] '>{category.categoryDescription}</h6>
+                  <h6 className='text-base text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{category.categoryDescription}</h6>
                 </div>
-                <div className='mt-16 grid grid-cols-2 gap-8'>
+                <div className='mt-16 sm:grid sm:grid-cols-2 flex flex-wrap gap-8'>
                   {products.map((product: ProductProps) => (
                     <>
                       {product.category === category.id ? (
@@ -382,13 +382,13 @@ const page = () => {
                           <div className='flex justify-between p-6 border border-neutral-100 rounded-lg h-[175px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' key={product.id} onClick={() => setBuyingProducts(true)}>
                             <div className='flex flex-col justify-center w-full'>
                               <div className='h-full '>
-                                <h1 className='text-2xl font-bold flex gap-3 items-center'> {product.productName}</h1>
-                                <h2 className='text-[#717171] text-sm mt-2'>{product.productDescription}</h2>
+                                <h1 className='text-[1.125rem] font-semibold selection:bg-[#ea1d2c] selection:text-white'> {product.productName}</h1>
+                                <h2 className='text-[#717171] text-[0.875rem] mt-2 text-justify selection:bg-[#ea1d2c] selection:text-white'>{product.productDescription}</h2>
                               </div>
-                              <h5 className='text-xl'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                              <h5 className='text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                             </div>
-                            <div className='max-w-[125px] max-h-[125px]'>
-                              <img src={product.productFoto} className='w-full h-full' alt="Product Image" />
+                            <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
+                              <img src={product.productFoto} alt="Product Image" />
                             </div>
                           </div>
                           <div className='absolute'>

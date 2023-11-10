@@ -223,3 +223,7 @@ export interface RoutineItemProps {
   product: DayItemProps;
   getUserRoutine: any;
 }
+
+export interface FeaturedProduct {
+  productData: ProductProps;
+}

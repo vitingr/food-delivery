@@ -1,40 +1,56 @@
 "use client"
 
+import { randomize } from '@/common/functions/randomItems'
+import FeaturedProducts from '@/components/FeaturedProducts'
+import ProductsSwiper from '@/components/ProductsSwiper'
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
 import RestaurantOption from '@/components/Restaurant/RestaurantOption'
 import SmallRestaurantOption from '@/components/Restaurant/SmallRestaurantOption'
-import { RestaurantProps } from '@/types/types'
+import { ProductProps, RestaurantProps } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5'
 
 const page = () => {
 
   const { data: session, status } = useSession()
 
+  const isFetched = useRef(false)
+
   const [restaurants, setRestaurants] = useState<RestaurantProps[] | any>([])
+  const [products, setProducts] = useState<ProductProps[]>([])
 
   const getRestaurants = async () => {
     const requisition = await fetch("http://localhost:3001/restaurant")
     const response = await requisition.json()
     setRestaurants(response)
-    console.log(response)
+  }
+
+  const getProducts = async () => {
+    const requisition = await fetch("http://localhost:3001/product")
+    const response = await requisition.json()
+    const randomProducts = await randomize(response)
+    setProducts(randomProducts)
   }
 
   useEffect(() => {
     if (session?.user?.email !== undefined && status === "authenticated") {
       getRestaurants()
+      if (!isFetched.current) {
+        getProducts()
+      } else {
+        isFetched.current = true
+      }
     }
   }, [session])
 
   return (
     <div className='w-full flex flex-col items-center sm:p-[2%]'>
+
       <section className='w-full flex flex-col items-center justify-center p-[2%]'>
         <div className='w-full max-w-[1600px]'>
-          <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>
-            Os melhores restaurantes
-          </h2>
+          <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>Os melhores restaurantes</h2>
           <div className='flex sm:flex-nowrap flex-wrap gap-6'>
             <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/Logo%20McDonald_MCDON_DRIV15.jpg?imwidth=128' name="Mcdonalds's" branch='Lanches' verified={true} />
             <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/201910292243_94aaf166-84cc-4ebf-a35d-d223be34d01f.png?imwidth=64' name='Coco Bambu' branch='Frutos do mar' verified={true} />
@@ -45,7 +61,12 @@ const page = () => {
         </div>
       </section>
 
-      <section className='max-w-[1600px] w-full mt-20 sm:mt-0'>
+      <section className='max-w-[2400px] w-full overflow-hidden mt-[50px] flex flex-col items-center'>
+        <h2 className='w-full text-3xl selection:bg-[#ea1d2c] selection:text-white max-w-[1600px] mb-6'>Destaques</h2>
+        <ProductsSwiper content={products} />
+      </section>
+
+      <section className='max-w-[1600px] w-full mt-[100px]'>
         <h2 className='sm:text-2xl text-4xl selection:bg-[#ea1d2c] selection:text-white text-center sm:text-left'>Você pode gostar</h2>
         <h5 className='text-[#717171] sm:text-sm text-base selection:bg-[#ea1d2c] selection:text-white text-center sm:text-left'>Escolha o que você mais deseja</h5>
         <div className='w-full flex flex-wrap sm:justify-normal justify-center sm:gap-6 gap-14 mt-14'>
@@ -84,7 +105,7 @@ const page = () => {
         <div className='w-full flex flex-wrap sm:flex-nowrap justify-between sm:gap-6 gap-14 mt-14 max-h-[700px] overflow-hidden'>
           <div className='w-full flex flex-col flex-wrap gap-2'>
             {restaurants.map((restaurant: RestaurantProps) => (
-              <div>
+              <div key={restaurant.id}>
                 <RestaurantOption restaurantId={restaurant.id} restaurantData={restaurant} />
               </div>
             ))}
@@ -96,7 +117,7 @@ const page = () => {
       <section className='mt-[200px] mb-[150px] w-full flex justify-center'>
         <img src="https://static.ifood-static.com.br/image/upload/t_high,q_100/webapp/landingV2/ifood-benefits-desktop.png" alt="Logo" className='w-full max-w-[1600px] cursor-pointer' />
       </section>
-    </div>
+    </div >
   )
 }
 

@@ -26,8 +26,9 @@ const Navbar = () => {
         <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Início</li></Link>
         <Link href="/home"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Restaurantes</li></Link>
         <Link href="/home"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Mercados</li></Link>
-        <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Cupons</li></Link>
+        <Link href="/cupons"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Cupons</li></Link>
         <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Informações</li></Link>
+        <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c]'>Sobre</li></Link>
       </ul>
 
       {session?.user?.email ? (
@@ -36,7 +37,7 @@ const Navbar = () => {
           <div className='flex items-center justify-center gap-2 transition-all duration-300 rounded-full hover:bg-[#b1b4b415] pl-6 pr-6 w-[125px] cursor-pointer'>
             <IoBagOutline size={35} className="red-icon" />
             <div className='w-full'>
-              <h5 className='text-[12px]'>R$ 0,00</h5>
+              {data.money > 0 ? <h5 className='text-[12px]'>{data.money.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5> : <h5 className='text-[12px]'>R$ 0,00</h5>}
               <p className='text-[11px] text-[#717171] mt-[-3.5px]'>0 itens</p>
             </div>
           </div>

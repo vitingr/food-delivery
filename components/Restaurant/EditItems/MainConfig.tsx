@@ -67,47 +67,72 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
 
   const updateInfo = async () => {
     if (restaurantId) {
-      try {
-        const response = await fetch("http://localhost:3001/restaurant/update", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: restaurantData.id,
-            ownerId: restaurantData.ownerId,
-            cellphone: cellphone,
-            ownerName: name,
-            ownerLastname: lastName,
-            restaurantName: restaurantName,
-            telephone: telephone,
-            street: street,
-            city: city,
-            state: state,
-            address: address,
-            speciality: speciality,
-            delivery: delivery,
-            logo: logo,
-            background: background,
-            deliveryTime: deliveryTime,
-            deliveryValue: deliveryValue,
-            minValue: minValue,
-            openingHour: openingHour,
-            closingHour: closingHour
-          })
-        })
 
-        if (response.ok) {
-          getRestaurantData()
-          router.push("/restaurant")
-          toast.success("Informações do restaurante atualizadas!")
-        } else {
+      let photoCloudinary
+      let backgroundCloudinary
+
+      const imageUpload = await fetch(`/api/upload/new`, {
+        method: "POST",
+        body: JSON.stringify({
+          path: logo
+        })
+      })
+
+      const backgroundUpload = await fetch(`/api/upload/new`, {
+        method: "POST",
+        body: JSON.stringify({
+          path: background
+        })
+      })
+
+      if (imageUpload.ok && backgroundUpload.ok) {
+        photoCloudinary = await imageUpload.json()
+        backgroundCloudinary = await backgroundUpload.json()
+
+        console.log(`${photoCloudinary} ${backgroundCloudinary}`)
+
+        try {
+          const response = await fetch("http://localhost:3001/restaurant/update", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: restaurantData.id,
+              ownerId: restaurantData.ownerId,
+              cellphone: cellphone,
+              ownerName: name,
+              ownerLastname: lastName,
+              restaurantName: restaurantName,
+              telephone: telephone,
+              street: street,
+              city: city,
+              state: state,
+              address: address,
+              speciality: speciality,
+              delivery: delivery,
+              logo: photoCloudinary.url,
+              background: backgroundCloudinary.url,
+              deliveryTime: deliveryTime,
+              deliveryValue: deliveryValue,
+              minValue: minValue,
+              openingHour: openingHour,
+              closingHour: closingHour
+            })
+          })
+
+          if (response.ok) {
+            getRestaurantData()
+            router.push("/restaurant")
+            toast.success("Informações do restaurante atualizadas!")
+          } else {
+            toast.error("Não foi possível atualizar as informações")
+          }
+
+        } catch (error) {
+          console.log(error)
           toast.error("Não foi possível atualizar as informações")
         }
-
-      } catch (error) {
-        console.log(error)
-        toast.error("Não foi possível atualizar as informações")
       }
     }
   }

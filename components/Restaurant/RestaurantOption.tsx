@@ -25,8 +25,8 @@ const RestaurantOption = ({ restaurantId, restaurantData }: RestaurantOption) =>
   }, [restaurantData])
 
   return isOpen ? (
-    <Link href={`/restaurant/${restaurantId}`} className='flex gap-3 p-6 h-[135px] cursor-pointer rounded-sm restaurant__option'>
-      <img src={restaurantData.logo} alt="Company Logo" className='rounded-xl h-full' />
+    <Link href={`/restaurant/${restaurantId}`} className='flex gap-6 p-6 h-[135px] cursor-pointer rounded-sm restaurant__option'>
+      <img src={restaurantData.logo} alt="Company Logo" className='rounded-xl h-full max-w-[75px] max-h-[75px]' />
       <div className='flex flex-col justify-center'>
         <h1 className='text-lg font-bold'>{restaurantData.restaurantName}</h1>
         <div className='flex gap-2'>
@@ -44,8 +44,8 @@ const RestaurantOption = ({ restaurantId, restaurantData }: RestaurantOption) =>
       </div>
     </Link>
   ) : (
-    <div className='flex gap-3 p-6 h-[135px] cursor-pointer rounded-sm restaurant__option'>
-      <img src={restaurantData.logo} alt="Company Logo" className='rounded-xl h-full' />
+    <div className='flex gap-6 p-6 h-[135px] cursor-pointer rounded-sm restaurant__option'>
+      <img src={restaurantData.logo} alt="Company Logo" className='rounded-xl h-full max-w-[75px] max-h-[75px]' />
       <div className='flex flex-col justify-center'>
         <h1 className='text-lg font-bold'>{restaurantData.restaurantName}</h1>
         <div className='flex gap-2'>
