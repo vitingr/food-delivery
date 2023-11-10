@@ -10,5 +10,5 @@ export const randomize = async (array: []) => {
     }
 
     // Retorna os primeiros 5 itens do array embaralhado
-    return arrayEmbaralhado.slice(0, 20);
+    return arrayEmbaralhado.slice(0, 25);
 }

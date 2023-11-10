@@ -60,7 +60,7 @@ const page = () => {
       <ToastMessage />
       <div className='hidden sm:block p-12 h-full min-h-[78vh] w-full max-w-[375px] border-r border-[#3e3e3e27] bg-[#efefef59]'>
         <div className='flex flex-col items-center'>
-          <img src={restaurantData.logo} alt="Company Logo" className='w-[150px] h-[150px] rounded-lg mt-[-25px]' />
+          <img src={restaurantData.logo} alt="Company Logo" className='w-[150px] h-[150px] rounded-xl mt-[-25px]' />
           <h1 className='mt-6 font-bold text-2xl uppercase'>{restaurantData.restaurantName}</h1>
         </div>
         <div className='mt-16 h-full'>
