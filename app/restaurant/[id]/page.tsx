@@ -8,13 +8,14 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { BsCoin } from 'react-icons/bs'
 import { usePathname, useRouter } from 'next/navigation'
 import { APP_ROUTES } from '@/constants/app-routes'
-import { toast } from 'react-toastify'
+import { toast, useToast } from 'react-toastify'
 import ToastMessage from '@/components/Config/ToastMessage'
 import Link from 'next/link'
 import { AddressProps, CategoryProps, ProductProps, PurchaseProps, RestaurantData } from '@/types/types'
 import { infoUser } from '@/common/utils/userContext'
 import Popup from '@/components/Popup/Popup'
 import { CIDADES_BRASIL } from '@/constants/json-cidades'
+import Avaliate from '@/components/Avaliate'
 
 const page = () => {
 
@@ -57,6 +58,11 @@ const page = () => {
   const [city, setCity] = useState<string>("")
   const [state, setState] = useState<string>("")
   const [address, setAddress] = useState<string>("")
+
+  // Restaurant Avaliation 
+  const [avaliatingRestaurant, setAvaliatingRestaurant] = useState<boolean>(false)
+  const [stars, setStars] = useState<number>(0)
+  const [avaliationText, setAvaliationText] = useState<string>("")
 
   const [isOwner, setIsOwner] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(true)
@@ -321,40 +327,59 @@ const page = () => {
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
             <div>
               <div className='flex items-center gap-2'>
-                <h1 className='text-2xl'>{restaurantData.restaurantName}</h1>
+                <h1 className='text-2xl selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.restaurantName}</h1>
                 <RiVerifiedBadgeFill size={22.5} className="red-icon" />
               </div>
               <div>
-                <h5 className='text-[#717171] text-sm'>Especialidade da casa: {restaurantData.speciality}</h5>
-                <h6 className='text-[#717171] text-sm'>Tempo de entrega: ≅ {restaurantData.deliveryTime}</h6>
+                <h5 className='text-[#717171] text-sm selection:bg-[#ea1d2c] selection:text-white'>Especialidade da casa: {restaurantData.speciality}</h5>
+                <h6 className='text-[#717171] text-sm selection:bg-[#ea1d2c] selection:text-white'>Tempo de entrega: ≅ {restaurantData.deliveryTime}</h6>
               </div>
               <div className='flex gap-2 items-center mt-4'>
-                <h1 className='text-sm'>Minha avaliação</h1>
+
+                {avaliatingRestaurant ? (<Avaliate state={setAvaliatingRestaurant} text={setAvaliationText} quantityStars={stars} restaurantData={restaurantData} avaliationText={avaliationText} />) : (<></>)}
+
+                <h1 className='text-sm selection:bg-[#ea1d2c] selection:text-white'>Minha avaliação</h1>
                 <div className='flex items-center gap-1'>
-                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
-                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
-                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
-                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
-                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" onClick={() => {
+                    setAvaliatingRestaurant(true)
+                    setStars(1)
+                  }} />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" onClick={() => {
+                    setAvaliatingRestaurant(true)
+                    setStars(2)
+                  }} />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" onClick={() => {
+                    setAvaliatingRestaurant(true)
+                    setStars(3)
+                  }} />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" onClick={() => {
+                    setAvaliatingRestaurant(true)
+                    setStars(4)
+                  }} />
+                  <AiOutlineStar size={18} className="gold-icon cursor-pointer" onClick={() => {
+                    setAvaliatingRestaurant(true)
+                    setStars(5)
+                  }} />
                 </div>
               </div>
+              <p className='text-[#717171] mt-1 text-sm selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.quantityAvaliations} avaliações</p>
             </div>
           </div>
           <div className=''>
             <div className='flex gap-8 h-[25px]'>
               <div className='flex gap-3 items-center'>
                 <AiFillStar size={15} className="gold-icon" />
-                <h3>{restaurantData.stars}.0</h3>
+                <h3 className='selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.stars !== undefined ? restaurantData.stars.toFixed(1) : '3.0'}</h3>
               </div>
               <div className='w-[200px] flex items-center gap-3 pl-8 border-l border-neutral-300'>
                 <BsCoin size={15} className="gray-icon" />
-                <p className='text-sm text-[#717171]'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                <p className='text-sm text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
               </div>
             </div>
             <div className='mt-8 flex justify-end gap-4 w-full'>
               <div className='w-full'>
-                <h3 className='text-[#717171] flex justify-end w-full'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
-                <h5 className='text-[#717171] flex justify-end w-full'>{restaurantData.street}, {restaurantData.address}</h5>
+                <h3 className='text-[#717171] flex justify-end w-full selection:bg-[#ea1d2c] selection:text-white'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
+                <h5 className='text-[#717171] flex justify-end w-full selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
             </div>
           </div>
@@ -391,13 +416,17 @@ const page = () => {
                               <img src={product.productFoto} alt="Product Image" className='rounded-md' />
                             </div>
                           </div>
-                          <div className='absolute'>
-                            {userFavorites.includes(product.id) ? (
-                              <IoBookmark size={20} className="cursor-pointer" />
-                            ) : (
-                              <IoBookmarkOutline size={20} onClick={() => favoriteProduct(product.id)} className="cursor-pointer" />
-                            )}
-                          </div>
+                          {avaliatingRestaurant ? (
+                            <></>
+                          ) : (
+                            <div className='absolute'>
+                              {userFavorites.includes(product.id) ? (
+                                <IoBookmark size={20} className="cursor-pointer" />
+                              ) : (
+                                <IoBookmarkOutline size={20} onClick={() => favoriteProduct(product.id)} className="cursor-pointer" />
+                              )}
+                            </div>
+                          )}
                         </div>
                       ) : (<></>)}
                     </>

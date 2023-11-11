@@ -163,6 +163,10 @@ export interface RestaurantProps {
   deliveryValue: number;
   minValue: number;
   stars: number;
+  closingHour: number;
+  openingHour: number;
+  quantityAvaliations: number;
+  totalAvaliationPoints: number;
 }
 
 export interface FieldProps {
@@ -226,4 +230,22 @@ export interface RoutineItemProps {
 
 export interface FeaturedProduct {
   productData: ProductProps;
+}
+
+export interface AvaliateProps {
+  state: any;
+  text: any;
+  quantityStars: number;
+  restaurantData: RestaurantProps;
+  avaliationText: string
+}
+
+export interface AvaliationProps {
+  user: string;
+  restaurant: string;
+  restaurantName: string;
+  username: string;
+  stars: number;
+  avaliationText: string;
+  data: string;
 }

@@ -1,6 +1,6 @@
 export const RESTAURANT_OPTIONS = [
   {
-    color: "bg-[#bceca0]",
+    color: "bg-[#bceca0] w-full h-[50px] rounded-t-3xl flex justify-center`",
     image: "https://cdn3.iconfinder.com/data/icons/3d-black-friday/512/basket.png",
     name: "Mercado",
     speciality: "Mercado"
