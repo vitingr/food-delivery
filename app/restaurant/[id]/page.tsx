@@ -324,7 +324,7 @@ const page = () => {
         <div className={`bg-cover bg-no-repeat w-full h-[300px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
         <div className='mt-10 flex justify-between w-full'>
           <div className='flex gap-6 w-full'>
-            <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
+            <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px] selection:bg-transparent' alt="Restaurant Image" />
             <div>
               <div className='flex items-center gap-2'>
                 <h1 className='text-2xl selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.restaurantName}</h1>
@@ -413,7 +413,7 @@ const page = () => {
                               <h5 className='text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                             </div>
                             <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
-                              <img src={product.productFoto} alt="Product Image" className='rounded-md' />
+                              <img src={product.productFoto} alt="Product Image" className='rounded-md selection:bg-transparent' />
                             </div>
                           </div>
                           {avaliatingRestaurant ? (

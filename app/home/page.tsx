@@ -6,6 +6,7 @@ import ProductsSwiper from '@/components/ProductsSwiper'
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
 import RestaurantOption from '@/components/Restaurant/RestaurantOption'
 import SmallRestaurantOption from '@/components/Restaurant/SmallRestaurantOption'
+import { FEATURED_RESTAURANTS } from '@/constants/featuredRestaurants'
 import { RESTAURANT_OPTIONS } from '@/constants/home'
 import { ProductProps, RestaurantProps } from '@/types/types'
 import { useSession } from 'next-auth/react'
@@ -53,18 +54,16 @@ const page = () => {
         <div className='w-full max-w-[1600px]'>
           <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>Os melhores restaurantes</h2>
           <div className='flex sm:flex-nowrap flex-wrap gap-6'>
-            <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/Logo%20McDonald_MCDON_DRIV15.jpg?imwidth=128' name="Mcdonalds's" branch='Lanches' verified={true} />
-            <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/201910292243_94aaf166-84cc-4ebf-a35d-d223be34d01f.png?imwidth=64' name='Coco Bambu' branch='Frutos do mar' verified={true} />
-            <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/201906182008_2b157a73-7564-4733-94c1-8d0376e7bb39.png?imwidth=64' name='Outback Steakhouse' branch='Australiana' verified={true} />
-            <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/201801231937__HABIB_VERDE.jpg?imwidth=64' name="Habib's" branch='Culinária Árabe' verified={true} />
-            <FeaturedRestaurant image='https://static.ifood-static.com.br/image/upload/t_thumbnail/logosgde/d4a3984f-2b73-4f46-99df-1d6bc79ff293/202001031317_CXpO_i.png?imwidth=64' name='China in Box' branch='Chinesa' verified={true} />
+            {FEATURED_RESTAURANTS.map((restaurant: any) => (
+              <FeaturedRestaurant image={restaurant.image} name={restaurant.name} branch={restaurant.branch} verified={restaurant.verified} linkPage={restaurant.linkPage} />
+            ))}
           </div>
         </div>
       </section>
 
       <section className='w-[2600px]  overflow-hidden mt-[50px] flex flex-col items-center'>
         <h2 className='w-full text-3xl selection:bg-[#ea1d2c] selection:text-white max-w-[1600px] mb-6'>Destaques</h2>
-        <ProductsSwiper content={products} />
+        <ProductsSwiper content={products} />  
       </section>
 
       <section className='max-w-[1600px] w-full mt-[100px]'>

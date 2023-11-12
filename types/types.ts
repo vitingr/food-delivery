@@ -1,3 +1,5 @@
+import { Url } from "next/dist/shared/lib/router/router";
+
 export interface GoogleAuth {
   clientId: string;
   clientSecret: string;
@@ -8,6 +10,7 @@ export interface FeaturedRestaurant {
   name: string;
   branch?: string;
   verified?: Boolean;
+  linkPage?: string;
 }
 
 export interface SmallRestaurantOption {

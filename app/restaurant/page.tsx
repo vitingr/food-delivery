@@ -269,7 +269,7 @@ const page = () => {
         <div className={`bg-cover bg-no-repeat w-full h-[300px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
         <div className='mt-10 flex justify-between sm:flex-nowrap flex-wrap w-full'>
           <div className='flex gap-6 w-full'>
-            <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px]' alt="Restaurant Image" />
+            <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px] selection:bg-transparent' alt="Restaurant Image" />
             <div>
               <div className='flex items-center gap-2'>
                 <h1 className='text-2xl selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.restaurantName}</h1>
@@ -283,10 +283,6 @@ const page = () => {
           </div>
           <div className='mt-6 sm:mt-0 pb-6 sm:pb-0'>
             <div className='flex gap-8 h-[25px]'>
-              <div className='flex gap-3 items-center'>
-                <AiFillStar size={15} className="gold-icon" />
-                <h3 className='selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.stars}.0</h3>
-              </div>
               <div className='w-[200px] flex items-center gap-3 pl-8 border-l border-neutral-300'>
                 <BsCoin size={15} className="gray-icon" />
                 <p className='text-sm text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
@@ -331,7 +327,7 @@ const page = () => {
                             <h5 className='text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                           </div>
                           <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
-                            <img src={product.productFoto} alt="Product Image" className='rounded-md' />
+                            <img src={product.productFoto} alt="Product Image" className='rounded-md selection:bg-transparent' />
                           </div>
                         </div>
                       ) : (<></>)}
