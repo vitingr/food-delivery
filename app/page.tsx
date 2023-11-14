@@ -1,7 +1,19 @@
+"use client"
+
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
+import Link from 'next/link'
+import { useState } from 'react'
 import { IoSearchOutline, IoChevronForwardOutline } from 'react-icons/io5'
 
 export default function Home() {
+
+  const [search, setSearch] = useState<string>("")
+
+  const buscar = async (value: string) => {
+    const query = value.replace(" ", "-")
+    setSearch(query)
+  }
+
   return (
     <div className='w-full h-full'>
       <section className='bg-[url("https://www.ifood.com.br/static/images/groceries-landing-page/desktop-background.png")] w-full min-h-[78vh] sm:p-[10%] p-[5%] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center'>
@@ -11,11 +23,11 @@ export default function Home() {
         <form className='p-6 rounded-xl border border-gray-300 mt-20 max-w-[550px] w-full flex justify-between items-center'>
           <div className='w-full flex gap-2 items-center'>
             <IoSearchOutline size={20} className="red-icon" />
-            <input type="text" name="procura" id="procura" placeholder='O que você está procurando?' className='outline-none w-full border-b border-neutral-200 max-w-[305px] p-1' />
+            <input type="text" placeholder='O que você está procurando?' className='outline-none w-full border-b border-neutral-200 max-w-[305px] p-1' autoComplete='off' onChange={(e) => buscar(e.target.value)} />
           </div>
-          <button className='sm:w-[200px] w-[100px] sm:text-base text-sm bg-[#ee4c58] text-white p-2 rounded-xl'>
+          <Link href={`/busca/${search}`} className='sm:w-[200px] w-[100px] cursor-pointer sm:text-base text-sm bg-[#ee4c58] text-white p-2 rounded-xl text-center'>
             Buscar Itens
-          </button>
+          </Link>
         </form>
       </section>
 

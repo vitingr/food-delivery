@@ -5,7 +5,7 @@ import React from 'react'
 const SmallRestaurantOption = ({ color, name, image, speciality }: SmallRestaurantOption) => {
   return (
     <Link href={`/home/${speciality}`} className='w-[125px] h-[140px] rounded-lg p-2 cursor-pointer flex flex-col justify-between  transition-all duration-300 hover:shadow-lg'>
-      <div className={`${color} bg-[#bceca0] w-full h-[50px] rounded-t-3xl flex justify-center`}>
+      <div className={`${color}`}>
         <img src={image} className='w-[100px] h-[100px] p-2' alt="Restaurant Kind Photo" />
       </div>
       <div className=" w-full flex flex-col justify-between items-center p-4 h-full">

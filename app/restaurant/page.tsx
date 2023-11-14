@@ -281,7 +281,7 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div className='mt-6 sm:mt-0 pb-6 sm:pb-0'>
+          <div className='mt-6 sm:mt-0 pb-6 sm:pb-0 w-full flex flex-wrap justify-center'>
             <div className='flex gap-8 h-[25px]'>
               <div className='w-[200px] flex items-center gap-3 pl-8 border-l border-neutral-300'>
                 <BsCoin size={15} className="gray-icon" />

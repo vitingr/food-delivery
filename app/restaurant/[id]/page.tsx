@@ -320,9 +320,9 @@ const page = () => {
   return isOpen ? (
     <div className='bg-[#f2f2f2] w-full min-h-[62vh] flex flex-col items-center p-[2%]'>
       <ToastMessage />
-      <div className='bg-white max-w-[1300px] w-full rounded-sm p-16'>
+      <div className='bg-white max-w-[1300px] w-full rounded-sm sm:p-16 p-4'>
         <div className={`bg-cover bg-no-repeat w-full h-[300px] rounded-xl`} style={{ backgroundImage: `url(${restaurantData.background})` }} />
-        <div className='mt-10 flex justify-between w-full'>
+        <div className='mt-10 flex justify-between w-full sm:flex-nowrap flex-wrap'>
           <div className='flex gap-6 w-full'>
             <img src={restaurantData.logo} className='rounded-full w-[80px] h-[80px] selection:bg-transparent' alt="Restaurant Image" />
             <div>
@@ -365,7 +365,7 @@ const page = () => {
               <p className='text-[#717171] mt-1 text-sm selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.quantityAvaliations} avaliações</p>
             </div>
           </div>
-          <div className=''>
+          <div className='mt-6 sm:mt-0 pb-6 sm:pb-0 w-full flex flex-wrap sm:justify-end justify-center'>
             <div className='flex gap-8 h-[25px]'>
               <div className='flex gap-3 items-center'>
                 <AiFillStar size={15} className="gold-icon" />
@@ -376,10 +376,10 @@ const page = () => {
                 <p className='text-sm text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
               </div>
             </div>
-            <div className='mt-8 flex justify-end gap-4 w-full'>
-              <div className='w-full'>
-                <h3 className='text-[#717171] flex justify-end w-full selection:bg-[#ea1d2c] selection:text-white'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
-                <h5 className='text-[#717171] flex justify-end w-full selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.street}, {restaurantData.address}</h5>
+            <div className='mt-8 flex sm:justify-end gap-4 w-full justify-center'>
+              <div className='w-full justify-center sm:justify-normal'>
+                <h3 className='text-[#717171] flex sm:justify-end justify-center w-full selection:bg-[#ea1d2c] selection:text-white'>Brasil - {restaurantData.state}, {restaurantData.city}</h3>
+                <h5 className='text-[#717171] flex sm:justify-end justify-center w-full selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.street}, {restaurantData.address}</h5>
               </div>
             </div>
           </div>

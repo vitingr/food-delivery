@@ -19,27 +19,27 @@ const ProductsSwiper = ({ content }: { content: ProductProps[] }) => {
       scrollbar={{ draggable: true, hide: true, el: 'no-scrollbar' }} className='w-full no-scrollbar' breakpoints={{
         500: {
           slidesPerView: 1,
-          spaceBetween: 20,
+          spaceBetween: 5,
         },
         640: {
           slidesPerView: 2,
-          spaceBetween: 20,
+          spaceBetween: 10,
         },
         768: {
           slidesPerView: 3,
-          spaceBetween: 40,
+          spaceBetween: 20,
         },
         1024: {
           slidesPerView: 4,
-          spaceBetween: 50,
+          spaceBetween: 25,
         },
         1328: {
           slidesPerView: 5,
-          spaceBetween: 50,
+          spaceBetween: 30,
         },
         1712: {
           slidesPerView: 6,
-          spaceBetween: 50,
+          spaceBetween: 40,
         },
         2000: {
           slidesPerView: 7,
