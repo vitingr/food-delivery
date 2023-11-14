@@ -18,7 +18,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState<Boolean>(false)
 
   return (
-    <div className='p-8 sm:p-2 justify-around items-center w-full flex'>
+    <div className='p-8 sm:p-2 justify-around items-center w-full flex fixed bg-white'>
       <Link href="/" className='sm:w-full flex justify-center'>
         <img src="/assets/logo.png" className='max-w-[75px] sm:max-w-[100px]' alt="Logo Image" />
       </Link>
