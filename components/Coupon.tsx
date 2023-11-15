@@ -2,7 +2,7 @@ import React from 'react'
 
 const Coupon = () => {
   return (
-    <div className='w-[400px] bg-white rounded-lg shadow-md'>
+    <div className='sm:w-[400px] w-full bg-white rounded-lg shadow-md'>
       <div className='flex gap-6 items-center p-8'>
         <img src="https://cdn-icons-png.flaticon.com/512/1211/1211031.png" className='w-[60px] h-[60px]' alt="Coupon Icon" />
         <h1 className='text-xl font-semibold selection:bg-[#ea1d2c] selection:text-white'>R$ 10 em qualquer compra no aplicativo</h1>

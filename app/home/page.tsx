@@ -1,7 +1,6 @@
 "use client"
 
 import { randomize } from '@/common/functions/randomItems'
-import FeaturedProducts from '@/components/FeaturedProducts'
 import ProductsSwiper from '@/components/ProductsSwiper'
 import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
 import RestaurantOption from '@/components/Restaurant/RestaurantOption'
@@ -13,6 +12,8 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5'
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 const page = () => {
 
@@ -55,7 +56,7 @@ const page = () => {
           <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>Os melhores restaurantes</h2>
           <div className='flex sm:flex-nowrap flex-wrap gap-6'>
             {FEATURED_RESTAURANTS.map((restaurant: any) => (
-              <FeaturedRestaurant image={restaurant.image} name={restaurant.name} branch={restaurant.branch} verified={restaurant.verified} linkPage={restaurant.linkPage} />
+              <FeaturedRestaurant image={restaurant.image} name={restaurant.name} branch={restaurant.branch} verified={restaurant.verified} linkPage={restaurant.linkPage} key={restaurant.index} />
             ))}
           </div>
         </div>

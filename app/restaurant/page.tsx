@@ -281,8 +281,12 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div className='mt-6 sm:mt-0 pb-6 sm:pb-0 w-full flex flex-wrap justify-center'>
-            <div className='flex gap-8 h-[25px]'>
+          <div className='mt-6 sm:mt-0 pb-6 sm:pb-0 w-full flex flex-wrap sm:justify-end justify-center'>
+          <div className='flex gap-8 h-[25px]'>
+              <div className='flex gap-3 items-center'>
+                <AiFillStar size={15} className="gold-icon" />
+                <h3 className='selection:bg-[#ea1d2c] selection:text-white'>{restaurantData.stars !== undefined ? restaurantData.stars.toFixed(1) : '3.0'}</h3>
+              </div>
               <div className='w-[200px] flex items-center gap-3 pl-8 border-l border-neutral-300'>
                 <BsCoin size={15} className="gray-icon" />
                 <p className='text-sm text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>Valor pedido mínimo {Number(restaurantData.minValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>

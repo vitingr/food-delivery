@@ -77,7 +77,7 @@ const page = () => {
       {purchases.length > 0 ? (
         <div className='max-w-[1500px] p-[2%]'>
           {purchases.map((purchase: PurchaseProps) => (
-            <div key={purchase.id} className='shadow-sm p-10 sm:w-[550px] w-[450px] border border-neutral-200 rounded-lg mb-20'>
+            <div key={purchase.id} className='shadow-sm p-10 sm:w-[550px] w-full border border-neutral-200 rounded-lg mb-20'>
               <div className='flex justify-between w-full'>
                 <div className='w-full flex gap-4'>
                   <img src={purchase.restaurantLogo} className='w-[75px] h-[75px] rounded-xl' alt="Restaurant Logo" />
@@ -125,7 +125,7 @@ const page = () => {
                     {(purchase.products).includes(product.id) ? (
                       <div className='flex justify-between mb-8'>
                         <div className='max-w-[65px] max-h-[65px] flex justify-center'>
-                          <img src={product.productFoto} alt="Product Photo" className='Product Image' />
+                          <img src={product.productFoto} alt="Product Photo" className='Product Image sm:block hidden' />
                         </div>
                         <div className='w-full ml-4'>
                           <h1 className='text-lg font-semibold selection:bg-[#ea1d2c] selection:text-white'>{product.productName}</h1>

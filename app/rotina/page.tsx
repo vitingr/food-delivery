@@ -10,6 +10,8 @@ import { DayItemProps, ProductProps, ScheduleProps, WeekDayProps } from '@/types
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 const page = () => {
 
@@ -38,6 +40,39 @@ const page = () => {
 
   // Conditioners Popup
   const [showCreatingDayItem, setShowCreatingDayItem] = useState<boolean>(false)
+
+  const driverObj = driver({
+    showProgress: true,
+    popoverClass: 'driverjs-theme',
+    steps: [
+      { element: '#dia', popover: { title: 'Sistema de Rotinas', description: 'Você não precisa mais se preocupar em parar suas atividades para pedir algo para comer! Agora você pode montar uma rotina de pedidos semanais, ou seja, são pedidos programados para serem reservados para você em determinados dias e horas da semana', side: "left", align: 'start' } },
+      { element: '#dia', popover: { title: 'Escolha um dia', description: 'Para a gente começar, escolha um dia da semana, na qual você deseja encomedar algum prato', side: "left", align: 'start' } },
+      { element: '#produto', popover: { title: 'Escolha o Produto', description: 'Depois de escolher o dia, escolha qual prato você gostaria de reservar', side: "bottom", align: 'start' } },
+      { element: '#quantidade', popover: { title: 'Quantidade', description: 'Escolha a quantidade do respectivo item a ser reservada, porém atenção! Quanto mais produtos reservados maior o valor!', side: "bottom", align: 'start' } },
+      { element: '#preco', popover: { title: 'Preço Total', description: 'Aqui é possível ver o preço total dessa encomenda', side: "left", align: 'start' } },
+      { element: '#horario', popover: { title: 'Escolha um horário', description: 'Escolha o horário adequado na qual você deseja receber a sua encomenda. Dito isso, bom apetite!', side: "top", align: 'start' } }
+    ]
+  })
+
+  const viewRoutine = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/user/viewRoutine", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: data.id
+        })
+      })
+
+      if (response.ok) {
+        getInfo()
+      }
+    } catch (error) { 
+      console.log(error)
+    }
+  }
 
   const getUserFavorites = async () => {
     try {
@@ -162,7 +197,7 @@ const page = () => {
             <h1 className='text-2xl font-semibold mb-16 selection:bg-[#ea1d2c] selection:text-white'>Segunda-Feira</h1>
             <div className='flex flex-col gap-6'>
               {dayItems.map((item: DayItemProps) => (
-                <RoutineProduct day="Segunda-Feira" dayValidator={item.day} key={item.id} product={item} getUserRoutine={getUserRoutine } />
+                <RoutineProduct day="Segunda-Feira" dayValidator={item.day} key={item.id} product={item} getUserRoutine={getUserRoutine} />
               ))}
             </div>
           </div>
@@ -230,7 +265,11 @@ const page = () => {
           <h1 className='font-semibold text-xl selection:bg-[#ea1d2c] selection:text-white text-center'>Você ainda não tem uma rotina de pedidos</h1>
           <h3 className='mt-4 text-[#717171] selection:bg-[#ea1d2c] selection:text-white text-center'>Com o Food Delivery é possível reservar a sua comida em um restaurante automaticamente. Basta você determinar um dia e horário para que a rotina seja executada semanalmente, para adicionar uma, clique abaixo.</h3>
           {showCreatingDayItem ? (<></>) : (
-            <Button text='Bora lá' handleClick={() => setShowCreatingDayItem(true)} />
+            <Button text='Bora lá' handleClick={() => {
+              viewRoutine()
+              setShowCreatingDayItem(true)
+              driverObj.drive()
+            }} />
           )}
         </div>
       )}
@@ -256,12 +295,10 @@ const page = () => {
               ))}
             </select>
 
-            {JSON.stringify(restaurant)}
-
-            <label htmlFor="dia" className='text-lg selection:bg-[#ea1d2c] selection:text-white'>Produto a reservar</label>
+            <label htmlFor="produto" className='text-lg selection:bg-[#ea1d2c] selection:text-white'>Produto a reservar</label>
             <div className='flex gap-6 mt-2'>
               <img src={productFoto} className='w-[65px] h-[65px]' alt="Product Image" />
-              <select name="dia" id="dia" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={(e) => {
+              <select name="produto" id="produto" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={(e) => {
                 setProductFoto(e.target.options[e.target.selectedIndex].getAttribute('data-productfoto'))
                 setProductValue(e.target.options[e.target.selectedIndex].getAttribute('data-value'))
                 setRestaurant(e.target.options[e.target.selectedIndex].getAttribute('data-restaurant'))
@@ -276,7 +313,7 @@ const page = () => {
             </div>
 
             <div className='w-full flex gap-2 justify-between mt-8 mb-12'>
-              <div className='flex items-center border border-neutral-200 rounded-lg pl-2 pr-2'>
+              <div className='flex items-center border border-neutral-200 rounded-lg pl-2 pr-2' id='quantidade'>
                 <div className='cursor-pointer text-xl border-r border-neutral-200 pr-3 pl-1 selection:bg-[#ea1d2c] selection:text-white' onClick={() => {
                   if (quantityItems > 1) {
                     setQuantityItems(quantityItems - 1)
@@ -289,14 +326,14 @@ const page = () => {
                   }
                 }}>+</div>
               </div>
-              <div>
+              <div id='preco'>
                 <h1 className='text-lg font-bold'>Valor total</h1>
                 <h2 className='text-[#717171] text-right'>{(quantityItems * productValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
               </div>
             </div>
 
-            <label htmlFor="dia" className='text-lg selection:bg-[#ea1d2c] selection:text-white'>Horário do Dia</label>
-            <select name="dia" id="dia" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={(e) => setHour(e.target.value)} defaultValue={day} required>
+            <label htmlFor="horario" className='text-lg selection:bg-[#ea1d2c] selection:text-white'>Horário do Dia</label>
+            <select name="horario" id="horario" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={(e) => setHour(e.target.value)} defaultValue={day} required>
               <option value="">Selecione um horário</option>
               {routineHours.map((hour) => (
                 <option value={hour.value} key={hour.title}>{hour.title}</option>
@@ -313,11 +350,6 @@ const page = () => {
         </Popup>
       ) : (<></>)}
     </div>
-
-    // 1 - Sistema terá um botão inicial para começar a agendar pedidos
-    // 2 - A cada clique criara um novo item no banco de dados chamado programação (cada programação irá pertencer a um dia da semana ao respectivo usuário)
-    // 3 - Após isso irá aparecer a segunda opçao, na qual ele irá selecionar um pedido dos favoritos para adicionar a sua agenda semanal.
-    // 4 - Irá gerar um flex-col com cada um dos 7 dias da semana e suas respectivas programações, e dentro de cada uma uma lista com os horários com os pedidos referentes ao determinado dia
   )
 }
 

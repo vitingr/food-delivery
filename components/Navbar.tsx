@@ -8,17 +8,53 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import { BsTicketPerforated } from 'react-icons/bs'
 import { VscSignOut } from 'react-icons/vsc'
 import { infoUser } from '@/common/utils/userContext'
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 const Navbar = () => {
 
   const { data: session, status } = useSession()
 
-  const { data } = infoUser()
+  const { data, getInfo } = infoUser()
 
   const [showMenu, setShowMenu] = useState<Boolean>(false)
 
+  const driverObj = driver({
+    showProgress: true,
+    popoverClass: 'driverjs-theme',
+    steps: [
+      { element: '#home', popover: { title: 'Conheça o nosso menu', description: 'Apresentaremos a você todas as funcionalidades de nosso site! Espero que você goste e aproveite ao máximo', side: "left", align: 'start' } },
+      { element: '#purchases', popover: { title: 'Seus Pedidos', description: 'Aqui é possível consultar todos o seus pedidos em nossa plataforma', side: "bottom", align: 'start' } },
+      { element: '#coupons', popover: { title: 'Cupons do Usuário', description: 'Aqui você pode explorar e conferir quantos cupons você possui, você pode usa-los em suas compras!', side: "bottom", align: 'start' } },
+      { element: '#favorites', popover: { title: 'Aba de Favoritos', description: 'Você pode salvar seus pratos favoritos nessa seção! Assim você economiza tempo buscando alguma opção.', side: "left", align: 'start' } },
+      { element: '#profile', popover: { title: 'Seu Perfil', description: 'Aqui você ver suas informações, editar seus dados pessoais, foto, nome, e muito mais referente a customização!', side: "top", align: 'start' } },
+      { element: '#routine', popover: { title: 'Rotinas Semanais', description: 'Você não precisa mais se preocupar em parar suas atividades para pedir algo para comer! Agora você pode montar uma rotina de pedidos semanais, ou seja, são pedidos programados para serem reservados para você em determinados dias e horas da semana.', side: "right", align: 'start' } },
+      { popover: { title: 'Bom Apetite!', description: 'E é isso! Explore as mais diversas variedades de pratos e restaurantes, desejamos uma boa experiência.' } }
+    ]
+  })
+
+  const viewMenu = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/user/viewMenu", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: data.id
+        })
+      })
+
+      if (response.ok) {
+        getInfo()
+      }
+    } catch (error) { 
+      console.log(error)
+    }
+  }
+
   return (
-    <div className='p-8 sm:p-2 justify-around items-center w-full flex fixed bg-white'>
+    <div className='p-8 sm:p-2 justify-around items-center w-full flex fixed bg-white z-10'>
       <Link href="/" className='sm:w-full flex justify-center'>
         <img src="/assets/logo.png" className='max-w-[75px] sm:max-w-[100px]' alt="Logo Image" />
       </Link>
@@ -41,10 +77,16 @@ const Navbar = () => {
               <p className='text-[11px] text-[#717171] mt-[-3.5px]'>0 itens</p>
             </div>
           </div>
-          <div className='flex items-center' onClick={() => setShowMenu(!showMenu)}>
+          <div className='flex items-center' onClick={() => {
+            setShowMenu(!showMenu)
+            if (!data.driverMenu) {
+              viewMenu()
+              driverObj.drive()
+            }
+          }}>
             <IoMenuOutline size={30} className="cursor-pointer" />
             {showMenu ? (
-              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[750px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[780px] lg:left-[64%]'>
+              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[750px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg mt-[800px] lg:left-[64%]'>
                 <div className='p-10'>
                   <h1 className='text-3xl font-bold text-center'>Olá, {session?.user?.name}</h1>
                 </div>
@@ -57,15 +99,15 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className='p-10 gap-8 w-full flex flex-col'>
-                  <Link href={"/home"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/home"} className='flex w-full justify-between items-center gap-8 cursor-pointer' id='home'>
                     <IoHomeOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Início</h3>
                   </Link>
-                  <Link href={"/pedidos"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/pedidos"} className='flex w-full justify-between items-center gap-8 cursor-pointer' id='purchases'>
                     <IoTicketOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meus Pedidos</h3>
                   </Link>
-                  <Link href={"/cupons"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/cupons"} className='flex w-full justify-between items-center gap-8 cursor-pointer' id='coupons'>
                     <BsTicketPerforated size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meus Cupons</h3>
                   </Link>
@@ -80,15 +122,15 @@ const Navbar = () => {
                       <h3 className='text-[#717171] w-full text-lg'>Adicionar meu Restaurante</h3>
                     </Link>
                   )}
-                  <Link href={"/favoritos"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/favoritos"} className='flex w-full justify-between items-center gap-8 cursor-pointer' id='favorites'>
                     <AiOutlineHeart size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Favoritos</h3>
                   </Link>
-                  <Link href={"/perfil"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/perfil"} className='flex w-full justify-between items-center gap-8 cursor-pointer' id='profile'>
                     <IoSettingsOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Meu Perfil</h3>
                   </Link>
-                  <Link href={"/rotina"} className='flex w-full justify-between items-center gap-8 cursor-pointer'>
+                  <Link href={"/rotina"} className='flex w-full justify-between items-center gap-8 cursor-pointer' id='routine'>
                     <IoCalendarOutline size={30} className="gray-icon" />
                     <h3 className='text-[#717171] w-full text-lg'>Rotina de Pedidos</h3>
                   </Link>

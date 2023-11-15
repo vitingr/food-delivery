@@ -14,7 +14,7 @@ const FeaturedRestaurant = ({ image, name, branch, verified, linkPage }: Feature
         <></>
       )}
       <div className='flex justify-between mt-4'>
-        <img src={image} className='w-[50px] h-[50px] rounded-full ' alt="Restaurant Image" />
+        <img src={image} className='w-[50px] h-[50px] rounded-full selection:bg-transparent' alt="Restaurant Image" />
         <div className='w-full ml-6'>
           <h1 className='text-base selection:bg-[#ea1d2c] selection:text-white'>{name}</h1>
           <p className='text-xs text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{branch}</p>
@@ -31,7 +31,7 @@ const FeaturedRestaurant = ({ image, name, branch, verified, linkPage }: Feature
         <></>
       )}
       <div className='flex justify-between mt-4'>
-        <img src={image} className='w-[50px] h-[50px] rounded-full ' alt="Restaurant Image" />
+        <img src={image} className='w-[50px] h-[50px] rounded-full selection:bg-transparent' alt="Restaurant Image" />
         <div className='w-full ml-6'>
           <h1 className='text-base selection:bg-[#ea1d2c] selection:text-white'>{name}</h1>
           <p className='text-xs text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{branch}</p>

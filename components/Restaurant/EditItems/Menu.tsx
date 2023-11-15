@@ -27,7 +27,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const [productName, setProductName] = useState<string>("")
   const [productDescription, setProductDescription] = useState<string>("")
   const [productValue, setProductValue] = useState<any>("")
-  const [productFoto, setProductFoto] = useState<string>("")
+  const [productFoto, setProductFoto] = useState<string>("https://images.immediate.co.uk/production/volatile/sites/30/2015/02/Top-10-foods-to-try-in-Spain-1d2b4ef.jpg?quality=90&resize=556,505")
 
   const [categories, setCategories] = useState<CategoryProps[]>([])
   const [products, setProducts] = useState<ProductProps[]>([])
@@ -342,11 +342,11 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
                             ) : (<></>)}
                           </>
                         ) : (<></>)}
-                        <img src={product.productFoto} alt="Product Foto" className='w-full max-w-[65px] max-h-[65px] h-full' />
+                        <img src={product.productFoto} alt="Product Foto" className='w-full max-w-[65px] max-h-[65px] h-full selection:bg-transparent' />
                         <div className='w-full'>
-                          <h1 className='font-bold'>{product.productName}</h1>
-                          <h2 className='text-base'>{product.productDescription}</h2>
-                          <p className='mt-2 text-sm text-[#717171]'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                          <h1 className='font-bold selection:bg-[#ea1d2c] selection:text-white'>{product.productName}</h1>
+                          <h2 className='text-base selection:bg-[#ea1d2c] selection:text-white'>{product.productDescription}</h2>
+                          <p className='mt-2 text-sm text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         </div>
                         <div className='flex gap-4 max-h-[40px]'>
                           <div className='text-[#ea1d2c] border border-[#ea1d2c] w-[100px] flex items-center justify-center rounded-xl cursor-pointer p-1' onClick={() => editProduct(product.id, product.productDescription, product.productName, product.productValue, product.productFoto)}>Editar</div>

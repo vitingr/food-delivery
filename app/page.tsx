@@ -34,23 +34,23 @@ export default function Home() {
       <section className='w-full flex justify-center gap-8 mt-[50px] p-2 sm:p-0'>
 
         <div className='flex gap-20 sm:flex-nowrap flex-wrap'>
-          <div className='bg-[#ea1d2c] p-10 rounded-xl flex flex-col sm:h-full cursor-pointer sm:w-[450px] transition-all duration-300 hover:scale-105'>
+          <Link href={"/home"} className='bg-[#ea1d2c] p-10 rounded-xl flex flex-col sm:h-full cursor-pointer sm:w-[450px] transition-all duration-300 hover:scale-105'>
             <h1 className='text-white text-5xl font-bold'>Restaurantes</h1>
             <p className='text-sm text-white '>Veja opções de restaurantes próximos</p>
             <div className='flex items-end gap-12 w-full mt-8'>
               <div className='flex gap-4 w-full items-center'><h5 className='text-white text-lg'>Ver opções</h5><IoChevronForwardOutline size={20} className="white-icon" /></div>
               <img src="https://static.ifood-static.com.br/image/upload/f_auto/webapp/landingV2/restaurant.png" className='w-[200px]' alt="Card Image Photo" />
             </div>
-          </div>
+          </Link>
 
-          <div className='bg-[#b6d048] p-10 rounded-xl flex flex-col smh-full cursor-pointer sm:w-[450px] transition-all duration-300 hover:scale-105'>
+          <Link href={"/home"} className='bg-[#b6d048] p-10 rounded-xl flex flex-col smh-full cursor-pointer sm:w-[450px] transition-all duration-300 hover:scale-105'>
             <h1 className='text-white text-5xl font-bold'>Mercado</h1>
             <p className='text-sm text-white'>Peça para entregarem as compras em sua casa</p>
             <div className='flex items-end gap-12 w-full mt-8'>
               <div className='flex gap-4 w-full items-center bg-[#9eb53e] p-2 rounded-xl'><h5 className='text-white text-lg'>Ver lojas</h5><IoChevronForwardOutline size={20} className="white-icon" /></div>
               <img src="https://static.ifood-static.com.br/image/upload/f_auto/webapp/landingV2/market.png" className='w-[200px]' alt="Card Image Photo" />
             </div>
-          </div>
+          </Link>
 
         </div>
       </section>

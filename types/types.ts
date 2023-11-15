@@ -91,6 +91,9 @@ export interface UserProps {
   photo: string;
   address: string;
   favorites: string;
+  quantityCoupons: number;
+  driverMenu: boolean;
+  driverRoutine: boolean;
 }
 
 export interface ProductProps {
