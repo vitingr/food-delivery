@@ -268,7 +268,9 @@ const page = () => {
             <Button text='Bora lá' handleClick={() => {
               viewRoutine()
               setShowCreatingDayItem(true)
-              driverObj.drive()
+              if (!data.driverRoutine) {
+                driverObj.drive()
+              }
             }} />
           )}
         </div>
