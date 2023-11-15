@@ -25,7 +25,7 @@ const page = () => {
 
   const getSearch = async () => {
     try {
-      const requisition = await fetch(`http://localhost:3001/search/${query}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/search/${query}`)
       const response = await requisition.json()
       setSearchItems(response)
     } catch (error) {

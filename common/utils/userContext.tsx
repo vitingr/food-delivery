@@ -14,7 +14,7 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
 
   const getInfo = async () => {
     try {
-      const requisition = await fetch(`http://localhost:3001/user/${session?.user?.email}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/user/${session?.user?.email}`)
       const response = await requisition.json()
       
       if (response === null) {
@@ -22,7 +22,7 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
         const firstname = fullname?.split(" ")[0]
         const lastname = fullname?.split(" ")[1]
 
-        const createUser = await fetch('http://localhost:3001/user/create', {
+        const createUser = await fetch('https://food-delivery-nest-api.vercel.app/user/create', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
