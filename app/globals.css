@@ -412,3 +412,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.restaurant-image {
+  width: 80px;
+  height: 80px;
+}
+
+.product-restaurant {
+  width: 120px;
+  height: 90px;
+}

@@ -413,7 +413,7 @@ const page = () => {
                               <h5 className='text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                             </div>
                             <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
-                              <img src={product.productFoto} alt="Product Image" className='rounded-md selection:bg-transparent' />
+                              <img src={product.productFoto} alt="Product Image" className='rounded-md selection:bg-transparent product-restaurant ' />
                             </div>
                           </div>
                           {avaliatingRestaurant ? (
