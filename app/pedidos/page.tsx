@@ -17,7 +17,7 @@ const page = () => {
 
   const getPurchases = async () => {
     try {
-      const result = await fetch(`http://localhost:3001/purchase/${data.id}`)
+      const result = await fetch(`https://food-delivery-nest-api.vercel.app/purchase/${data.id}`)
       const response = await result.json()
 
       setPurchases(response)
@@ -30,7 +30,7 @@ const page = () => {
 
   const getAllProducts = async () => {
     try {
-      const requisition = await fetch('http://localhost:3001/product')
+      const requisition = await fetch('https://food-delivery-nest-api.vercel.app/product')
       const response = await requisition.json()
       setProducts(response)
     } catch (error) {
@@ -40,7 +40,7 @@ const page = () => {
 
   const cancelPurchase = async (purchaseId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/purchase/remove`, {
+      const response = await fetch(`https://food-delivery-nest-api.vercel.app/purchase/remove`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

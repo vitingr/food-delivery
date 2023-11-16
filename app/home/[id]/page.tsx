@@ -24,7 +24,7 @@ const page = () => {
   const getRestaurants = async () => {
     if (query) {
       try {
-        const requisition = await fetch(`http://localhost:3001/restaurant/findRestaurantBySpeciality/${query}`)
+        const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/findRestaurantBySpeciality/${query}`)
         const response = await requisition.json()
         console.log(response)
         setRestaurants(response)

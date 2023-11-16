@@ -25,13 +25,13 @@ const page = () => {
   const [products, setProducts] = useState<ProductProps[]>([])
 
   const getRestaurants = async () => {
-    const requisition = await fetch("http://localhost:3001/restaurant")
+    const requisition = await fetch("https://food-delivery-nest-api.vercel.app/restaurant")
     const response = await requisition.json()
     setRestaurants(response)
   }
 
   const getProducts = async () => {
-    const requisition = await fetch("http://localhost:3001/product")
+    const requisition = await fetch("https://food-delivery-nest-api.vercel.app/product")
     const response = await requisition.json()
     const randomProducts = await randomize(response)
     setProducts(randomProducts)

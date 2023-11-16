@@ -8,7 +8,7 @@ const RoutineProduct = ({ day, dayValidator, product, getUserRoutine }: RoutineI
 
   const removeDayItem = async (id: string) => {
     try {
-      const response = await fetch("http://localhost:3001/dayitem/remove", {
+      const response = await fetch("https://food-delivery-nest-api.vercel.app/dayitem/remove", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

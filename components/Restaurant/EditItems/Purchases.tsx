@@ -15,7 +15,7 @@ const Purchases = ({ restaurantId, restaurantData }: { restaurantId: string, res
 
   const getPurchases = async () => {
     try {
-      const result = await fetch(`http://localhost:3001/purchase/restaurantPurchases/${restaurantId}`)
+      const result = await fetch(`https://food-delivery-nest-api.vercel.app/purchase/restaurantPurchases/${restaurantId}`)
       const response = await result.json()
 
       setPurchases(response)
@@ -28,7 +28,7 @@ const Purchases = ({ restaurantId, restaurantData }: { restaurantId: string, res
 
   const getRestaurantProducts = async () => {
     try {
-      const requisition = await fetch(`http://localhost:3001/product/${restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/product/${restaurantId}`)
       const response = await requisition.json()
 
       setProducts(response)
@@ -41,7 +41,7 @@ const Purchases = ({ restaurantId, restaurantData }: { restaurantId: string, res
 
   const getAddresses = async () => {
     try {
-      const requisition = await fetch(`http://localhost:3001/address`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/address`)
       const response = await requisition.json()
 
       setAddresses(response)

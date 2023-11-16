@@ -29,7 +29,7 @@ const page = () => {
 
   const getRestaurantData = async () => {
     if (data.restaurantId !== undefined && data.restaurantId !== null) {
-      const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/${data.restaurantId}`)
       const response = await requisition.json()
 
       if (response !== null) {

@@ -56,7 +56,7 @@ const page = () => {
 
   const getRestaurantData = async () => {
     if (data.restaurantId !== undefined && data.restaurantId !== null) {
-      const requisition = await fetch(`http://localhost:3001/restaurant/${data.restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/${data.restaurantId}`)
       const response = await requisition.json()
 
       if (response !== null) {
@@ -78,7 +78,7 @@ const page = () => {
 
   const getRestaurantCategories = async (restaurantId: string) => {
     try {
-      const requisition = await fetch(`http://localhost:3001/category/${restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/category/${restaurantId}`)
       const response = await requisition.json()
 
       setCategories(response)
@@ -93,7 +93,7 @@ const page = () => {
 
   const getRestaurantProducts = async (restaurantId: string) => {
     try {
-      const requisition = await fetch(`http://localhost:3001/product/${restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/product/${restaurantId}`)
       const response = await requisition.json()
 
       setProducts(response)
@@ -141,7 +141,7 @@ const page = () => {
   const getUserAddress = async () => {
     if (data.id !== null && data.id !== undefined) {
       try {
-        const result = await fetch(`http://localhost:3001/address/${data.id}`)
+        const result = await fetch(`https://food-delivery-nest-api.vercel.app/address/${data.id}`)
         const response = await result.json()
         setUserAddresses(response)
       } catch (error) {
@@ -154,7 +154,7 @@ const page = () => {
   const createAddress = async (state: string, city: string, street: string, address: number) => {
     if (data.id !== null && data.id !== undefined && state !== "" && city !== "" && street !== "" && address !== 0) {
       try {
-        const response = await fetch("http://localhost:3001/address/create", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/address/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -205,13 +205,13 @@ const page = () => {
           setTotalPurchaseValue(newPurchaseValue)
         }
 
-        const requisition: any = await fetch(`http://localhost:3001/address/getAddressById/${deliveryPlace}`)
+        const requisition: any = await fetch(`https://food-delivery-nest-api.vercel.app/address/getAddressById/${deliveryPlace}`)
         const addressData: any = await requisition.json()
 
         let deliveryLocal = `${addressData.address}, ${addressData.street}, ${addressData.city} - ${addressData.state}`
 
         if (deliveryLocal) {
-          const response = await fetch("http://localhost:3001/purchase/create", {
+          const response = await fetch("https://food-delivery-nest-api.vercel.app/purchase/create", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -104,7 +104,7 @@ const page = () => {
     if (email != "" && cellphone !== "" && name !== "" && lastName !== "" && cpf !== "" && rg !== "" && orgaoEmissor !== "" && cnpj !== "" && restaurantName !== "" && telephone !== "" && state !== "" && city !== "" && address !== "" && street !== "" && speciality !== "" && delivery !== "" && data.email !== "" && data.email !== undefined) {
       try {
 
-        const response = await fetch("http://localhost:3001/restaurant/create", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/restaurant/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

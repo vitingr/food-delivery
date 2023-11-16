@@ -92,7 +92,7 @@ const MainConfig = ({ restaurantData, restaurantId, getRestaurantData }: MainCon
         console.log(`${photoCloudinary} ${backgroundCloudinary}`)
 
         try {
-          const response = await fetch("http://localhost:3001/restaurant/update", {
+          const response = await fetch("https://food-delivery-nest-api.vercel.app/restaurant/update", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

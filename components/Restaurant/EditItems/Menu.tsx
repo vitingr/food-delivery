@@ -35,7 +35,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const createCategory = async () => {
     if (categoryName !== "" && categoryDescription !== "") {
       try {
-        const response = await fetch("http://localhost:3001/category/create", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/category/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
       if (imageUpload.ok) {
         photoCloudinary = await imageUpload.json()
         try {
-          const response = await fetch("http://localhost:3001/product/create", {
+          const response = await fetch("https://food-delivery-nest-api.vercel.app/product/create", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -131,7 +131,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const getRestaurantCategories = async (restaurantId: string) => {
     try {
 
-      const requisition = await fetch(`http://localhost:3001/category/${restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/category/${restaurantId}`)
       const response = await requisition.json()
 
       setCategories(response)
@@ -146,7 +146,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
 
   const getRestaurantProducts = async (restaurantId: string) => {
     try {
-      const requisition = await fetch(`http://localhost:3001/product/${restaurantId}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/product/${restaurantId}`)
       const response = await requisition.json()
 
       setProducts(response)
@@ -165,7 +165,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const removeCategory = async (categoryId: string) => {
     if (categoryId) {
       try {
-        const response = await fetch("http://localhost:3001/category/remove", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/category/remove", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -192,7 +192,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const updateCategory = async (categoryId: string) => {
     if (categoryId) {
       try {
-        const response = await fetch("http://localhost:3001/category/update", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/category/update", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -224,7 +224,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const removeProduct = async (productId: string) => {
     if (productId) {
       try {
-        const response = await fetch(`"http://localhost:3001/product/remove`, {
+        const response = await fetch(`"https://food-delivery-nest-api.vercel.app/product/remove`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -252,7 +252,7 @@ const Menu = ({ restaurantId }: { restaurantId: string }) => {
   const updateProduct = async (productId: string) => {
     if (productId) {
       try {
-        const response = await fetch("http://localhost:3001/product/update", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/product/update", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

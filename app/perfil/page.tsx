@@ -34,7 +34,7 @@ const page = () => {
       try {
         let name = `${firstname} ${lastname}`
 
-        const response = await fetch("http://localhost:3001/user/update", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/user/update", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const page = () => {
   const getUserAddress = async () => {
     if (data.id !== null && data.id !== undefined) {
       try {
-        const result = await fetch(`http://localhost:3001/address/${data.id}`)
+        const result = await fetch(`https://food-delivery-nest-api.vercel.app/address/${data.id}`)
         const response = await result.json()
         setUserAddresses(response)
       } catch (error) {
@@ -92,7 +92,7 @@ const page = () => {
   const createAddress = async (state: string, city: string, street: string, address: number) => {
     if (data.id !== null && data.id !== undefined && state !== "" && city !== "" && street !== "" && address !== 0) {
       try {
-        const response = await fetch("http://localhost:3001/address/create", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/address/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

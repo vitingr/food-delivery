@@ -17,7 +17,7 @@ const page = () => {
 
   const getUserFavorites = async () => {
     try {
-      const result = await fetch(`http://localhost:3001/product/getRestaurantProducts/${data.favorites}`)
+      const result = await fetch(`https://food-delivery-nest-api.vercel.app/product/getRestaurantProducts/${data.favorites}`)
       const response = await result.json()
       setFavorites(response)
     } catch (error) {

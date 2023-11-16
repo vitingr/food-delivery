@@ -35,7 +35,7 @@ const Navbar = () => {
 
   const viewMenu = async () => {
     try {
-      const response = await fetch("http://localhost:3001/user/viewMenu", {
+      const response = await fetch("https://food-delivery-nest-api.vercel.app/user/viewMenu", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -56,7 +56,7 @@ const page = () => {
 
   const viewRoutine = async () => {
     try {
-      const response = await fetch("http://localhost:3001/user/viewRoutine", {
+      const response = await fetch("https://food-delivery-nest-api.vercel.app/user/viewRoutine", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const page = () => {
 
   const getUserFavorites = async () => {
     try {
-      const requisition = await fetch(`http://localhost:3001/product/getRestaurantProducts/${data.favorites}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/product/getRestaurantProducts/${data.favorites}`)
       const response = await requisition.json()
       setFavorites(response)
     } catch (error) {
@@ -87,13 +87,13 @@ const page = () => {
   const getUserSchedule = async () => {
     if (data.id) {
       try {
-        const requisition = await fetch(`http://localhost:3001/schedule/${data.id}`)
+        const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/schedule/${data.id}`)
         const response = await requisition.json()
         if (response.length > 0) {
           setSchedule(response)
         } else {
           try {
-            await fetch("http://localhost:3001/schedule/create", {
+            await fetch("https://food-delivery-nest-api.vercel.app/schedule/create", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -114,11 +114,11 @@ const page = () => {
 
   const getUserRoutine = async () => {
     try {
-      const weekRequisition = await fetch(`http://localhost:3001/weekday/${data.id}`)
+      const weekRequisition = await fetch(`https://food-delivery-nest-api.vercel.app/weekday/${data.id}`)
       const weekResponse = await weekRequisition.json()
       setWeekDays(weekResponse)
 
-      const dayRequisition = await fetch(`http://localhost:3001/dayitem/${data.id}`)
+      const dayRequisition = await fetch(`https://food-delivery-nest-api.vercel.app/dayitem/${data.id}`)
       const dayResponse = await dayRequisition.json()
       setDayItems(dayResponse)
 
@@ -129,12 +129,12 @@ const page = () => {
 
   const createDayItem = async () => {
     try {
-      const requisition = await fetch(`http://localhost:3001/restaurant/${restaurant}`)
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/${restaurant}`)
       const result = await requisition.json()
       let restaurantName = result.restaurantName
 
       if (restaurantName) {
-        const response = await fetch("http://localhost:3001/dayitem/create", {
+        const response = await fetch("https://food-delivery-nest-api.vercel.app/dayitem/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
