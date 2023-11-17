@@ -1,25 +1,18 @@
 "use client"
 
-import { infoUser } from '@/common/utils/userContext'
 import ToastMessage from '@/components/Config/ToastMessage'
 import SearchProdutCard from '@/components/SearchProdutCard'
 import SearchRestaurantCard from '@/components/SearchRestaurantCard'
 import { ProductProps, RestaurantProps } from '@/types/types'
-import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const page = () => {
 
-  const { data: session, status } = useSession()
-  const { data } = infoUser()
-
   const pathname = usePathname().split("/")
   const query = pathname[2]
-
-  const isFetched = useRef(false)
 
   const [searchItems, setSearchItems] = useState<ProductProps[] | RestaurantProps[] | any>([])
 
@@ -35,12 +28,8 @@ const page = () => {
   }
 
   useEffect(() => {
-    if (!isFetched.current) {
-      getSearch()
-    } else {
-      isFetched.current = true
-    }
-  }, [data])
+    getSearch()
+  }, [])
 
   return (
     <div className='p-[5%] w-full flex flex-col items-center'>
