@@ -19,8 +19,6 @@ const page = () => {
 
   const { data: session, status } = useSession()
 
-  const isFetched = useRef(false)
-
   const [restaurants, setRestaurants] = useState<RestaurantProps[] | any>([])
   const [products, setProducts] = useState<ProductProps[]>([])
 
@@ -40,11 +38,7 @@ const page = () => {
   useEffect(() => {
     if (session?.user?.email !== undefined && status === "authenticated") {
       getRestaurants()
-      if (!isFetched.current) {
-        getProducts()
-      } else {
-        isFetched.current = true
-      }
+      getProducts()
     }
   }, [session])
 
@@ -64,7 +58,7 @@ const page = () => {
 
       <section className='w-[2600px]  overflow-hidden mt-[50px] flex flex-col items-center'>
         <h2 className='w-full text-3xl selection:bg-[#ea1d2c] selection:text-white max-w-[1600px] mb-6'>Destaques</h2>
-        <ProductsSwiper content={products} />  
+        <ProductsSwiper content={products} />
       </section>
 
       <section className='max-w-[1600px] w-full mt-[100px]'>
