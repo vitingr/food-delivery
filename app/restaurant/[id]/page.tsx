@@ -68,16 +68,18 @@ const page = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const getRestaurantData = async () => {
-    const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/${query}`)
-    const response = await requisition.json()
+    if (query) {
+      const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/${query}`)
+      const response = await requisition.json()
 
-    if (response !== null) {
-      setRestaurantData(response)
-      setIsOwner(true)
-      getRestaurantCategories(response.id)
-    } else {
-      toast.error("Você não pode editar um restaurante que não existe")
-      router.push(APP_ROUTES.private.usuario)
+      if (response !== null) {
+        setRestaurantData(response)
+        setIsOwner(true)
+        getRestaurantCategories(response.id)
+      } else {
+        toast.error("Você não pode editar um restaurante que não existe")
+        router.push(APP_ROUTES.private.usuario)
+      }
     }
   }
 

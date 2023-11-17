@@ -86,7 +86,7 @@ const Navbar = () => {
           }}>
             <IoMenuOutline size={30} className="cursor-pointer" />
             {showMenu ? (
-              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[750px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg sm:mt-[800px] mt-[740px] lg:left-[64%]'>
+              <div className='z-20 fixed right-0 bg-[#fff] shadow-md h-[750px] w-[350px] border border-[#f7f7f7] translate-y-2 transition-all rounded-lg sm:mt-[800px] mt-[700px] lg:left-[64%]'>
                 <div className='p-10'>
                   <h1 className='text-3xl font-bold text-center selection:bg-[#ea1d2c] selection:text-white'>Olá, {session?.user?.name}</h1>
                 </div>

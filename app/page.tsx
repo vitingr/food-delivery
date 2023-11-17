@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div className='w-full h-full'>
-      <section className='bg-[url("https://www.ifood.com.br/static/images/groceries-landing-page/desktop-background.png")] w-full min-h-[78vh] sm:p-[10%] p-[5%] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center'>
+      <section className='bg-[url("https://www.ifood.com.br/static/images/groceries-landing-page/desktop-background.png")] w-full min-h-[78vh] sm:p-[10%] p-[5%] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center sm:mt-0 mt-12'>
         <h1 className='font-bold text-5xl selection:bg-[#ea1d2c] selection:text-white'>Faça suas compras por Aqui</h1>
         <p className='mt-2 text-lg text-gray-500 selection:bg-[#ea1d2c] selection:text-white'>Entregamos tudo o que precisa na porta da sua casa, de hortifruti a itens de limpeza</p>
 
