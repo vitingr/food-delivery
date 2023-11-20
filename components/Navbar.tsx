@@ -69,7 +69,7 @@ const Navbar = () => {
 
       {session?.user?.email ? (
         <div className='w-full flex items-center gap-4 sm:ml-20 justify-end sm:justify-start'>
-          <img src={data.photo || ""} className='w-[40px] h-[40px] duration-200 transition-all hover:scale-110 cursor-pointer rounded-full selection:bg-transparent' alt="Profile Image" />
+          <img src={data.photo || "https://www.digitary.net/wp-content/uploads/2021/07/Generic-Profile-Image.png"} className='w-[40px] h-[40px] duration-200 transition-all hover:scale-110 cursor-pointer rounded-full selection:bg-transparent' alt="Profile Image" />
           <div className='flex items-center justify-center gap-2 transition-all duration-300 rounded-full hover:bg-[#b1b4b415] pl-6 pr-6 w-[125px] cursor-pointer'>
             <IoBagOutline size={35} className="red-icon" />
             <div className='w-full'>

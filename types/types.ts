@@ -259,3 +259,7 @@ export interface AvaliationProps {
 export interface SearchCardProps {
   itemProps: ProductProps | RestaurantData | any;
 }
+
+export interface restaurantMain {
+  query: string;
+}
