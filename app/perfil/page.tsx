@@ -1,6 +1,7 @@
 "use client"
 
 import { infoUser } from '@/common/utils/userContext'
+import Loader from '@/components/Config/Loader'
 import ToastMessage from '@/components/Config/ToastMessage'
 import Upload from '@/components/Config/Upload'
 import Popup from '@/components/Popup/Popup'
@@ -235,7 +236,7 @@ const page = () => {
       </form>
     </div>
   ) : (
-    <h1>Carregando</h1>
+    <Loader />
   )
 }
 
