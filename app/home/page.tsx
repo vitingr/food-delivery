@@ -1,19 +1,18 @@
 "use client"
 
-import { randomize } from '@/common/functions/randomItems'
-import ProductsSwiper from '@/components/ProductsSwiper'
-import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant'
-import RestaurantOption from '@/components/Restaurant/RestaurantOption'
-import SmallRestaurantOption from '@/components/Restaurant/SmallRestaurantOption'
-import { FEATURED_RESTAURANTS } from '@/constants/featuredRestaurants'
-import { RESTAURANT_OPTIONS } from '@/constants/home'
-import { ProductProps, RestaurantProps } from '@/types/types'
-import { useSession } from 'next-auth/react'
-import Link from 'next/link'
-import React, { useEffect, useRef, useState } from 'react'
-import { IoSearchOutline } from 'react-icons/io5'
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
+import { randomize } from '@/common/functions/randomItems';
+import { FEATURED_RESTAURANTS } from '@/constants/featuredRestaurants';
+import { RESTAURANT_OPTIONS } from '@/constants/home';
+import { ProductProps, RestaurantProps } from '@/types/types';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { IoSearchOutline } from 'react-icons/io5';
+import Loader from '@/components/Config/Loader';
+import ProductsSwiper from '@/components/ProductsSwiper';
+import FeaturedRestaurant from '@/components/Restaurant/FeaturedRestaurant';
+import RestaurantOption from '@/components/Restaurant/RestaurantOption';
+import SmallRestaurantOption from '@/components/Restaurant/SmallRestaurantOption';
 
 const page = () => {
 
@@ -35,14 +34,17 @@ const page = () => {
     setProducts(randomProducts)
   }
 
-  useEffect(() => {
-    if (session?.user?.email !== undefined && status === "authenticated") {
-      getRestaurants()
-      getProducts()
+  const fetchData = async () => {
+    if (session?.user?.email && status === "authenticated") {
+      await Promise.all([getRestaurants(), getProducts()])
     }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [session])
 
-  return (
+  return restaurants.length > 0 && products.length > 0 ? (
     <div className='overflow-hidden w-full flex flex-col items-center sm:p-[2%]'>
 
       <section className='w-full flex flex-col items-center justify-center p-[2%]'>
@@ -105,6 +107,8 @@ const page = () => {
         <img src="https://static.ifood-static.com.br/image/upload/t_high,q_100/webapp/landingV2/ifood-benefits-desktop.png" alt="Logo" className='w-full max-w-[1600px] cursor-pointer' />
       </section>
     </div >
+  ) : (
+    <Loader />
   )
 }
 

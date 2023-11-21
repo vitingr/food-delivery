@@ -62,13 +62,15 @@ const RestaurantMain = ({ query }: restaurantMain) => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const getRestaurantData = async () => {
-    if (query) {
+    if (query != "" && query !== undefined) {
       const requisition = await fetch(`https://food-delivery-nest-api.vercel.app/restaurant/${query}`)
       const response = await requisition.json()
 
       if (response !== null) {
         setRestaurantData(response)
         setIsOwner(true)
+
+        isRestaurantOpen(response)
         getRestaurantCategories(response.id)
       } else {
         toast.error("Você não pode editar um restaurante que não existe")
@@ -255,10 +257,10 @@ const RestaurantMain = ({ query }: restaurantMain) => {
     }
   }
 
-  const isRestaurantOpen = async () => {
+  const isRestaurantOpen = async (data: any) => {
     const now = new Date()
     const currentHour = now.getHours()
-    const open = currentHour <= 23 && currentHour >= 11
+    const open = currentHour <= data.closingHour && currentHour >= data.openingHour
 
     setIsOpen(open)
   }
@@ -305,7 +307,6 @@ const RestaurantMain = ({ query }: restaurantMain) => {
       if (session?.user?.email !== undefined && status === "authenticated" && data.id !== null) {
         getRestaurantData()
         getUserAddress()
-        isRestaurantOpen()
         getUserFavorites()
       }
     } else {
