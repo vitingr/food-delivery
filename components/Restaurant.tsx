@@ -385,6 +385,57 @@ const RestaurantMain = ({ query }: restaurantMain) => {
 
       <div className='bg-white w-full min-h-[18vh] sm:p-16 p-4 mt-[75px] max-w-[1300px]'>
         <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px]'>Menu do Restaurante</h1>
+        {categories.length > 0 ? (
+          <>
+            {categories.map((category: CategoryProps) => (
+              <div className='mt-[75px]' key={category.id}>
+                <div>
+                  <div className='flex items-end gap-2'>
+                    <h2 className='font-bold text-2xl selection:bg-[#ea1d2c] selection:text-white'>{category.categoryName}</h2>
+                    {category.quantityItems === 0 ? <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>Categoria vazia</h5> : <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>{category.quantityItems} itens na categoria</h5>}
+                  </div>
+                  <h6 className='text-base text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{category.categoryDescription}</h6>
+                </div>
+                <div className='mt-16 sm:grid sm:grid-cols-2 flex flex-wrap gap-8'>
+                  {products.map((product: ProductProps) => (
+                    <div key={product.id}>
+                      {product.category === category.id ? (
+                        <div className='flex'>
+                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg sm:h-[175px] h-[200px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' onClick={() => setBuyingProducts(true)}>
+                            <div className='flex flex-col justify-center w-full'>
+                              <div className='h-full '>
+                                <h1 className='text-[1.125rem] sm:mt-0 mt-4 font-semibold selection:bg-[#ea1d2c] selection:text-white'> {product.productName}</h1>
+                                <h2 className='text-[#717171] text-[0.875rem] mt-2 text-justify selection:bg-[#ea1d2c] selection:text-white'>{product.productDescription}</h2>
+                              </div>
+                              <h5 className='sm:mt-0 mt-6 text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                            </div>
+                            <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
+                              <img src={product.productFoto} alt="Product Image" className='rounded-md selection:bg-transparent product-restaurant ' />
+                            </div>
+                          </div>
+                          {avaliatingRestaurant ? (
+                            <></>
+                          ) : (
+                            <div className='absolute'>
+                              {userFavorites.includes(product.id) ? (
+                                <IoBookmark size={20} className="cursor-pointer" />
+                              ) : (
+                                <IoBookmarkOutline size={20} onClick={() => favoriteProduct(product.id)} className="cursor-pointer" />
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ) : (<></>)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <p className='text-center mt-12'>Esse restaurante ainda não adicionou nada ao seu cardápio</p>
+        )}
+
 
       </div>
     </div >
