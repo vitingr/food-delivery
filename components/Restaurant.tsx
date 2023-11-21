@@ -384,58 +384,236 @@ const RestaurantMain = ({ query }: restaurantMain) => {
       </div>
 
       <div className='bg-white w-full min-h-[18vh] sm:p-16 p-4 mt-[75px] max-w-[1300px]'>
-        <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px]'>Menu do Restaurante</h1>
-        {categories.length > 0 ? (
-          <>
-            {categories.map((category: CategoryProps) => (
-              <div className='mt-[75px]' key={category.id}>
-                <div>
-                  <div className='flex items-end gap-2'>
-                    <h2 className='font-bold text-2xl selection:bg-[#ea1d2c] selection:text-white'>{category.categoryName}</h2>
-                    {category.quantityItems === 0 ? <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>Categoria vazia</h5> : <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>{category.quantityItems} itens na categoria</h5>}
-                  </div>
-                  <h6 className='text-base text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{category.categoryDescription}</h6>
-                </div>
-                <div className='mt-16 sm:grid sm:grid-cols-2 flex flex-wrap gap-8'>
-                  {products.map((product: ProductProps) => (
-                    <div key={product.id}>
-                      {product.category === category.id ? (
-                        <div className='flex'>
-                          <div className='flex justify-between p-6 border border-neutral-100 rounded-lg sm:h-[175px] h-[200px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' onClick={() => setBuyingProducts(true)}>
-                            <div className='flex flex-col justify-center w-full'>
-                              <div className='h-full '>
-                                <h1 className='text-[1.125rem] sm:mt-0 mt-4 font-semibold selection:bg-[#ea1d2c] selection:text-white'> {product.productName}</h1>
-                                <h2 className='text-[#717171] text-[0.875rem] mt-2 text-justify selection:bg-[#ea1d2c] selection:text-white'>{product.productDescription}</h2>
-                              </div>
-                              <h5 className='sm:mt-0 mt-6 text-lg selection:bg-[#ea1d2c] selection:text-white'>A partir de {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+
+        {buyingProducts ? (
+          <Popup state={setBuyingProducts} title={`Adicionar itens à Sacola`} handleSubmit={() => {
+            setDeliveryPlace("")
+            setTakeMethod("Retirada")
+            setPaymentMethod("")
+            setCommentaries("")
+            setMyPurchases([])
+            setTotalPurchaseValue(0)
+          }}>
+            <div className='mt-14 z-50 flex flex-col overflow-y-scroll max-h-[600px] pr-10'>
+              {categories.map((category: CategoryProps) => (
+                <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={category.restaurant}>
+                  <h2 className='font-bold mb-10 text-xl'>{category.categoryName}</h2>
+                  <div>
+                    {products.map((product: ProductProps) => (
+                      <div key={product.productName}>
+                        {product.category === category.id ? (
+                          <div className='flex justify-between mb-5'>
+                            <div className='w-full'>
+                              <h1 className='text-lg font-semibold'>{product.productName}</h1>
+                              <h2 className='text-[#717171]'>+ {product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
                             </div>
-                            <div className='max-w-[150px] max-h-[150px] ml-[25px] p-4'>
-                              <img src={product.productFoto} alt="Product Image" className='rounded-md selection:bg-transparent product-restaurant ' />
+                            <img src={product.productFoto} alt="Product Photo" className='w-[65px] h-[65px]' />
+                            <div className='ml-6 flex items-center cursor-pointer' onClick={() => chooseProduct(product)}>
+                              <IoAdd size={25} className="red-icon" />
                             </div>
                           </div>
-                          {avaliatingRestaurant ? (
-                            <></>
-                          ) : (
-                            <div className='absolute'>
-                              {userFavorites.includes(product.id) ? (
-                                <IoBookmark size={20} className="cursor-pointer" />
-                              ) : (
-                                <IoBookmarkOutline size={20} onClick={() => favoriteProduct(product.id)} className="cursor-pointer" />
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ) : (<></>)}
+                        ) : (<></>)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              <div className='flex justify-between mt-10'>
+                <h1 className='w-full'>Valor dos itens: {totalPurchaseValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h1>
+                <h1 className='w-full flex justify-end text-[#717171]'>{myPurchases.length} itens</h1>
+              </div>
+              {myPurchases.length > 0 && totalPurchaseValue > restaurantData.minValue ? (
+                <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit' onClick={() => {
+                  setBuyingProducts(!setBuyingProducts)
+                  setConfirmingProducts(true)
+                }}>
+                  Avançar
+                </button>
+              ) : (
+                <button className='mt-6 w-full bg-[#dddddd] rounded-xl p-4 text-center text-[#717171] font-bold cursor-not-allowed'>Avançar</button>
+              )}
+            </div>
+          </Popup>
+        ) : (<></>)}
+
+        {confirmingProducts ? (
+          <Popup state={setConfirmingProducts} title={`Confirmar Itens`} handleSubmit={() => {
+            setDeliveryPlace("")
+            setTakeMethod("Retirada")
+            setPaymentMethod("")
+            setCommentaries("")
+            setMyPurchases([])
+            setTotalPurchaseValue(0)
+          }}>
+            <form onSubmit={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+            }} className='mt-14 z-50 overflow-y-scroll max-h-[600px] pr-10 flex flex-col gap-6'>
+              {myPurchases.map((product: ProductProps) => (
+                <div key={product.productDescription} className='flex flex-col gap-6'>
+                  <div className='flex justify-between'>
+                    <div className='max-w-[65px] max-h-[65px] flex justify-center'>
+                      <img src={product.productFoto} alt="Product Photo" className='Product Image' />
                     </div>
-                  ))}
+                    <div className='w-full ml-4'>
+                      <h1 className='text-lg font-semibold'>{product.productName}</h1>
+                      <h2 className='text-[#717171]'>{product.productDescription}</h2>
+                    </div>
+                    <div className='ml-6 flex items-center'>
+                      <p>{product.productValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <div className='flex flex-col gap-4 w-full mt-10 pt-10 border-t border-neutral-200'>
+                <label htmlFor="takeMethod" className='text-lg'>Como você prefere receber o item?</label>
+                <select name="takeMethod" id="takeMethod" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setTakeMethod(e.target.value)} required>
+                  <option value="">Escolha uma maneira</option>
+                  <option value="Retirada">Retirada</option>
+                  <option value="Entrega">Entrega</option>
+                </select>
+
+                <div className='flex justify-between w-full'>
+                  <h1 className='w-full text-[#717171]'>Subtotal:</h1>
+                  <h2 className='w-full flex justify-end'>{totalPurchaseValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
+                </div>
+                <div className='flex justify-between w-full'>
+                  <h1 className='w-full text-[#717171]'>Taxa de entrega:</h1>
+                  {takeMethod == "Retirada" ? (
+                    <h2 className='w-full flex justify-end text-green-700'>Grátis</h2>
+                  ) : (
+                    <h2 className='w-full flex justify-end'>{(restaurantData.deliveryValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
+                  )}
+                </div>
+                <div className='flex justify-between w-full'>
+                  <h1 className='w-full text-[#717171]'>Cupom:</h1>
+                  <h2 className='w-full flex justify-end'>- R$ 0,00</h2>
+                </div>
+                <div className='flex justify-between w-full mt-4'>
+                  <h1 className='w-full text-[#717171] font-bold text-xl'>Total</h1>
+                  {takeMethod == "Retirada" ? (
+                    <h2 className='w-full flex justify-end font-bold text-xl'>{totalPurchaseValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
+                  ) : (
+                    <h2 className='w-full flex justify-end font-bold text-xl'>{(totalPurchaseValue + 5).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
+                  )}
                 </div>
               </div>
-            ))}
-          </>
-        ) : (
-          <p className='text-center mt-12'>Esse restaurante ainda não adicionou nada ao seu cardápio</p>
-        )}
+              <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit' onClick={() => {
+                setConfirmingProducts(!setBuyingProducts)
+                setPayingProducts(true)
+              }}>
+                Fechar Pedido
+              </button>
+            </form>
+          </Popup>
+        ) : (<></>)}
 
+        {payingProducts ? (
+          <Popup state={setPayingProducts} title={`Retirada e Pagamento`} handleSubmit={() => {
+            setDeliveryPlace("")
+            setTakeMethod("Retirada")
+            setPaymentMethod("")
+            setCommentaries("")
+            setMyPurchases([])
+            setTotalPurchaseValue(0)
+          }}>
+            <form onSubmit={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              confirmPurchase()
+            }} className='mt-14 z-50 overflow-y-scroll max-h-[600px] pr-10 flex flex-col gap-4'>
+
+              {takeMethod === "Entrega" ? (
+                <>
+                  <div>
+                    <label htmlFor="deliveryPlace" className='text-lg'>Em qual endereço devemos entregar?</label>
+                    <select name="deliveryPlace" id="deliveryPlace" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setDeliveryPlace(e.target.value)} required>
+                      <option value="">Escolha um endereço de entrega</option>
+                      {userAddresses.map((address: AddressProps) => (
+                        <option value={address.id} key={address.user}>{address.address}, {address.street}, {address.city} - {address.state}</option>
+                      ))}
+                    </select>
+
+                    <div className='text-[#ea1d2c] underline underline-offset-4 text-center w-full cursor-pointer mb-4' onClick={() => {
+                      setPayingProducts(false)
+                      setCreatingAddress(true)
+                    }}>
+                      Adicionar endereço
+                    </div>
+                  </div>
+                </>
+              ) : (<></>)}
+
+              <label htmlFor="paymentMethod" className='text-lg'>Como você deseja pagar?</label>
+              <select name="paymentMethod" id="paymentMethod" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setPaymentMethod(e.target.value)} required>
+                <option value="">Escolha o método de pagamento</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Cartão de Débito">Cartão de Débito</option>
+                <option value="Pix">Pix</option>
+              </select>
+
+              <label htmlFor="commentaries" className='text-lg'>Alguma observação?</label>
+              <input type="text" name="commentaries" id="commentaries" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Comentários adicionais' onChange={(e) => setCommentaries(e.target.value)} />
+
+              <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                Fechar Pedido
+              </button>
+            </form>
+          </Popup>
+        ) : (<></>)}
+
+        {creatingAddress ? (
+          <Popup state={setCreatingAddress} title={`Adicionar Endereço`} handleSubmit={() => {
+            setPayingProducts(true)
+          }}>
+            <form onSubmit={(e: React.SyntheticEvent) => {
+              e.preventDefault()
+              createAddress(state, city, street, Number(address))
+            }} className='mt-14 z-50 overflow-y-scroll max-h-[600px] pr-10 flex flex-col gap-4'>
+
+              <div className='flex items-center gap-6'>
+                <div className='w-full'>
+                  <label htmlFor="state" className='text-lg'>Estado</label>
+                  <select name="state" id="state" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={handleChangeEstado} required>
+                    <option value="">Selecione um estado</option>
+                    {CIDADES_BRASIL.estados.map((estado: any) => (
+                      <option key={estado.sigla} value={estado.sigla}>
+                        {estado.nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className='w-full'>
+                  <label htmlFor="city" className='text-lg'>Cidade</label>
+                  <select name="city" id="city" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={(e) => setCity(e.target.value)} required>
+                    <option value="">Selecione uma cidade</option>
+                    {cidadesList.map((cidade: any) => (
+                      <option key={cidade} value={cidade}>
+                        {cidade}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-6'>
+                <div className='w-full'>
+                  <label htmlFor="street" className='text-lg'>Endereço</label>
+                  <input type="text" name="street" id="street" minLength={2} maxLength={55} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Exemplo: Bairro ou Rua do restaurante' onChange={(e) => setStreet(e.target.value)} required />
+                </div>
+                <div>
+                  <label htmlFor="address" className='text-lg'>Número</label>
+                  <input type="number" name="address" id="address" min={1} max={99999} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' placeholder='Número do endereço' onChange={(e) => setAddress(e.target.value)} required />
+                </div>
+              </div>
+
+              <button className='mt-6 w-full bg-[#ea1d2c] rounded-xl p-4 text-center text-white font-bold cursor-pointer' type='submit'>
+                Adicionar Endereço
+              </button>
+            </form>
+          </Popup>
+        ) : (<></>)}
 
       </div>
     </div >
