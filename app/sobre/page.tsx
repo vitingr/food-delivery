@@ -63,7 +63,7 @@ const page = () => {
           </div>
           <div className='w-full'>
             <label htmlFor="mensage" className='text-lg'>Sua Mensagem</label>
-            <textarea name="mensage" id="mensage" cols={30} rows={10} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8 resize-none' autoComplete='off'></textarea>
+            <textarea name="mensage" id="mensage" cols={30} rows={10} className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8 resize-none' autoComplete='off' placeholder='Digite uma mensagem para a nossa equipe'></textarea>
           </div>
           <button className='cursor-pointer sm:text-base text-sm bg-[#ee4c58] text-white p-2 w-[200px] rounded-xl text-center'>
             Enviar Mensagem

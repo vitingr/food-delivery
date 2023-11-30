@@ -34,15 +34,17 @@ const page = () => {
     setProducts(randomProducts)
   }
 
-  const fetchData = async () => {
+  useEffect(() => {
     if (session?.user?.email && status === "authenticated") {
-      await Promise.all([getRestaurants(), getProducts()])
+      getRestaurants()
     }
-  }
+  }, [session])
 
   useEffect(() => {
-    fetchData()
-  }, [session])
+    if (restaurants.length > 0) {
+      getProducts()
+    }
+  }, [restaurants])
 
   return restaurants.length > 0 && products.length > 0 ? (
     <div className='overflow-hidden w-full flex flex-col items-center sm:p-[2%]'>
