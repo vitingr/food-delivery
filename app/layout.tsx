@@ -34,7 +34,7 @@ export default function RootLayout({
             <>
               <UserProvider>
                 <Navbar />
-                <main>
+                <main className='selection:bg-[#ea1d2c] selection:text-white'>
                   {children}
                 </main>
                 <Footer />
@@ -47,7 +47,7 @@ export default function RootLayout({
               <PrivateRoute>
                 <Navbar />
                 <Coupons />
-                <main>
+                <main className='selection:bg-[#ea1d2c] selection:text-white'>
                   {children}
                 </main>
                 <Footer />

@@ -63,8 +63,8 @@ const Navbar = () => {
         <Link href="/home"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Restaurantes</li></Link>
         <Link href="/home"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Mercados</li></Link>
         <Link href="/cupons"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Cupons</li></Link>
-        <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Informações</li></Link>
-        <Link href="/"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Sobre</li></Link>
+        <Link href="/informacoes"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Informações</li></Link>
+        <Link href="/sobre"><li className='duration-300 transition-all hover:text-[#ea1d2c] selection:bg-[#ea1d2c] selection:text-white'>Sobre</li></Link>
       </ul>
 
       {session?.user?.email ? (
