@@ -38,7 +38,7 @@ const page = () => {
     if (session?.user?.email && status === "authenticated") {
       getRestaurants()
     }
-  }, [session])
+  }, [session, status])
 
   useEffect(() => {
     if (restaurants.length > 0) {
@@ -48,7 +48,6 @@ const page = () => {
 
   return restaurants.length > 0 && products.length > 0 ? (
     <div className='overflow-hidden w-full flex flex-col items-center sm:p-[2%]'>
-
       <section className='w-full flex flex-col items-center justify-center p-[2%]'>
         <div className='w-full max-w-[1600px]'>
           <h2 className='w-full pt-16 pb-10 border-t border-neutral-300 text-3xl selection:bg-[#ea1d2c] selection:text-white'>Os melhores restaurantes</h2>

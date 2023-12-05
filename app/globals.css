@@ -7,7 +7,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Bold.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Bold.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Bold.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Bold.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -25,7 +25,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Bold.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Bold.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -34,7 +34,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Medium.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Medium.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -43,7 +43,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-ExtraBold.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-ExtraBold.woff') format('woff');
+    url('/fonts/iFoodRCTextos-ExtraBold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -52,7 +52,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Medium.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Medium.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -61,7 +61,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-ExtraBold.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-ExtraBold.woff') format('woff');
+    url('/fonts/iFoodRCTextos-ExtraBold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -70,7 +70,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Medium.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Medium.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -79,7 +79,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-ExtraBold.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-ExtraBold.woff') format('woff');
+    url('/fonts/iFoodRCTextos-ExtraBold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -88,7 +88,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Light.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Light.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -97,7 +97,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Light.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Light.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -106,7 +106,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Light.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Light.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -115,7 +115,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Regular.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Regular.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -124,7 +124,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Regular.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Regular.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -133,7 +133,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Thin.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Thin.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Thin.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -142,7 +142,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Regular.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Regular.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -151,7 +151,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Thin.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Thin.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Thin.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -160,7 +160,7 @@
 @font-face {
   font-family: 'iFood RC Textos';
   src: url('/fonts/iFoodRCTextos-Thin.woff2') format('woff2'),
-      url('/fonts/iFoodRCTextos-Thin.woff') format('woff');
+    url('/fonts/iFoodRCTextos-Thin.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -170,7 +170,7 @@
 *::after,
 *::before {
   font-size: 14.5px;
-  font-family: 'iFood RC Textos', sans-serif !important; 
+  font-family: 'iFood RC Textos', sans-serif !important;
   color: #3e3e3e;
   font-style: normal;
   box-sizing: border-box;
@@ -310,7 +310,7 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
-  box-shadow: 0 0px 32px 0 rgba(31, 38, 135, 0.37); 
+  box-shadow: 0 0px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .chart__pie {
@@ -422,4 +422,3 @@
   width: 120px;
   height: 90px;
 }
-

@@ -7,8 +7,7 @@ const page = () => {
   return (
     <div className='p-[5%] w-full flex flex-col items-center'>
       <h1 className='sm:text-2xl text-3xl font-semibold mb-20 mt-12 sm:mb-28 w-full max-w-[1500px] sm:text-left text-center'>Sobre o Food-Delivery</h1>
-
-
+      
       <section className='max-w-[1200px]'>
         <div className='flex justify-between gap-10 w-full'>
           <div className='w-full flex flex-col items-center'>
