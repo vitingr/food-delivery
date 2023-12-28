@@ -385,16 +385,16 @@ const RestaurantMain = ({ query }: restaurantMain) => {
 
       <div className='bg-white w-full min-h-[18vh] sm:p-16 p-4 mt-[75px] max-w-[1300px]'>
         <h1 className='w-full text-center text-4xl font-bold selection:bg-[#ea1d2c] selection:text-white mb-[50px]'>Menu do Restaurante</h1>
-        {categories.map((category: CategoryProps) => (
-          <div className='mt-[75px]' key={category.id}>
+        {categories.map((category: CategoryProps, index: number) => (
+          <div className='mt-[75px]' key={index}>
             <div className='flex items-end gap-2'>
               <h2 className='font-bold text-2xl selection:bg-[#ea1d2c] selection:text-white'>{category.categoryName}</h2>
               {category.quantityItems === 0 ? <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>Categoria vazia</h5> : <h5 className='text-sm selection:bg-[#ea1d2c] selection:text-white mt-4'>{category.quantityItems} itens na categoria</h5>}
             </div>
             <h6 className='text-base text-[#717171] selection:bg-[#ea1d2c] selection:text-white'>{category.categoryDescription}</h6>
             <div className='mt-16 sm:grid sm:grid-cols-2 flex flex-wrap gap-8'>
-              {products.map((product: ProductProps) => (
-                <div key={product.id}>
+              {products.map((product: ProductProps, index: number) => (
+                <div key={index}>
                   {product.category === category.id ? (
                     <div className='flex'>
                       <div className='flex justify-between p-6 border border-neutral-100 rounded-lg sm:h-[175px] h-[200px] w-full shadow-sm cursor-pointer transition-all duration-300 hover:border-neutral-300' onClick={() => setBuyingProducts(true)}>
@@ -438,12 +438,12 @@ const RestaurantMain = ({ query }: restaurantMain) => {
             setTotalPurchaseValue(0)
           }}>
             <div className='mt-14 z-50 flex flex-col overflow-y-scroll max-h-[600px] pr-10'>
-              {categories.map((category: CategoryProps) => (
-                <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={category.restaurant}>
+              {categories.map((category: CategoryProps, index: number) => (
+                <div className='w-full pt-8 pb-4 border-t border-neutral-200' key={index}>
                   <h2 className='font-bold mb-10 text-xl'>{category.categoryName}</h2>
                   <div>
-                    {products.map((product: ProductProps) => (
-                      <div key={product.productName}>
+                    {products.map((product: ProductProps, index: number) => (
+                      <div key={index}>
                         {product.category === category.id ? (
                           <div className='flex justify-between mb-5'>
                             <div className='w-full'>
@@ -492,8 +492,8 @@ const RestaurantMain = ({ query }: restaurantMain) => {
             <form onSubmit={(e: React.SyntheticEvent) => {
               e.preventDefault()
             }} className='mt-14 z-50 overflow-y-scroll max-h-[600px] pr-10 flex flex-col gap-6'>
-              {myPurchases.map((product: ProductProps) => (
-                <div key={product.productDescription} className='flex flex-col gap-6'>
+              {myPurchases.map((product: ProductProps, index: number) => (
+                <div key={index} className='flex flex-col gap-6'>
                   <div className='flex justify-between'>
                     <div className='max-w-[65px] max-h-[65px] flex justify-center'>
                       <img src={product.productFoto} alt="Product Photo" className='Product Image' />
@@ -572,8 +572,8 @@ const RestaurantMain = ({ query }: restaurantMain) => {
                     <label htmlFor="deliveryPlace" className='text-lg'>Em qual endereço devemos entregar?</label>
                     <select name="deliveryPlace" id="deliveryPlace" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' autoComplete='off' onChange={(e) => setDeliveryPlace(e.target.value)} required>
                       <option value="">Escolha um endereço de entrega</option>
-                      {userAddresses.map((address: AddressProps) => (
-                        <option value={address.id} key={address.user}>{address.address}, {address.street}, {address.city} - {address.state}</option>
+                      {userAddresses.map((address: AddressProps, index: number) => (
+                        <option value={address.id} key={index}>{address.address}, {address.street}, {address.city} - {address.state}</option>
                       ))}
                     </select>
 
@@ -620,8 +620,8 @@ const RestaurantMain = ({ query }: restaurantMain) => {
                   <label htmlFor="state" className='text-lg'>Estado</label>
                   <select name="state" id="state" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={handleChangeEstado} required>
                     <option value="">Selecione um estado</option>
-                    {CIDADES_BRASIL.estados.map((estado: any) => (
-                      <option key={estado.sigla} value={estado.sigla}>
+                    {CIDADES_BRASIL.estados.map((estado: any, index: number) => (
+                      <option key={index} value={estado.sigla}>
                         {estado.nome}
                       </option>
                     ))}
@@ -631,8 +631,8 @@ const RestaurantMain = ({ query }: restaurantMain) => {
                   <label htmlFor="city" className='text-lg'>Cidade</label>
                   <select name="city" id="city" className='w-full outline-none pl-4 pr-4 pt-2 pb-2 border border-neutral-200 rounded-lg mt-1 text-[#717171] mb-8' onChange={(e) => setCity(e.target.value)} required>
                     <option value="">Selecione uma cidade</option>
-                    {cidadesList.map((cidade: any) => (
-                      <option key={cidade} value={cidade}>
+                    {cidadesList.map((cidade: any, index: number) => (
+                      <option key={index} value={cidade}>
                         {cidade}
                       </option>
                     ))}

@@ -61,13 +61,6 @@ export interface RestaurantData {
   closingHour: number;
 }
 
-export interface EditMenu {
-  currentSection: string;
-  restaurantId: string;
-  restaurantData: any;
-  getRestaurantData: any
-}
-
 export interface Button {
   text: string;
   handleClick?: () => void;
@@ -141,12 +134,6 @@ export interface CategoryProps {
   categoryName: string;
   categoryDescription: string;
   quantityItems: number;
-}
-
-export interface MainConfig {
-  restaurantId: string;
-  restaurantData: any;
-  getRestaurantData: any
 }
 
 export interface RestaurantProps {

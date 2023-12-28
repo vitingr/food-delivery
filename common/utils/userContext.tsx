@@ -1,5 +1,6 @@
 "use client"
 
+import Loader from '@/components/Config/Loader'
 import { UserContextProps, UserProps } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import React, { createContext, useContext, useEffect, useState } from 'react'
@@ -58,10 +59,12 @@ export const UserProvider = ({ children } : { children: React.ReactNode }) => {
     }
   }, [session])
 
-  return (
+  return session?.user?.email ? (
     <UserContext.Provider value={{data, setData, getInfo}}>
       {children}
     </UserContext.Provider>
+  ) : (
+    <Loader />
   )
 }
 

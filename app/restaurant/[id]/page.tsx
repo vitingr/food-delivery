@@ -1,17 +1,14 @@
-"use client"
+"use client";
 
-import React from 'react'
-import { usePathname } from 'next/navigation'
-import RestaurantMain from '@/components/Restaurant'
+import React from "react";
+import { usePathname } from "next/navigation";
+import RestaurantMain from "@/components/Restaurant";
 
 const page = () => {
+  const pathname = usePathname().split("/");
+  const query = pathname[2];
 
-  const pathname = usePathname().split("/")
-  const query = pathname[2]
+  return <RestaurantMain query={query} />;
+};
 
-  return (
-    <RestaurantMain query={query} />
-  )
-}
-
-export default page
+export default page;
