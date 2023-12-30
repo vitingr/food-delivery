@@ -1,4 +1,4 @@
-import { Button } from '@/types/types'
+import type { Button } from '@/types/types'
 import React from 'react'
 
 const Button = ({ text, handleClick }: Button) => {

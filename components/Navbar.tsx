@@ -11,7 +11,7 @@ import { infoUser } from '@/common/utils/userContext'
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 
-const Navbar = () => {
+export default function Navbar() {
 
   const { data: session, status } = useSession()
 
@@ -152,5 +152,3 @@ const Navbar = () => {
     </div >
   )
 }
-
-export default Navbar
